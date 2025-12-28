@@ -1,0 +1,247 @@
+<!--
+  @component PpdbDaftar
+  @description Halaman pendaftaran PPDB dengan multi-step form accordion
+  @route /ppdb/daftar
+-->
+
+<template>
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
+    <div class="max-w-4xl mx-auto">
+      <BackButton to="/ppdb" text="Kembali ke Info PPDB" variant="ghost" />
+
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 font-poppins">
+          Formulir Pendaftaran PPDB
+        </h1>
+        <p class="text-gray-600 dark:text-gray-300 font-poppins">
+          SMA Mutiara Insan Nusantara - Tahun Ajaran {{ activeWave?.academic_year || '2025/2026' }}
+        </p>
+      </div>
+
+      <!-- No Active Wave -->
+      <div v-if="!isLoading && !activeWave" class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-2xl p-8 text-center">
+        <AlertTriangle class="w-16 h-16 mx-auto mb-4 text-yellow-500" />
+        <h2 class="text-xl font-bold text-yellow-800 dark:text-yellow-200 mb-2">Pendaftaran Belum Dibuka</h2>
+        <p class="text-yellow-700 dark:text-yellow-300">Silakan cek kembali nanti atau hubungi sekolah untuk informasi lebih lanjut.</p>
+      </div>
+
+      <!-- Loading -->
+      <div v-else-if="isLoading" class="py-20">
+        <LoadingSpinner size="lg" color="blue" text="Memuat formulir..." />
+      </div>
+
+      <!-- Registration Form -->
+      <div v-else class="space-y-4">
+        <!-- Progress Indicator -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-200 dark:border-gray-700 mb-6">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Progress Pengisian</span>
+            <span class="text-sm font-bold text-blue-600">{{ completedSections }}/{{ totalSections }} Bagian</span>
+          </div>
+          <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500" :style="`width: ${progressPercent}%`"></div>
+          </div>
+        </div>
+
+        <!-- Accordion Sections -->
+        <FormSection
+          v-for="(section, index) in sections"
+          :key="section.id"
+          :title="section.title"
+          :icon="section.icon"
+          :is-open="openSection === section.id"
+          :is-complete="isSectionComplete(section.id)"
+          :number="index + 1"
+          @toggle="toggleSection(section.id)"
+        >
+          <component :is="section.component" v-model="formData" :errors="errors" />
+        </FormSection>
+
+        <!-- Submit Button -->
+        <div class="pt-6">
+          <button
+            @click="submitForm"
+            :disabled="isSubmitting || !isFormValid"
+            class="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-2xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed font-poppins flex items-center justify-center gap-2"
+          >
+            <span v-if="isSubmitting">
+              <div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+            </span>
+            <span v-else>
+              <Send class="w-5 h-5" />
+            </span>
+            {{ isSubmitting ? 'Mengirim...' : 'Kirim Pendaftaran' }}
+          </button>
+          <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-3">
+            Pastikan semua data sudah benar sebelum mengirim
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import BackButton from '@/components/ui/BackButton.vue'
+import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
+import { useHead } from '@vueuse/head'
+import { AlertTriangle, Send } from 'lucide-vue-next'
+import { computed, onMounted, ref, shallowRef } from 'vue'
+import { useRouter } from 'vue-router'
+import FormSection from './ppdbDaftar/FormSection.vue'
+import SectionIdentitas from './ppdbDaftar/SectionIdentitas.vue'
+import SectionAlamat from './ppdbDaftar/SectionAlamat.vue'
+import SectionPendidikan from './ppdbDaftar/SectionPendidikan.vue'
+import SectionKesehatan from './ppdbDaftar/SectionKesehatan.vue'
+import SectionOrangTua from './ppdbDaftar/SectionOrangTua.vue'
+import SectionWali from './ppdbDaftar/SectionWali.vue'
+
+const router = useRouter()
+
+useHead({
+  title: 'Daftar PPDB - SMA Mutiara Insan Nusantara',
+  meta: [
+    { name: 'description', content: 'Formulir pendaftaran PPDB SMA Mutiara Insan Nusantara' }
+  ]
+})
+
+const isLoading = ref(true)
+const isSubmitting = ref(false)
+const activeWave = ref(null)
+const openSection = ref('identitas')
+const errors = ref({})
+
+const formData = ref({
+  // Identitas
+  nama_lengkap: '', nik: '', nisn: '', tempat_lahir: '', tanggal_lahir: '',
+  jenis_kelamin: '', agama: '', anak_ke: 1, jumlah_saudara: 0, no_hp: '', email: '',
+  hobi: '', cita_cita: '', prestasi_akademik: '', prestasi_non_akademik: '',
+  // Alamat
+  alamat_lengkap: '', rt: '', rw: '', kelurahan: '', kecamatan: '',
+  kota_kabupaten: '', provinsi: '', kode_pos: '',
+  // Pendidikan
+  asal_sekolah: '', npsn_sekolah: '', alamat_sekolah: '', tahun_lulus: new Date().getFullYear(),
+  jurusan_pilihan: '',
+  // Kesehatan
+  golongan_darah: '', tinggi_badan: null, berat_badan: null,
+  riwayat_penyakit: '', alergi: false, keterangan_alergi: '',
+  // Orang Tua
+  nama_ayah: '', nik_ayah: '', pekerjaan_ayah: '', pendidikan_ayah: '',
+  penghasilan_ayah: '', no_hp_ayah: '', ayah_masih_hidup: true,
+  nama_ibu: '', nik_ibu: '', pekerjaan_ibu: '', pendidikan_ibu: '',
+  penghasilan_ibu: '', no_hp_ibu: '', ibu_masih_hidup: true,
+  // Wali
+  nama_wali: '', nik_wali: '', hubungan_wali: '', pekerjaan_wali: '',
+  pendidikan_wali: '', penghasilan_wali: '', no_hp_wali: ''
+})
+
+const sections = shallowRef([
+  { id: 'identitas', title: 'Identitas Diri', icon: 'User', component: SectionIdentitas },
+  { id: 'alamat', title: 'Alamat Tempat Tinggal', icon: 'MapPin', component: SectionAlamat },
+  { id: 'pendidikan', title: 'Pendidikan & Jurusan', icon: 'GraduationCap', component: SectionPendidikan },
+  { id: 'kesehatan', title: 'Informasi Kesehatan', icon: 'Heart', component: SectionKesehatan },
+  { id: 'orangtua', title: 'Data Orang Tua', icon: 'Users', component: SectionOrangTua },
+  { id: 'wali', title: 'Data Wali (Opsional)', icon: 'UserPlus', component: SectionWali },
+])
+
+const totalSections = computed(() => sections.value.length)
+
+const requiredFields = {
+  identitas: ['nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'no_hp'],
+  alamat: ['alamat_lengkap', 'rt', 'rw', 'kelurahan', 'kecamatan', 'kota_kabupaten', 'provinsi'],
+  pendidikan: ['asal_sekolah', 'tahun_lulus', 'jurusan_pilihan'],
+  kesehatan: [],
+  orangtua: ['nama_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'nama_ibu', 'pekerjaan_ibu', 'pendidikan_ibu'],
+  wali: []
+}
+
+const isSectionComplete = (sectionId) => {
+  const fields = requiredFields[sectionId] || []
+  return fields.every(field => {
+    const value = formData.value[field]
+    return value !== '' && value !== null && value !== undefined
+  })
+}
+
+const completedSections = computed(() => {
+  return Object.keys(requiredFields).filter(id => isSectionComplete(id)).length
+})
+
+const progressPercent = computed(() => {
+  return Math.round((completedSections.value / totalSections.value) * 100)
+})
+
+const isFormValid = computed(() => {
+  return ['identitas', 'alamat', 'pendidikan', 'orangtua'].every(id => isSectionComplete(id))
+})
+
+const toggleSection = (id) => {
+  openSection.value = openSection.value === id ? null : id
+}
+
+const fetchActiveWave = async () => {
+  try {
+    const response = await fetch('/api/ppdb/wave/active')
+    const data = await response.json()
+    if (data.success) {
+      activeWave.value = data.data
+    }
+  } catch (error) {
+    console.error('Error fetching wave:', error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const submitForm = async () => {
+  if (!isFormValid.value) return
+  
+  isSubmitting.value = true
+  errors.value = {}
+  
+  try {
+    const response = await fetch('/api/ppdb/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData.value)
+    })
+    
+    const data = await response.json()
+    
+    if (data.success) {
+      // Navigate to success page with registration data
+      router.push({
+        path: '/ppdb/sukses',
+        query: {
+          reg: data.data.registration_number,
+          token: data.data.token,
+          nama: data.data.nama
+        }
+      })
+    } else {
+      errors.value = data.errors || {}
+      // Find first section with error and open it
+      for (const section of sections.value) {
+        const sectionFields = Object.keys(requiredFields[section.id] || {})
+        if (sectionFields.some(f => errors.value[f])) {
+          openSection.value = section.id
+          break
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error)
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+onMounted(() => {
+  fetchActiveWave()
+})
+</script>
+
+<style scoped>
+.font-poppins { font-family: 'Poppins', sans-serif; }
+</style>

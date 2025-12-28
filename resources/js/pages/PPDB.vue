@@ -17,9 +17,27 @@
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 font-poppins">
           Informasi PPDB
         </h1>
-        <p class="text-lg text-gray-600 dark:text-gray-300 font-poppins">
+        <p class="text-lg text-gray-600 dark:text-gray-300 font-poppins mb-6">
           Penerimaan Peserta Didik Baru - Dokumen & Informasi
         </p>
+        
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <router-link
+            to="/ppdb/daftar"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl font-poppins"
+          >
+            <UserPlus class="w-5 h-5" />
+            Daftar Sekarang
+          </router-link>
+          <router-link
+            to="/ppdb/status"
+            class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-400 rounded-xl font-semibold transition-all font-poppins"
+          >
+            <Search class="w-5 h-5" />
+            Cek Status
+          </router-link>
+        </div>
       </div>
 
       <div v-if="loading" class="py-20">
@@ -95,7 +113,7 @@
 import BackButton from '@/components/ui/BackButton.vue'
 import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
 import { useHead } from '@vueuse/head'
-import { Download, FileText } from 'lucide-vue-next'
+import { Download, FileText, Search, UserPlus } from 'lucide-vue-next'
 import { onBeforeUnmount, onMounted, ref, computed } from 'vue'
 
 // Props from Inertia

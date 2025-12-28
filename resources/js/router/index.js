@@ -51,6 +51,24 @@ const routes = [
     component: () => import('@/pages/PPDB.vue'),
     meta: { title: 'Info PPDB - SMA Mutiara Insan Nusantara' }
   },
+  {
+    path: '/ppdb/daftar',
+    name: 'PpdbDaftar',
+    component: () => import('@/pages/PpdbDaftar.vue'),
+    meta: { title: 'Daftar PPDB - SMA Mutiara Insan Nusantara' }
+  },
+  {
+    path: '/ppdb/sukses',
+    name: 'PpdbSukses',
+    component: () => import('@/pages/PpdbSukses.vue'),
+    meta: { title: 'Pendaftaran Berhasil - PPDB SMA Mutiara Insan Nusantara' }
+  },
+  {
+    path: '/ppdb/status',
+    name: 'PpdbStatus',
+    component: () => import('@/pages/PpdbStatus.vue'),
+    meta: { title: 'Cek Status PPDB - SMA Mutiara Insan Nusantara' }
+  },
 
   {
     path: '/yasmin-panel/login',
