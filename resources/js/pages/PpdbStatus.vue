@@ -27,7 +27,7 @@
               v-model="form.registration_number"
               type="text"
               required
-              class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="PPDB-2024-0001"
             />
           </div>
@@ -38,7 +38,7 @@
               type="text"
               required
               maxlength="6"
-              class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-mono text-center text-2xl tracking-widest uppercase focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white font-mono text-center text-2xl tracking-widest uppercase focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               placeholder="ABC123"
             />
           </div>
