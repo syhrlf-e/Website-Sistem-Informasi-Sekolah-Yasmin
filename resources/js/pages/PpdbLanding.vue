@@ -53,7 +53,7 @@
       <div class="container-content">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Jadwal Pendaftaran -->
-          <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                 <Calendar class="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -81,7 +81,7 @@
           </div>
 
           <!-- Persyaratan -->
-          <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                 <FileText class="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -113,7 +113,7 @@
           </div>
 
           <!-- Biaya Pendaftaran -->
-          <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700">
             <div class="flex items-center gap-3 mb-5">
               <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                 <Wallet class="w-6 h-6 text-blue-600 dark:text-blue-400" />
