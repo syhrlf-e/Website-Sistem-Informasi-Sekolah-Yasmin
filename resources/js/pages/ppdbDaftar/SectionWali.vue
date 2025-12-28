@@ -19,6 +19,7 @@
         <input 
           :value="modelValue.nik_wali" 
           @input="handleNik" 
+          @keypress="onlyNumbers"
           type="text" 
           inputmode="numeric"
           maxlength="16" 
@@ -46,6 +47,7 @@
         <input 
           :value="modelValue.no_hp_wali" 
           @input="handlePhone" 
+          @keypress="onlyNumbers"
           type="tel" 
           inputmode="numeric"
           maxlength="13" 
@@ -64,6 +66,14 @@ const props = defineProps({
 })
 
 const pendidikanOptions = ['SD', 'SMP', 'SMA/SMK', 'D1', 'D2', 'D3', 'D4/S1', 'S2', 'S3']
+
+// Block non-numeric keypress
+const onlyNumbers = (event) => {
+  const char = String.fromCharCode(event.which || event.keyCode)
+  if (!/[0-9]/.test(char)) {
+    event.preventDefault()
+  }
+}
 
 // Handle NIK - only allow numbers, 16 digits
 const handleNik = (event) => {

@@ -18,6 +18,7 @@
       <input 
         :value="modelValue.nik" 
         @input="handleNik($event, 'nik', 16)" 
+        @keypress="onlyNumbers"
         type="text" 
         inputmode="numeric"
         maxlength="16" 
@@ -33,6 +34,7 @@
       <input 
         :value="modelValue.nisn" 
         @input="handleNik($event, 'nisn', 10)" 
+        @keypress="onlyNumbers"
         type="text" 
         inputmode="numeric"
         maxlength="10" 
@@ -101,6 +103,7 @@
       <input 
         :value="modelValue.no_hp" 
         @input="handlePhone" 
+        @keypress="onlyNumbers"
         type="tel" 
         inputmode="numeric"
         maxlength="13" 
@@ -155,6 +158,14 @@ const maxBirthDate = computed(() => {
   d.setFullYear(d.getFullYear() - 12)
   return d.toISOString().split('T')[0]
 })
+
+// Block non-numeric keypress
+const onlyNumbers = (event) => {
+  const char = String.fromCharCode(event.which || event.keyCode)
+  if (!/[0-9]/.test(char)) {
+    event.preventDefault()
+  }
+}
 
 // Handle NIK/NISN - only allow numbers
 const handleNik = (event, field, maxLen) => {

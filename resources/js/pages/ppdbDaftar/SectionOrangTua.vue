@@ -18,6 +18,7 @@
           <input 
             :value="modelValue.nik_ayah" 
             @input="handleNik($event, 'nik_ayah')" 
+            @keypress="onlyNumbers"
             type="text" 
             inputmode="numeric"
             maxlength="16" 
@@ -48,6 +49,7 @@
           <input 
             :value="modelValue.no_hp_ayah" 
             @input="handlePhone($event, 'no_hp_ayah')" 
+            @keypress="onlyNumbers"
             type="tel" 
             inputmode="numeric"
             maxlength="13" 
@@ -73,6 +75,7 @@
           <input 
             :value="modelValue.nik_ibu" 
             @input="handleNik($event, 'nik_ibu')" 
+            @keypress="onlyNumbers"
             type="text" 
             inputmode="numeric"
             maxlength="16" 
@@ -103,6 +106,7 @@
           <input 
             :value="modelValue.no_hp_ibu" 
             @input="handlePhone($event, 'no_hp_ibu')" 
+            @keypress="onlyNumbers"
             type="tel" 
             inputmode="numeric"
             maxlength="13" 
@@ -129,6 +133,14 @@ const penghasilanOptions = [
   'Rp 5.000.000 - Rp 10.000.000',
   '> Rp 10.000.000'
 ]
+
+// Block non-numeric keypress
+const onlyNumbers = (event) => {
+  const char = String.fromCharCode(event.which || event.keyCode)
+  if (!/[0-9]/.test(char)) {
+    event.preventDefault()
+  }
+}
 
 // Handle NIK - only allow numbers, 16 digits
 const handleNik = (event, field) => {
