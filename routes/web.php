@@ -26,6 +26,7 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/news/{slug}', 'newsDetail')->name('news.show');
     Route::get('/prestasi', 'prestasi')->name('prestasi');
     Route::get('/ppdb', 'ppdb')->name('ppdb');
+    Route::get('/ppdb/landing', 'ppdbLanding')->name('ppdb.landing');
     Route::get('/ppdb/daftar', 'ppdbDaftar')->name('ppdb.daftar');
     Route::get('/ppdb/sukses', 'ppdbSukses')->name('ppdb.sukses');
     Route::get('/ppdb/status', 'ppdbStatus')->name('ppdb.status');

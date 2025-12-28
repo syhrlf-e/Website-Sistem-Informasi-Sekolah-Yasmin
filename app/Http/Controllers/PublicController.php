@@ -338,6 +338,19 @@ class PublicController extends Controller
     }
 
     /**
+     * PPDB Landing Page
+     */
+    public function ppdbLanding()
+    {
+        return Inertia::render('PpdbLanding', [
+            'meta' => [
+                'title' => 'PPDB - SMA Mutiara Insan Nusantara',
+                'description' => 'Pendaftaran Peserta Didik Baru SMA Mutiara Insan Nusantara',
+            ],
+        ]);
+    }
+
+    /**
      * PPDB Registration Form Page
      */
     public function ppdbDaftar()
