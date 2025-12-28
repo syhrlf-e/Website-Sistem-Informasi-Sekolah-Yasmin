@@ -63,7 +63,7 @@
             <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <!-- Waves dari database -->
               <li v-for="wave in landingInfo.waves" :key="wave.id" class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
                 <span>{{ wave.name }}: <strong>{{ formatDateRange(wave.start_date, wave.end_date) }}</strong></span>
               </li>
               <!-- Jadwal tambahan dari settings -->
