@@ -264,11 +264,22 @@ const submitForm = async () => {
   isSubmitting.value = true
   errors.value = {}
   
+  // Clean up data - convert empty strings to null for numeric fields
+  const cleanData = { ...formData.value }
+  const numericFields = ['tinggi_badan', 'berat_badan', 'anak_ke', 'jumlah_saudara', 'tahun_lulus']
+  numericFields.forEach(field => {
+    if (cleanData[field] === '' || cleanData[field] === null) {
+      cleanData[field] = null
+    } else {
+      cleanData[field] = Number(cleanData[field])
+    }
+  })
+  
   try {
     const response = await fetch('/api/ppdb/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData.value)
+      body: JSON.stringify(cleanData)
     })
     
     const data = await response.json()
