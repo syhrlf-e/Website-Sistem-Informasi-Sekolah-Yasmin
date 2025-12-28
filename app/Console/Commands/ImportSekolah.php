@@ -16,13 +16,13 @@ class ImportSekolah extends Command
 
     // Jabodetabek regions
     private array $jabodetabekRegions = [
-        // DKI Jakarta
-        'Kota Jakarta Pusat',
-        'Kota Jakarta Utara',
-        'Kota Jakarta Barat',
-        'Kota Jakarta Selatan',
-        'Kota Jakarta Timur',
-        'Kab. Kepulauan Seribu',
+        // DKI Jakarta (format: "Kota Adm. ...")
+        'Kota Adm. Jakarta Pusat',
+        'Kota Adm. Jakarta Utara',
+        'Kota Adm. Jakarta Barat',
+        'Kota Adm. Jakarta Selatan',
+        'Kota Adm. Jakarta Timur',
+        'Kab. Adm. Kepulauan Seribu',
         // Bogor
         'Kab. Bogor',
         'Kota Bogor',
