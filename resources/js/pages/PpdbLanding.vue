@@ -11,15 +11,8 @@
 
     <!-- Hero Section -->
     <section class="relative h-[60vh] min-h-[500px] overflow-hidden pt-24">
-      <!-- Background Image -->
-      <div class="absolute inset-0 bg-white dark:bg-gray-900">
-        <img
-          src="/storage/images/school-building.jpg"
-          alt="Gedung Sekolah"
-          class="w-full h-full object-cover"
-          @error="onImageError"
-        />
-      </div>
+      <!-- Background Gradient -->
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
 
       <!-- Hero Content -->
       <div class="relative z-10 h-full flex items-center">
@@ -231,10 +224,6 @@ useHead({
     { name: 'description', content: `Pendaftaran Peserta Didik Baru SMA Mutiara Insan Nusantara Tahun Ajaran ${props.academicYear}. Daftar sekarang!` }
   ]
 })
-
-const onImageError = (e) => {
-  e.target.style.display = 'none'
-}
 
 const formatFileSize = (bytes) => {
   if (!bytes) return ''
