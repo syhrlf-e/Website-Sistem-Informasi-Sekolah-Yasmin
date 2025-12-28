@@ -211,14 +211,12 @@ const submitForm = async () => {
     
     if (data.success) {
       // Navigate to success page with registration data
-      router.push({
-        path: '/ppdb/sukses',
-        query: {
-          reg: data.data.registration_number,
-          token: data.data.token,
-          nama: data.data.nama
-        }
+      const params = new URLSearchParams({
+        reg: data.data.registration_number,
+        token: data.data.token,
+        nama: data.data.nama
       })
+      window.location.href = `/ppdb/sukses?${params.toString()}`
     } else {
       errors.value = data.errors || {}
       // Find first section with error and open it

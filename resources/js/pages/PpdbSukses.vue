@@ -52,19 +52,19 @@
 
         <!-- Action Buttons -->
         <div class="space-y-3">
-          <router-link
-            to="/ppdb/status"
+          <a
+            href="/ppdb/status"
             class="block w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-medium transition-colors"
           >
             Cek Status Pendaftaran
-          </router-link>
+          </a>
           
-          <router-link
-            to="/"
+          <a
+            href="/"
             class="block w-full py-3 px-6 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium transition-colors"
           >
             Kembali ke Beranda
-          </router-link>
+          </a>
         </div>
       </div>
     </div>
@@ -75,14 +75,14 @@
 import { useHead } from '@vueuse/head'
 import { AlertTriangle, CheckCircle, Copy } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
 const copied = ref(false)
 
-const registrationNumber = computed(() => route.query.reg || 'PPDB-2024-0001')
-const token = computed(() => route.query.token || 'ABC123')
-const nama = computed(() => route.query.nama || 'Pendaftar')
+// Get query params from URL
+const urlParams = new URLSearchParams(window.location.search)
+const registrationNumber = computed(() => urlParams.get('reg') || 'PPDB-2024-0001')
+const token = computed(() => urlParams.get('token') || 'ABC123')
+const nama = computed(() => urlParams.get('nama') || 'Pendaftar')
 
 useHead({
   title: 'Pendaftaran Berhasil - PPDB SMA Mutiara Insan Nusantara',

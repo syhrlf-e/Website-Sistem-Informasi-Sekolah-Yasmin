@@ -338,6 +338,44 @@ class PublicController extends Controller
     }
 
     /**
+     * PPDB Registration Form Page
+     */
+    public function ppdbDaftar()
+    {
+        return Inertia::render('PpdbDaftar', [
+            'meta' => [
+                'title' => 'Daftar PPDB - SMA Mutiara Insan Nusantara',
+                'description' => 'Formulir pendaftaran PPDB SMA Mutiara Insan Nusantara',
+            ],
+        ]);
+    }
+
+    /**
+     * PPDB Success Page
+     */
+    public function ppdbSukses()
+    {
+        return Inertia::render('PpdbSukses', [
+            'meta' => [
+                'title' => 'Pendaftaran Berhasil - PPDB SMA Mutiara Insan Nusantara',
+            ],
+        ]);
+    }
+
+    /**
+     * PPDB Status Check Page
+     */
+    public function ppdbStatus()
+    {
+        return Inertia::render('PpdbStatus', [
+            'meta' => [
+                'title' => 'Cek Status PPDB - SMA Mutiara Insan Nusantara',
+                'description' => 'Cek status pendaftaran PPDB SMA Mutiara Insan Nusantara',
+            ],
+        ]);
+    }
+
+    /**
      * Guru Page
      */
     public function guru()

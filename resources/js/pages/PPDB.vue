@@ -23,20 +23,20 @@
         
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <router-link
-            to="/ppdb/daftar"
+          <a
+            href="/ppdb/daftar"
             class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl font-poppins"
           >
             <UserPlus class="w-5 h-5" />
             Daftar Sekarang
-          </router-link>
-          <router-link
-            to="/ppdb/status"
+          </a>
+          <a
+            href="/ppdb/status"
             class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-400 rounded-xl font-semibold transition-all font-poppins"
           >
             <Search class="w-5 h-5" />
             Cek Status
-          </router-link>
+          </a>
         </div>
       </div>
 
