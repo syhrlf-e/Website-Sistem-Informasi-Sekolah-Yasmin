@@ -25,7 +25,7 @@
               v-model="filters.search"
               type="text"
               placeholder="Cari nama, no. registrasi, NIK..."
-              class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500"
+              class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
               @input="debouncedSearch"
             />
           </div>
@@ -34,7 +34,7 @@
         <!-- Status Filter -->
         <select
           v-model="filters.status"
-          class="px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm"
+          class="px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           @change="fetchData"
         >
           <option value="all">Semua Status</option>
@@ -48,7 +48,7 @@
         <!-- Wave Filter -->
         <select
           v-model="filters.wave_id"
-          class="px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm"
+          class="px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           @change="fetchData"
         >
           <option value="">Semua Gelombang</option>
