@@ -247,11 +247,13 @@ const saveWave = async () => {
 
 const toggleActive = async (wave) => {
   try {
-    await api.put(`/yasmin-panel/ppdb/waves/${wave.id}/toggle`)
-    wave.is_active = !wave.is_active
-    showSuccess('Berhasil!', wave.is_active ? 'Gelombang diaktifkan' : 'Gelombang dinonaktifkan')
+    const response = await api.put(`/yasmin-panel/ppdb/waves/${wave.id}/toggle`)
+    if (response.data.success) {
+      showSuccess('Berhasil!', response.data.data.is_active ? 'Gelombang diaktifkan' : 'Gelombang dinonaktifkan')
+      fetchWaves() // Refresh from server
+    }
   } catch (error) {
-    showError('Gagal!', 'Gagal mengubah status gelombang')
+    showError('Gagal!', error.response?.data?.message || 'Gagal mengubah status gelombang')
   }
 }
 
