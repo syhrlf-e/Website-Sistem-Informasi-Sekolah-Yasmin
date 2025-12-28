@@ -50,12 +50,17 @@
           :title="section.title"
           :icon="section.icon"
           :is-open="openSection === section.id"
-          :is-complete="isSectionComplete(section.id)"
+          :is-complete="isSectionComplete(section.id) || skippedSections.includes(section.id)"
           :is-locked="!isSectionUnlocked(section.id)"
           :number="index + 1"
           @toggle="toggleSection(section.id)"
         >
-          <component :is="section.component" v-model="formData" :errors="errors" />
+          <component 
+            :is="section.component" 
+            v-model="formData" 
+            :errors="errors"
+            @skip="skipSection(section.id)"
+          />
         </FormSection>
 
         <!-- Submit Button -->
@@ -116,6 +121,7 @@ const isSubmitting = ref(false)
 const activeWave = ref(null)
 const openSection = ref('identitas')
 const errors = ref({})
+const skippedSections = ref([]) // Track skipped optional sections (e.g., wali)
 
 const formData = ref({
   // Identitas
@@ -222,6 +228,17 @@ const toggleSection = (id) => {
   if (isSectionUnlocked(id)) {
     openSection.value = id
   }
+}
+
+/**
+ * Skip an optional section (e.g., Wali)
+ * Marks it as complete and closes it
+ */
+const skipSection = (id) => {
+  if (!skippedSections.value.includes(id)) {
+    skippedSections.value.push(id)
+  }
+  openSection.value = null
 }
 
 const fetchActiveWave = async () => {

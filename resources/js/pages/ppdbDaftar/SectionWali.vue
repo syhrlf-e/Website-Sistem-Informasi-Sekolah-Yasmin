@@ -56,6 +56,22 @@
         />
       </div>
     </div>
+
+    <!-- Skip Button -->
+    <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex items-center justify-between">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Tidak relevan? Silakan klik tombol lewati
+        </p>
+        <button
+          @click="$emit('skip')"
+          type="button"
+          class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition-colors"
+        >
+          Lewati →
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,6 +80,8 @@ const props = defineProps({
   modelValue: { type: Object, required: true },
   errors: { type: Object, default: () => ({}) }
 })
+
+defineEmits(['skip'])
 
 const pendidikanOptions = ['SD', 'SMP', 'SMA/SMK', 'D1', 'D2', 'D3', 'D4/S1', 'S2', 'S3']
 
