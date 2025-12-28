@@ -189,8 +189,8 @@ const searchError = ref('')
 const selectedSchool = ref(null)
 let debounceTimer = null
 
-// API Base URL
-const API_BASE = 'https://api-sekolah-indonesia.vercel.app/sekolah'
+// API Endpoint (Laravel proxy to Kemendikdasmen)
+const API_URL = '/api/sekolah/search'
 
 // Search schools with debounce
 const onSearchInput = () => {
@@ -206,22 +206,27 @@ const onSearchInput = () => {
   
   debounceTimer = setTimeout(async () => {
     try {
-      // Search both SMP and MTs
-      const [smpRes, mtsRes] = await Promise.all([
-        fetch(`${API_BASE}/SMP?sekolah=${encodeURIComponent(searchQuery.value)}&perPage=10`),
-        fetch(`${API_BASE}/MTs?sekolah=${encodeURIComponent(searchQuery.value)}&perPage=10`)
-      ])
+      const response = await fetch(`${API_URL}?keyword=${encodeURIComponent(searchQuery.value)}`)
+      const data = await response.json()
       
-      const smpData = await smpRes.json()
-      const mtsData = await mtsRes.json()
-      
-      // Combine and dedupe results
-      const combined = [
-        ...(smpData.dataSekolah || []),
-        ...(mtsData.dataSekolah || [])
-      ]
-      
-      searchResults.value = combined.slice(0, 15)
+      if (data.success) {
+        // Map Kemendikdasmen fields to our format
+        searchResults.value = (data.data || []).map(school => ({
+          id: school.satuanPendidikanId || school.npsn,
+          npsn: school.npsn,
+          sekolah: school.nama,
+          bentuk: school.bentukPendidikan,
+          alamat_jalan: school.alamatJalan || '-',
+          kecamatan: school.namaKecamatan || school.kecamatan || '',
+          kabupaten_kota: school.namaKabupaten || school.kabupatenKota || '',
+          propinsi: school.namaProvinsi || school.provinsi || ''
+        }))
+      } else {
+        searchResults.value = []
+        if (data.message) {
+          searchError.value = data.message
+        }
+      }
     } catch (error) {
       console.error('Search error:', error)
       searchError.value = 'Gagal mencari sekolah. Coba lagi.'

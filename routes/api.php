@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\AdminGuruController;
 use App\Http\Controllers\Api\PpdbRegistrationController;
 use App\Http\Controllers\Api\AdminPpdbController;
 use App\Http\Controllers\Api\AdminPpdbWaveController;
+use App\Http\Controllers\Api\SekolahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,9 @@ Route::prefix('ppdb')->group(function () {
         ->middleware('throttle:3,1'); // Max 3 registrations per minute per IP
     Route::post('/check-status', [PpdbRegistrationController::class, 'checkStatus']);
 });
+
+// Sekolah Search API (proxy to Kemendikdasmen)
+Route::get('/sekolah/search', [SekolahController::class, 'search']);
 
 /*
 |--------------------------------------------------------------------------
