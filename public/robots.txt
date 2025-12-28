@@ -1,0 +1,11 @@
+# Robots.txt - SMA Mutiara Insan Nusantara
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+Disallow: /yasmin-panel/
+Disallow: /api/
+Disallow: /storage/
+
+# Sitemap location (update domain when migrating to .sch.id)
+Sitemap: https://sma-mutiarainsannusantara.my.id/sitemap.xml
