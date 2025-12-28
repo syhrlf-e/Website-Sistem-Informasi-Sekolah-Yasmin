@@ -229,7 +229,6 @@
                     <CalendarDays class="w-4 h-4 text-blue-500" />
                     <span class="text-gray-700 dark:text-gray-300">{{ wave.name }}:</span>
                     <span class="font-semibold text-gray-900 dark:text-white">{{ formatDate(wave.start_date) }} - {{ formatDate(wave.end_date) }}</span>
-                    <span class="ml-auto text-xs text-blue-600 dark:text-blue-400">(dari Gelombang)</span>
                   </div>
                 </div>
                 <p v-else class="text-sm text-gray-500 dark:text-gray-400 mb-3 italic">Belum ada gelombang aktif</p>
