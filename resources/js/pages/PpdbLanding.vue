@@ -144,7 +144,7 @@
     </section>
 
     <!-- Download Center Section -->
-    <section class="py-16 bg-white dark:bg-gray-900">
+    <section class="py-16 bg-gray-50 dark:bg-gray-800">
       <div class="container-content">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
