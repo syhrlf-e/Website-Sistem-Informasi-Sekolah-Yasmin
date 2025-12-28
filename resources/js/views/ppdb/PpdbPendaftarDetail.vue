@@ -126,7 +126,7 @@
             v-model="adminNotes"
             rows="3"
             placeholder="Tambahkan catatan..."
-            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm"
+            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           ></textarea>
           <button
             @click="saveNotes"
@@ -146,7 +146,7 @@
           <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Update Status</h3>
           <select
             v-model="newStatus"
-            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl mb-4"
+            class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl mb-4 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
           >
             <option value="pending">Menunggu Verifikasi</option>
             <option value="verified">Terverifikasi</option>
