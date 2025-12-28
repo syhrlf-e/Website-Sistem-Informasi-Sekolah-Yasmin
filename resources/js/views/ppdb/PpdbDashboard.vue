@@ -248,6 +248,9 @@
 import { CalendarDays, ChevronRight, Clock, CheckCircle, UserCheck, XCircle, Users, UserPlus, Settings, Wallet, FileText, Trash2, Plus } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
+import { usePopup } from '@/composables/usePopup'
+
+const { showSuccess, showError } = usePopup()
 
 const isLoading = ref(true)
 const isSaving = ref(false)
@@ -301,11 +304,11 @@ const saveLandingSettings = async () => {
   try {
     const response = await api.post('/yasmin-panel/ppdb/landing-settings', landingSettings.value)
     if (response.data.success) {
-      alert('Pengaturan berhasil disimpan!')
+      showSuccess('Berhasil!', 'Pengaturan berhasil disimpan')
     }
   } catch (error) {
     console.error('Failed to save landing settings:', error)
-    alert('Gagal menyimpan pengaturan')
+    showError('Gagal!', 'Gagal menyimpan pengaturan')
   } finally {
     isSaving.value = false
   }
