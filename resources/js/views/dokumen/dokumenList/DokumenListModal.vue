@@ -26,7 +26,7 @@
           <form @submit.prevent="handleSubmit" class="p-6 space-y-4">
             <div>
               <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                Judul <span class="text-red-500">*</span>
+                Nama Dokumen <span class="text-red-500">*</span>
               </label>
               <input
                 v-model="localForm.title"
@@ -34,14 +34,6 @@
                 required
                 class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
               />
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">Deskripsi</label>
-              <textarea
-                v-model="localForm.description"
-                rows="3"
-                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white resize-none"
-              ></textarea>
             </div>
             <div v-if="!editMode">
               <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">

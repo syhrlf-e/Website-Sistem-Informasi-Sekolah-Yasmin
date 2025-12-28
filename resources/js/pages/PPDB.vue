@@ -30,50 +30,45 @@
         v-else-if="documents.length > 0"
         class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
       >
+        <!-- Table Header -->
+        <div class="grid grid-cols-12 gap-4 px-4 py-3 bg-gray-50 dark:bg-gray-700/50 border-b border-gray-200 dark:border-gray-700">
+          <div class="col-span-5 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Nama Dokumen</div>
+          <div class="col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Tipe</div>
+          <div class="col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Ukuran</div>
+          <div class="col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase">Tanggal</div>
+          <div class="col-span-1 text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase text-center">Aksi</div>
+        </div>
+        
+        <!-- Table Body -->
         <div class="divide-y divide-gray-200 dark:divide-gray-700">
           <div
             v-for="doc in documents"
             :key="doc.id"
-            class="flex items-center gap-4 p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+            class="grid grid-cols-12 gap-4 px-4 py-3 items-center hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
           >
-            <div
-              class="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-              :class="getFileIconBg(doc.file_type)"
-            >
-              <FileText class="w-6 h-6" :class="getFileIconColor(doc.file_type)" />
+            <div class="col-span-5">
+              <span class="text-sm text-gray-900 dark:text-white font-poppins">{{ doc.title }}</span>
             </div>
-
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-1">
-                <h3
-                  class="text-base font-semibold text-gray-900 dark:text-white font-poppins truncate"
-                >
-                  {{ doc.title }}
-                </h3>
-                <span class="px-2 py-0.5 rounded text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex-shrink-0">
-                  {{ doc.file_type.toUpperCase() }}
-                </span>
-              </div>
-              <p
-                v-if="doc.description"
-                class="text-sm text-gray-600 dark:text-gray-400 mb-1 line-clamp-1"
+            <div class="col-span-2">
+              <span class="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
+                {{ doc.file_type.toUpperCase() }}
+              </span>
+            </div>
+            <div class="col-span-2">
+              <span class="text-sm text-gray-600 dark:text-gray-400">{{ formatFileSize(doc.file_size) }}</span>
+            </div>
+            <div class="col-span-2">
+              <span class="text-sm text-gray-500 dark:text-gray-400">{{ formatDate(doc.created_at) }}</span>
+            </div>
+            <div class="col-span-1 text-center">
+              <button
+                @click="downloadDocument(doc.id, doc.file_name)"
+                class="p-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-colors"
+                title="Download"
               >
-                {{ doc.description }}
-              </p>
-              <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-                <span>{{ formatFileSize(doc.file_size) }}</span>
-                <span>•</span>
-                <span>{{ formatDate(doc.created_at) }}</span>
-              </div>
+                <Download class="w-4 h-4" />
+              </button>
             </div>
-
-            <button
-              @click="downloadDocument(doc.id, doc.file_name)"
-              class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-medium transition-colors font-poppins flex-shrink-0"
-            >
-              <Download class="w-4 h-4" />
-              <span class="hidden sm:inline">Download</span>
-            </button>
           </div>
         </div>
       </div>
