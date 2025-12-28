@@ -52,7 +52,7 @@
           <div class="flex items-center gap-3">
             <button
               @click="handleDokumenPPDB"
-              class="hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-sm font-medium transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:-translate-y-0.5"
+              class="hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 text-sm font-medium transition-all duration-300 hover:bg-blue-50 dark:hover:bg-gray-700 hover:-translate-y-0.5"
             >
               <svg
                 class="w-4 h-4"
@@ -193,7 +193,7 @@
           <div class="pt-4 pb-2 border-t border-gray-200/30 dark:border-gray-700/30">
             <button
               @click="handleDokumenPPDB"
-              class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium transition-all duration-300 shadow-lg shadow-orange-500/20 opacity-0 translate-y-2"
+              class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 font-medium transition-all duration-300 opacity-0 translate-y-2"
               :class="mobileMenuOpen ? 'animate-slide-in' : ''"
               style="transition-delay: 300ms"
             >

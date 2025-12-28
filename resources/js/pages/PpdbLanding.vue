@@ -12,24 +12,23 @@
     <!-- Hero Section -->
     <section class="relative h-[60vh] min-h-[500px] overflow-hidden pt-24">
       <!-- Background Image -->
-      <div class="absolute inset-0">
+      <div class="absolute inset-0 bg-white dark:bg-gray-900">
         <img
           src="/storage/images/school-building.jpg"
           alt="Gedung Sekolah"
           class="w-full h-full object-cover"
           @error="onImageError"
         />
-        <div class="absolute inset-0 bg-gradient-to-r from-teal-900/90 to-teal-800/70"></div>
       </div>
 
       <!-- Hero Content -->
       <div class="relative z-10 h-full flex items-center">
         <div class="container-content">
           <div class="max-w-2xl">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-poppins leading-tight">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 font-poppins leading-tight">
               Penerimaan Peserta Didik Baru {{ academicYear }}
             </h1>
-            <p class="text-lg md:text-xl text-white/90 mb-8 font-poppins">
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 font-poppins">
               Selamat Datang di PPDB SMA Mutiara Insan Nusantara.<br />
               Segera Daftarkan Diri Anda.
             </p>
@@ -38,14 +37,14 @@
             <div class="flex flex-col sm:flex-row gap-4">
               <a
                 href="/ppdb/daftar"
-                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
               >
                 Daftar Sekarang
                 <ArrowRight class="w-5 h-5" />
               </a>
               <a
                 href="/ppdb/status"
-                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/50 text-white hover:bg-white/20 rounded-lg font-semibold text-lg transition-all font-poppins"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-semibold text-lg transition-all font-poppins"
               >
                 <Search class="w-5 h-5" />
                 Cek Status Pendaftaran
@@ -67,10 +66,10 @@
           <!-- Jadwal Pendaftaran -->
           <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
             <div class="flex items-center gap-3 mb-5">
-              <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center">
-                <Calendar class="w-6 h-6 text-teal-600 dark:text-teal-400" />
+              <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                <Calendar class="w-6 h-6 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 class="text-lg font-bold text-teal-700 dark:text-teal-400 font-poppins">Jadwal Pendaftaran</h3>
+              <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 font-poppins">Jadwal Pendaftaran</h3>
             </div>
             <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <li class="flex items-start gap-2">
@@ -95,10 +94,10 @@
           <!-- Persyaratan -->
           <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
             <div class="flex items-center gap-3 mb-5">
-              <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center">
-                <FileText class="w-6 h-6 text-teal-600 dark:text-teal-400" />
+              <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                <FileText class="w-6 h-6 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 class="text-lg font-bold text-teal-700 dark:text-teal-400 font-poppins">Persyaratan</h3>
+              <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 font-poppins">Persyaratan</h3>
             </div>
             <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <li class="flex items-start gap-2">
@@ -127,10 +126,10 @@
           <!-- Biaya Pendaftaran -->
           <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
             <div class="flex items-center gap-3 mb-5">
-              <div class="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex items-center justify-center">
-                <Wallet class="w-6 h-6 text-teal-600 dark:text-teal-400" />
+              <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                <Wallet class="w-6 h-6 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 class="text-lg font-bold text-teal-700 dark:text-teal-400 font-poppins">Biaya Pendaftaran</h3>
+              <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 font-poppins">Biaya Pendaftaran</h3>
             </div>
             <div class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <div class="flex justify-between">
@@ -159,8 +158,8 @@
     <section class="py-16 bg-white dark:bg-gray-900">
       <div class="container-content">
         <div class="flex items-center gap-3 mb-8">
-          <div class="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center">
-            <Download class="w-6 h-6 text-teal-600 dark:text-teal-400" />
+          <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+            <Download class="w-6 h-6 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white font-poppins">
@@ -175,7 +174,7 @@
           <div
             v-for="doc in documents"
             :key="doc.id"
-            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-600 transition-colors"
+            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
           >
             <div class="flex items-center gap-4">
               <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
@@ -190,7 +189,7 @@
             <a
               :href="`/storage/documents/${doc.file_name}`"
               download
-              class="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium transition-colors"
+              class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg text-sm font-medium transition-colors"
             >
               <Download class="w-4 h-4" />
               Download
@@ -208,38 +207,15 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-      <div class="container-content">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div>
-            <h4 class="font-bold text-lg font-poppins">SMA Mutiara Insan Nusantara</h4>
-            <p class="text-gray-400 text-sm">Sekial : (014) 223-1454</p>
-            <p class="text-gray-400 text-sm">Sekial : (025) 322-2808</p>
-          </div>
-          <div class="flex items-center gap-4">
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-              <Facebook class="w-5 h-5" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-              <Instagram class="w-5 h-5" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-              <Youtube class="w-5 h-5" />
-            </a>
-          </div>
-        </div>
-        <div class="mt-6 pt-6 border-t border-gray-800 text-center text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} SMA Mutiara Insan Nusantara
-        </div>
-      </div>
-    </footer>
+    <Footer />
   </div>
 </template>
 
 <script setup>
 import { useHead } from '@vueuse/head'
-import { ArrowRight, Calendar, Download, Facebook, FileText, Instagram, Search, Wallet, Youtube } from 'lucide-vue-next'
+import { ArrowRight, Calendar, Download, FileText, Search, Wallet } from 'lucide-vue-next'
 import Navbar from '../components/ui/Navbar.vue'
+import Footer from '../components/ui/Footer.vue'
 
 // Props from backend
 const props = defineProps({
