@@ -6,8 +6,11 @@
 
 <template>
   <div class="min-h-screen bg-white dark:bg-gray-900">
+    <!-- Navbar -->
+    <Navbar />
+
     <!-- Hero Section -->
-    <section class="relative h-[60vh] min-h-[500px] overflow-hidden">
+    <section class="relative h-[60vh] min-h-[500px] overflow-hidden pt-24">
       <!-- Background Image -->
       <div class="absolute inset-0">
         <img
@@ -21,7 +24,7 @@
 
       <!-- Hero Content -->
       <div class="relative z-10 h-full flex items-center">
-        <div class="container mx-auto px-6 md:px-12">
+        <div class="container-content">
           <div class="max-w-2xl">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-poppins leading-tight">
               Penerimaan Peserta Didik Baru {{ academicYear }}
@@ -54,8 +57,8 @@
     </section>
 
     <!-- Info Cards Section -->
-    <section class="py-16 px-6 bg-gray-50 dark:bg-gray-800">
-      <div class="container mx-auto max-w-6xl">
+    <section class="py-16 bg-gray-50 dark:bg-gray-800">
+      <div class="container-content">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-10 font-poppins">
           Informasi PPDB
         </h2>
@@ -153,8 +156,8 @@
     </section>
 
     <!-- Download Center Section -->
-    <section v-if="documents && documents.length > 0" class="py-16 px-6 bg-white dark:bg-gray-900">
-      <div class="container mx-auto max-w-6xl">
+    <section class="py-16 bg-white dark:bg-gray-900">
+      <div class="container-content">
         <div class="flex items-center gap-3 mb-8">
           <div class="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center">
             <Download class="w-6 h-6 text-teal-600 dark:text-teal-400" />
@@ -167,7 +170,8 @@
           </div>
         </div>
 
-        <div class="space-y-3">
+        <!-- Document List -->
+        <div v-if="documents && documents.length > 0" class="space-y-3">
           <div
             v-for="doc in documents"
             :key="doc.id"
@@ -193,12 +197,19 @@
             </a>
           </div>
         </div>
+
+        <!-- Empty State -->
+        <div v-else class="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+          <FileText class="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+          <p class="text-gray-500 dark:text-gray-400">Belum ada dokumen yang tersedia</p>
+          <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Dokumen akan segera ditambahkan</p>
+        </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8 px-6">
-      <div class="container mx-auto max-w-6xl">
+    <footer class="bg-gray-900 text-white py-8">
+      <div class="container-content">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
           <div>
             <h4 class="font-bold text-lg font-poppins">SMA Mutiara Insan Nusantara</h4>
@@ -228,6 +239,7 @@
 <script setup>
 import { useHead } from '@vueuse/head'
 import { ArrowRight, Calendar, Download, Facebook, FileText, Instagram, Search, Wallet, Youtube } from 'lucide-vue-next'
+import Navbar from '../components/ui/Navbar.vue'
 
 // Props from backend
 const props = defineProps({

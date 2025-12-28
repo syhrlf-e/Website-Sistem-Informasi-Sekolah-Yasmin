@@ -67,7 +67,7 @@
                 <path d="M12 16v-4" />
                 <path d="M12 8h.01" />
               </svg>
-              <span>Info PPDB</span>
+              <span>PPDB {{ ppdbYear }}</span>
             </button>
 
             <div class="hidden lg:block w-px h-6 bg-gray-400/30 dark:bg-gray-600/50"></div>
@@ -210,7 +210,7 @@
                 <path d="M12 16v-4" />
                 <path d="M12 8h.01" />
               </svg>
-              <span>Info PPDB</span>
+              <span>PPDB {{ ppdbYear }}</span>
             </button>
           </div>
         </div>
@@ -238,6 +238,12 @@ const currentUrl = computed(() => page.url)
 const themeStore = useThemeStore()
 const mobileMenuOpen = ref(false)
 const activeMenu = ref('Beranda')
+
+// Dynamic PPDB year
+const ppdbYear = computed(() => {
+  const year = new Date().getFullYear()
+  return `${year}/${year + 1}`
+})
 
 // Lock body scroll when mobile menu is open
 watch(
