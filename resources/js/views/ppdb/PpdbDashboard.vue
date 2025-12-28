@@ -12,16 +12,55 @@
     </div>
 
     <template v-else>
-      <!-- Stats Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <StatsCard
-          v-for="stat in statsCards"
-          :key="stat.label"
-          :label="stat.label"
-          :value="stat.value"
-          :icon="stat.icon"
-          :color="stat.color"
-        />
+      <!-- Stats Cards (matching main dashboard style) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Total Pendaftar -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+              <Users class="w-6 h-6 text-blue-600 dark:text-blue-400" />
+            </div>
+            <span class="text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">Terdaftar</span>
+          </div>
+          <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.total }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Total Pendaftar</p>
+        </div>
+
+        <!-- Menunggu Verifikasi -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center">
+              <Clock class="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
+            <span class="text-xs font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 px-3 py-1 rounded-full">Pending</span>
+          </div>
+          <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.by_status.pending }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Menunggu Verifikasi</p>
+        </div>
+
+        <!-- Diterima -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
+              <CheckCircle class="w-6 h-6 text-green-600 dark:text-green-400" />
+            </div>
+            <span class="text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">Lulus</span>
+          </div>
+          <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.by_status.accepted }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Diterima</p>
+        </div>
+
+        <!-- Ditolak -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+              <XCircle class="w-6 h-6 text-red-600 dark:text-red-400" />
+            </div>
+            <span class="text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-1 rounded-full">Tidak Lolos</span>
+          </div>
+          <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.by_status.rejected }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Ditolak</p>
+        </div>
       </div>
 
       <!-- Wave Stats -->
@@ -101,10 +140,9 @@
 </template>
 
 <script setup>
-import { CalendarDays, ChevronRight, Clock, CheckCircle, XCircle, Users, UserPlus, FileCheck } from 'lucide-vue-next'
-import { computed, onMounted, ref } from 'vue'
+import { CalendarDays, ChevronRight, Clock, CheckCircle, XCircle, Users, UserPlus } from 'lucide-vue-next'
+import { onMounted, ref } from 'vue'
 import api from '@/services/api'
-import StatsCard from './ppdbDashboard/StatsCard.vue'
 
 const isLoading = ref(true)
 const stats = ref({
@@ -120,15 +158,6 @@ const stats = ref({
   wave_stats: [],
   recent: []
 })
-
-const statsCards = computed(() => [
-  { label: 'Total Pendaftar', value: stats.value.total, icon: Users, color: 'blue' },
-  { label: 'Menunggu', value: stats.value.by_status.pending, icon: Clock, color: 'yellow' },
-  { label: 'Terverifikasi', value: stats.value.by_status.verified, icon: FileCheck, color: 'cyan' },
-  { label: 'Seleksi', value: stats.value.by_status.selection, icon: UserPlus, color: 'purple' },
-  { label: 'Diterima', value: stats.value.by_status.accepted, icon: CheckCircle, color: 'green' },
-  { label: 'Ditolak', value: stats.value.by_status.rejected, icon: XCircle, color: 'red' },
-])
 
 const fetchDashboard = async () => {
   try {
