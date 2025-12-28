@@ -4,6 +4,7 @@
   @props {Boolean} isOpen - Toggle visibility di mobile (lg:always-visible)
   @props {Number} pendingCount - Badge count untuk menu Pendaftar Ekskul  
   @props {Boolean} isSuperAdmin - Role-based visibility untuk menu Users
+  @props {Boolean} isAdminPpdb - Role-based visibility untuk admin PPDB (only PPDB menus)
   @emits logout - Trigger logout flow di parent
 -->
 
@@ -25,7 +26,9 @@
         label="Dashboard"
       />
 
+      <!-- Konten Submenu - Hidden for admin_ppdb -->
       <SidebarSubmenu
+        v-if="!isAdminPpdb"
         :icon="FileText"
         label="Konten"
         :items="kontenItems"
@@ -33,36 +36,45 @@
         :default-open="true"
       />
 
+      <!-- Regular menus - Hidden for admin_ppdb -->
       <SidebarMenuItem
+        v-if="!isAdminPpdb"
         to="/yasmin-panel/pengumuman"
         :icon="Megaphone"
         label="Pengumuman"
       />
 
       <SidebarMenuItem
+        v-if="!isAdminPpdb"
         to="/yasmin-panel/testimoni"
         :icon="MessageSquareQuote"
         label="Testimoni"
       />
 
       <SidebarMenuItem
+        v-if="!isAdminPpdb"
         to="/yasmin-panel/dokumen"
         :icon="FileText"
         label="Dokumen PPDB"
       />
 
       <SidebarMenuItem
+        v-if="!isAdminPpdb"
         to="/yasmin-panel/guru"
         :icon="GraduationCap"
         label="Data Guru"
       />
 
       <SidebarMenuItem
+        v-if="!isAdminPpdb"
         to="/yasmin-panel/pendaftar"
         :icon="ClipboardList"
         label="Pendaftar Ekskul"
         :badge="pendingCount"
       />
+
+      <!-- TODO: PPDB Menu akan ditambahkan di Phase 3 -->
+      <!-- PPDB Submenu - Visible for admin_ppdb, super_admin, admin -->
 
       <SidebarMenuItem
         to="/yasmin-panel/users"
@@ -130,6 +142,10 @@ const props = defineProps({
     default: 0
   },
   isSuperAdmin: {
+    type: Boolean,
+    default: false
+  },
+  isAdminPpdb: {
     type: Boolean,
     default: false
   }

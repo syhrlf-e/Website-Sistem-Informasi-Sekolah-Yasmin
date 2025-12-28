@@ -19,12 +19,20 @@ export function useAuth() {
   const isAdmin = computed(() => {
     if (!user.value) return false
     const role = user.value.role?.toLowerCase()
-    return ['admin', 'super_admin'].includes(role)
+    return ['admin', 'super_admin', 'admin_ppdb'].includes(role)
   })
 
   const isSuperAdmin = computed(() => {
     if (!user.value) return false
     return user.value.role?.toLowerCase() === 'super_admin'
+  })
+
+  /**
+   * Check if user is PPDB Admin (only PPDB access)
+   */
+  const isAdminPpdb = computed(() => {
+    if (!user.value) return false
+    return user.value.role?.toLowerCase() === 'admin_ppdb'
   })
 
   const login = async (credentials) => {
@@ -99,6 +107,7 @@ export function useAuth() {
     isAuthenticated,
     isAdmin,
     isSuperAdmin,
+    isAdminPpdb,
     login,
     logout,
     fetchUser,

@@ -12,6 +12,7 @@
       :is-open="sidebarOpen"
       :pending-count="isOnPendaftarRoute ? 0 : pendingCount"
       :is-super-admin="isSuperAdmin"
+      :is-admin-ppdb="isAdminPpdb"
       @logout="handleLogout"
     />
 
@@ -43,7 +44,7 @@ import MobileOverlay from './admin/MobileOverlay.vue'
 
 const router = useRouter()
 const route = useRoute()
-const { user, logout, initAuth, isSuperAdmin } = useAuth()
+const { user, logout, initAuth, isSuperAdmin, isAdminPpdb } = useAuth()
 
 const sidebarOpen = ref(false)
 const isDark = ref(false)

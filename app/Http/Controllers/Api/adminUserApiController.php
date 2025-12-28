@@ -47,7 +47,7 @@ class AdminUserApiController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,super_admin'
+            'role' => 'required|in:admin,super_admin,admin_ppdb'
         ]);
 
         $validatedData['password'] = Hash::make($validatedData['password']);
@@ -98,7 +98,7 @@ class AdminUserApiController extends Controller
 
         $rules = [
             'name' => 'required|max:255',
-            'role' => 'required|in:admin,super_admin'
+            'role' => 'required|in:admin,super_admin,admin_ppdb'
         ];
 
         if ($request->email !== $user->email) {
