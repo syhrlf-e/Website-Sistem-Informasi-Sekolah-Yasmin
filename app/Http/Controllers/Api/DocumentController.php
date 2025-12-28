@@ -38,17 +38,17 @@ class DocumentController extends Controller
     {
         try {
             $document = Document::findOrFail($id);
-            
-            $filePath = storage_path('app/public/documents/' . $document->file_path);
-            
-            if (!file_exists($filePath)) {
+
+            $filePath = 'documents/' . $document->file_path;
+
+            if (!Storage::disk('public')->exists($filePath)) {
                 return response()->json([
                     'success' => false,
                     'message' => 'File tidak ditemukan'
                 ], 404);
             }
 
-            return response()->download($filePath, $document->file_name);
+            return Storage::disk('public')->download($filePath, $document->file_name);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

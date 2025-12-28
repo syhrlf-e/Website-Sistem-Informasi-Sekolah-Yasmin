@@ -159,30 +159,22 @@
         </div>
 
         <!-- Document List -->
-        <div v-if="documents && documents.length > 0" class="space-y-3">
-          <div
-            v-for="doc in documents"
-            :key="doc.id"
-            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
-          >
-            <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
-                <FileText class="w-5 h-5 text-red-600 dark:text-red-400" />
-              </div>
-              <div>
-                <h4 class="font-medium text-gray-900 dark:text-white">{{ doc.title }}</h4>
-                <p v-if="doc.description" class="text-sm text-gray-500 dark:text-gray-400">{{ doc.description }}</p>
-                <p class="text-xs text-gray-400 dark:text-gray-500">{{ formatFileSize(doc.file_size) }}</p>
-              </div>
-            </div>
-            <a
-              :href="`/storage/documents/${doc.file_name}`"
-              download
-              class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg text-sm font-medium transition-colors"
+        <div v-if="documents && documents.length > 0" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div class="divide-y divide-gray-200 dark:divide-gray-700">
+            <div
+              v-for="doc in documents"
+              :key="doc.id"
+              class="flex items-center justify-between px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
             >
-              <Download class="w-4 h-4" />
-              Download
-            </a>
+              <span class="text-sm text-gray-900 dark:text-white">{{ doc.title }}</span>
+              <a
+                :href="`/api/documents/${doc.id}/download`"
+                class="p-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg transition-colors flex-shrink-0"
+                title="Download"
+              >
+                <Download class="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
 
