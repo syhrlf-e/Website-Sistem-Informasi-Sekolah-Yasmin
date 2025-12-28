@@ -7,7 +7,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
     <div class="max-w-4xl mx-auto">
-      <BackButton to="/ppdb" text="Kembali ke Info PPDB" variant="ghost" />
+      <BackButton to="/ppdb/landing" text="Kembali ke PPDB" variant="ghost" />
 
       <!-- Header -->
       <div class="text-center mb-8">
@@ -142,7 +142,7 @@ const sections = shallowRef([
   { id: 'pendidikan', title: 'Pendidikan & Jurusan', icon: 'GraduationCap', component: SectionPendidikan },
   { id: 'kesehatan', title: 'Informasi Kesehatan', icon: 'Heart', component: SectionKesehatan },
   { id: 'orangtua', title: 'Data Orang Tua', icon: 'Users', component: SectionOrangTua },
-  { id: 'wali', title: 'Data Wali (Opsional)', icon: 'UserPlus', component: SectionWali },
+  { id: 'wali', title: 'Data Wali', icon: 'UserPlus', component: SectionWali },
 ])
 
 const totalSections = computed(() => sections.value.length)
@@ -158,6 +158,8 @@ const requiredFields = {
 
 const isSectionComplete = (sectionId) => {
   const fields = requiredFields[sectionId] || []
+  // Sections with no required fields are never auto-complete
+  if (fields.length === 0) return false
   return fields.every(field => {
     const value = formData.value[field]
     return value !== '' && value !== null && value !== undefined

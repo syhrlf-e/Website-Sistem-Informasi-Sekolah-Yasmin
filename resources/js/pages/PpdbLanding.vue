@@ -37,14 +37,14 @@
             <div class="flex flex-col sm:flex-row gap-4">
               <a
                 href="/ppdb/daftar"
-                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
               >
                 Daftar Sekarang
                 <ArrowRight class="w-5 h-5" />
               </a>
               <a
                 href="/ppdb/status"
-                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-100 dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg font-semibold text-lg transition-all font-poppins"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-xl font-semibold text-lg transition-all font-poppins"
               >
                 <Search class="w-5 h-5" />
                 Cek Status Pendaftaran
@@ -58,10 +58,6 @@
     <!-- Info Cards Section -->
     <section class="py-16 bg-gray-50 dark:bg-gray-800">
       <div class="container-content">
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-10 font-poppins">
-          Informasi PPDB
-        </h2>
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Jadwal Pendaftaran -->
           <div class="bg-white dark:bg-gray-700 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-600">
@@ -157,15 +153,15 @@
     <!-- Download Center Section -->
     <section class="py-16 bg-white dark:bg-gray-900">
       <div class="container-content">
-        <div class="flex items-center gap-3 mb-8">
-          <div class="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-            <Download class="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+            <Download class="w-5 h-5 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white font-poppins">
+            <h3 class="text-lg md:text-xl font-bold text-gray-900 dark:text-white font-poppins">
               Dokumen & Unduhan
-            </h2>
-            <p class="text-gray-500 dark:text-gray-400 text-sm">Download berkas kelengkapan pendaftaran</p>
+            </h3>
+            <p class="text-gray-500 dark:text-gray-400 text-xs">Download berkas kelengkapan pendaftaran</p>
           </div>
         </div>
 
