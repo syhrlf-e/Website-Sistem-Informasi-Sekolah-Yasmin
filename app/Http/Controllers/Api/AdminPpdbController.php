@@ -302,8 +302,6 @@ class AdminPpdbController extends Controller
         \App\Models\Setting::set('ppdb_spp_bulanan', $validated['spp_bulanan']);
         \App\Models\Setting::set('ppdb_persyaratan', json_encode($validated['persyaratan']));
 
-        $this->logUpdate('PpdbSettings', (object) ['id' => 1, 'name' => 'Landing Settings'], []);
-
         return response()->json([
             'success' => true,
             'message' => 'Pengaturan berhasil disimpan!',
