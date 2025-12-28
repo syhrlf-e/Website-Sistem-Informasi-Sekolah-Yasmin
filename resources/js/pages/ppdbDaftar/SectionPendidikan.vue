@@ -134,16 +134,8 @@
         <div
           @click="modelValue.jurusan_pilihan = 'IPA'"
           :class="modelValue.jurusan_pilihan === 'IPA' ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-green-400'"
-          class="flex flex-col items-center justify-center p-6 border-2 rounded-xl cursor-pointer transition-all"
+          class="flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all"
         >
-          <div 
-            :class="modelValue.jurusan_pilihan === 'IPA' ? 'bg-green-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500'" 
-            class="w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-all"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-            </svg>
-          </div>
           <p class="font-semibold text-gray-900 dark:text-white">IPA</p>
           <p class="text-xs text-gray-500 text-center">Ilmu Pengetahuan Alam</p>
         </div>
@@ -151,16 +143,8 @@
         <div
           @click="modelValue.jurusan_pilihan = 'IPS'"
           :class="modelValue.jurusan_pilihan === 'IPS' ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-orange-400'"
-          class="flex flex-col items-center justify-center p-6 border-2 rounded-xl cursor-pointer transition-all"
+          class="flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all"
         >
-          <div 
-            :class="modelValue.jurusan_pilihan === 'IPS' ? 'bg-orange-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500'" 
-            class="w-12 h-12 rounded-xl flex items-center justify-center mb-3 transition-all"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
           <p class="font-semibold text-gray-900 dark:text-white">IPS</p>
           <p class="text-xs text-gray-500 text-center">Ilmu Pengetahuan Sosial</p>
         </div>
@@ -178,7 +162,7 @@ const props = defineProps({
 })
 
 const currentYear = new Date().getFullYear()
-const years = computed(() => [currentYear, currentYear + 1])
+const years = computed(() => [currentYear, currentYear - 1, currentYear - 2, currentYear - 3])
 
 // Search state
 const searchQuery = ref('')
@@ -210,16 +194,16 @@ const onSearchInput = () => {
       const data = await response.json()
       
       if (data.success) {
-        // Map Kemendikdasmen fields to our format
+        // Map Kemendikdasmen fields to our format (API uses snake_case)
         searchResults.value = (data.data || []).map(school => ({
-          id: school.satuanPendidikanId || school.npsn,
+          id: school.sekolah_id || school.npsn,
           npsn: school.npsn,
           sekolah: school.nama,
-          bentuk: school.bentukPendidikan,
-          alamat_jalan: school.alamatJalan || '-',
-          kecamatan: school.namaKecamatan || school.kecamatan || '',
-          kabupaten_kota: school.namaKabupaten || school.kabupatenKota || '',
-          propinsi: school.namaProvinsi || school.provinsi || ''
+          bentuk: school.bentuk_pendidikan,
+          alamat_jalan: school.alamat_jalan || '-',
+          kecamatan: school.kecamatan || '',
+          kabupaten_kota: school.kabupaten || '',
+          propinsi: school.provinsi || ''
         }))
       } else {
         searchResults.value = []
