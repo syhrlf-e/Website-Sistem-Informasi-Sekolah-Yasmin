@@ -97,7 +97,7 @@ import BackButton from '@/components/ui/BackButton.vue'
 import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
 import { useHead } from '@vueuse/head'
 import { AlertTriangle, Send } from 'lucide-vue-next'
-import { computed, onMounted, ref, shallowRef } from 'vue'
+import { computed, onMounted, ref, shallowRef, watch } from 'vue'
 // Note: This is an Inertia page, uses window.location for navigation
 import FormSection from './ppdbDaftar/FormSection.vue'
 import SectionIdentitas from './ppdbDaftar/SectionIdentitas.vue'
@@ -168,8 +168,11 @@ const requiredFields = {
 }
 
 const isSectionComplete = (sectionId) => {
+  // If section is skipped, it counts as complete
+  if (skippedSections.value.includes(sectionId)) return true
+  
   const fields = requiredFields[sectionId] || []
-  // Sections with no required fields are never auto-complete
+  // Sections with no required fields are complete only if skipped (handled above)
   if (fields.length === 0) return false
   return fields.every(field => {
     const value = formData.value[field]
@@ -271,6 +274,8 @@ const submitForm = async () => {
     const data = await response.json()
     
     if (data.success) {
+      // Clear form storage before navigating away
+      clearFormStorage()
       // Navigate to success page with registration data
       const params = new URLSearchParams({
         reg: data.data.registration_number,
@@ -296,7 +301,47 @@ const submitForm = async () => {
   }
 }
 
+// LocalStorage key
+const STORAGE_KEY = 'ppdb_form_data'
+
+// Save form data to localStorage when it changes
+watch(formData, (newData) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(newData))
+}, { deep: true })
+
+// Save skipped sections to localStorage
+watch(skippedSections, (newData) => {
+  localStorage.setItem(STORAGE_KEY + '_skipped', JSON.stringify(newData))
+}, { deep: true })
+
+// Clear localStorage after successful submit
+const clearFormStorage = () => {
+  localStorage.removeItem(STORAGE_KEY)
+  localStorage.removeItem(STORAGE_KEY + '_skipped')
+}
+
 onMounted(() => {
+  // Restore form data from localStorage
+  const savedData = localStorage.getItem(STORAGE_KEY)
+  if (savedData) {
+    try {
+      const parsed = JSON.parse(savedData)
+      Object.assign(formData.value, parsed)
+    } catch (e) {
+      console.error('Failed to restore form data:', e)
+    }
+  }
+  
+  // Restore skipped sections
+  const savedSkipped = localStorage.getItem(STORAGE_KEY + '_skipped')
+  if (savedSkipped) {
+    try {
+      skippedSections.value = JSON.parse(savedSkipped)
+    } catch (e) {
+      console.error('Failed to restore skipped sections:', e)
+    }
+  }
+  
   fetchActiveWave()
 })
 </script>
