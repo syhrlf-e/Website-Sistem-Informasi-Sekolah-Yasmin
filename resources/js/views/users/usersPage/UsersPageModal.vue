@@ -43,6 +43,7 @@
             <select v-model="form.role" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white font-poppins">
               <option value="">Pilih Role</option>
               <option value="admin">Admin</option>
+              <option value="admin_ppdb">Admin PPDB</option>
               <option value="super_admin" :disabled="superAdminExists && !editingSuperAdmin">
                 Super Admin {{ superAdminExists && !editingSuperAdmin ? '(Sudah ada)' : '' }}
               </option>
