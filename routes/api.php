@@ -29,6 +29,9 @@ use App\Http\Controllers\Api\AdminTestimonialController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\AdminDocumentController;
 use App\Http\Controllers\Api\AdminGuruController;
+use App\Http\Controllers\Api\PpdbRegistrationController;
+use App\Http\Controllers\Api\AdminPpdbController;
+use App\Http\Controllers\Api\AdminPpdbWaveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +82,14 @@ Route::get('/documents/{id}/download', [DocumentController::class, 'download']);
 
 // Guru API
 Route::get('/guru', [App\Http\Controllers\Api\GuruController::class, 'index']);
+
+// PPDB Public API
+Route::prefix('ppdb')->group(function () {
+    Route::get('/wave/active', [PpdbRegistrationController::class, 'getActiveWave']);
+    Route::post('/register', [PpdbRegistrationController::class, 'store'])
+        ->middleware('throttle:3,1'); // Max 3 registrations per minute per IP
+    Route::post('/check-status', [PpdbRegistrationController::class, 'checkStatus']);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -210,5 +221,29 @@ Route::middleware(['auth:sanctum', 'is_admin_api'])->prefix('yasmin-panel')->gro
         Route::get('/', [\App\Http\Controllers\Api\ActivityLogController::class, 'index']);
         Route::get('/actions', [\App\Http\Controllers\Api\ActivityLogController::class, 'actions']);
         Route::get('/users', [\App\Http\Controllers\Api\ActivityLogController::class, 'users']);
+    });
+
+    // PPDB Admin Routes
+    Route::prefix('ppdb')->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [AdminPpdbController::class, 'dashboard']);
+        Route::get('/status-options', [AdminPpdbController::class, 'getStatusOptions']);
+
+        // Registrations (Pendaftar)
+        Route::get('/registrations', [AdminPpdbController::class, 'index']);
+        Route::get('/registrations/{registration}', [AdminPpdbController::class, 'show']);
+        Route::put('/registrations/{registration}/status', [AdminPpdbController::class, 'updateStatus']);
+        Route::post('/registrations/bulk-status', [AdminPpdbController::class, 'bulkUpdateStatus']);
+        Route::delete('/registrations/{registration}', [AdminPpdbController::class, 'destroy']);
+        Route::get('/export', [AdminPpdbController::class, 'export']);
+
+        // Waves (Gelombang)
+        Route::get('/waves', [AdminPpdbWaveController::class, 'index']);
+        Route::post('/waves', [AdminPpdbWaveController::class, 'store']);
+        Route::get('/waves/open', [AdminPpdbWaveController::class, 'getOpenWave']);
+        Route::get('/waves/{wave}', [AdminPpdbWaveController::class, 'show']);
+        Route::put('/waves/{wave}', [AdminPpdbWaveController::class, 'update']);
+        Route::put('/waves/{wave}/toggle', [AdminPpdbWaveController::class, 'toggleActive']);
+        Route::delete('/waves/{wave}', [AdminPpdbWaveController::class, 'destroy']);
     });
 });
