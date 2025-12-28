@@ -266,6 +266,7 @@ class AdminPpdbController extends Controller
         $biayaFormulir = \App\Models\Setting::get('ppdb_biaya_formulir', '250000');
         $sppBulanan = \App\Models\Setting::get('ppdb_spp_bulanan', '850000');
         $persyaratan = \App\Models\Setting::get('ppdb_persyaratan');
+        $jadwalTambahan = \App\Models\Setting::get('ppdb_jadwal_tambahan');
 
         // Parse persyaratan JSON, fallback to default if empty
         $persyaratanList = $persyaratan ? json_decode($persyaratan, true) : [
@@ -276,12 +277,16 @@ class AdminPpdbController extends Controller
             'Sertifikat Prestasi (Jika Ada)'
         ];
 
+        // Parse jadwal tambahan JSON
+        $jadwalTambahanList = $jadwalTambahan ? json_decode($jadwalTambahan, true) : [];
+
         return response()->json([
             'success' => true,
             'data' => [
                 'biaya_formulir' => $biayaFormulir,
                 'spp_bulanan' => $sppBulanan,
-                'persyaratan' => $persyaratanList
+                'persyaratan' => $persyaratanList,
+                'jadwal_tambahan' => $jadwalTambahanList
             ]
         ]);
     }
@@ -296,11 +301,15 @@ class AdminPpdbController extends Controller
             'spp_bulanan' => 'required|numeric|min:0',
             'persyaratan' => 'required|array',
             'persyaratan.*' => 'required|string|max:255',
+            'jadwal_tambahan' => 'nullable|array',
+            'jadwal_tambahan.*.label' => 'nullable|string|max:255',
+            'jadwal_tambahan.*.value' => 'nullable|string|max:255',
         ]);
 
         \App\Models\Setting::set('ppdb_biaya_formulir', $validated['biaya_formulir']);
         \App\Models\Setting::set('ppdb_spp_bulanan', $validated['spp_bulanan']);
         \App\Models\Setting::set('ppdb_persyaratan', json_encode($validated['persyaratan']));
+        \App\Models\Setting::set('ppdb_jadwal_tambahan', json_encode($validated['jadwal_tambahan'] ?? []));
 
         return response()->json([
             'success' => true,
@@ -308,7 +317,8 @@ class AdminPpdbController extends Controller
             'data' => [
                 'biaya_formulir' => $validated['biaya_formulir'],
                 'spp_bulanan' => $validated['spp_bulanan'],
-                'persyaratan' => $validated['persyaratan']
+                'persyaratan' => $validated['persyaratan'],
+                'jadwal_tambahan' => $validated['jadwal_tambahan'] ?? []
             ]
         ]);
     }

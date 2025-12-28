@@ -187,7 +187,11 @@
         <!-- Collapsed Preview -->
         <div v-if="!isSettingsExpanded" class="px-4 pb-4">
           <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div>
+                <span class="text-gray-500 dark:text-gray-400">Jadwal:</span>
+                <span class="ml-2 font-semibold text-gray-900 dark:text-white">{{ waves.length + (landingSettings.jadwal_tambahan?.length || 0) }} item</span>
+              </div>
               <div>
                 <span class="text-gray-500 dark:text-gray-400">Biaya Formulir:</span>
                 <span class="ml-2 font-semibold text-gray-900 dark:text-white">{{ formatCurrency(landingSettings.biaya_formulir) }}</span>
@@ -207,9 +211,68 @@
         <!-- Expanded Form -->
         <Transition name="accordion">
           <div v-show="isSettingsExpanded" class="border-t border-gray-200 dark:border-gray-700">
-            <div class="p-6">
+            <div class="p-6 space-y-6">
+              
+              <!-- Jadwal Pendaftaran Section -->
+              <div>
+                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                  <CalendarDays class="w-4 h-4" /> Jadwal Pendaftaran
+                </h3>
+                
+                <!-- Gelombang (dari data waves - read only) -->
+                <div v-if="waves.length" class="space-y-2 mb-3">
+                  <div
+                    v-for="wave in waves"
+                    :key="wave.id"
+                    class="flex items-center gap-2 px-3 py-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg text-sm"
+                  >
+                    <CalendarDays class="w-4 h-4 text-blue-500" />
+                    <span class="text-gray-700 dark:text-gray-300">{{ wave.name }}:</span>
+                    <span class="font-semibold text-gray-900 dark:text-white">{{ formatDate(wave.start_date) }} - {{ formatDate(wave.end_date) }}</span>
+                    <span class="ml-auto text-xs text-blue-600 dark:text-blue-400">(dari Gelombang)</span>
+                  </div>
+                </div>
+                <p v-else class="text-sm text-gray-500 dark:text-gray-400 mb-3 italic">Belum ada gelombang aktif</p>
+                
+                <!-- Custom Jadwal (editable) -->
+                <div class="space-y-2">
+                  <div
+                    v-for="(item, index) in landingSettings.jadwal_tambahan"
+                    :key="'jadwal-' + index"
+                    class="flex items-center gap-2"
+                  >
+                    <input
+                      v-model="landingSettings.jadwal_tambahan[index].label"
+                      type="text"
+                      placeholder="Label (misal: Pengumuman)"
+                      class="w-1/3 px-3 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    />
+                    <input
+                      v-model="landingSettings.jadwal_tambahan[index].value"
+                      type="text"
+                      placeholder="Tanggal (misal: 5 Juli 2025)"
+                      class="flex-1 px-3 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    />
+                    <button
+                      @click="removeJadwal(index)"
+                      class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                      title="Hapus"
+                    >
+                      <Trash2 class="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+                <button
+                  @click="addJadwal"
+                  class="mt-3 w-full px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:border-blue-500 hover:text-blue-600 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+                >
+                  <Plus class="w-4 h-4" />
+                  Tambah Jadwal Lainnya
+                </button>
+              </div>
+
               <!-- Biaya Section -->
-              <div class="mb-6">
+              <div>
                 <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
                   <Wallet class="w-4 h-4" /> Biaya
                 </h3>
@@ -323,8 +386,11 @@ const stats = ref({
 const landingSettings = ref({
   biaya_formulir: 250000,
   spp_bulanan: 850000,
-  persyaratan: []
+  persyaratan: [],
+  jadwal_tambahan: []
 })
+
+const waves = ref([])
 
 const fetchDashboard = async () => {
   try {
@@ -381,6 +447,38 @@ const formatCurrency = (amount) => {
   }).format(amount)
 }
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('id-ID', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  })
+}
+
+const fetchWaves = async () => {
+  try {
+    const response = await api.get('/yasmin-panel/ppdb/waves')
+    if (response.data.success) {
+      waves.value = response.data.data || []
+    }
+  } catch (error) {
+    console.error('Failed to fetch waves:', error)
+  }
+}
+
+const addJadwal = () => {
+  if (!landingSettings.value.jadwal_tambahan) {
+    landingSettings.value.jadwal_tambahan = []
+  }
+  landingSettings.value.jadwal_tambahan.push({ label: '', value: '' })
+}
+
+const removeJadwal = (index) => {
+  landingSettings.value.jadwal_tambahan.splice(index, 1)
+}
+
 const addPersyaratan = () => {
   landingSettings.value.persyaratan.push('')
 }
@@ -414,6 +512,7 @@ const getStatusClass = (status) => {
 onMounted(() => {
   fetchDashboard()
   fetchLandingSettings()
+  fetchWaves()
 })
 </script>
 
