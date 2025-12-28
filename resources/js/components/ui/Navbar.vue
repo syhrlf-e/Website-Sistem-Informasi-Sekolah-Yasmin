@@ -347,7 +347,7 @@ watch(
 
 const handleDokumenPPDB = () => {
   mobileMenuOpen.value = false
-  router.visit('/ppdb')
+  router.visit('/ppdb/landing')
 }
 </script>
 

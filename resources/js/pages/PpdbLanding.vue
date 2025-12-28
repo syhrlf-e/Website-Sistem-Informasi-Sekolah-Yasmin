@@ -152,6 +152,50 @@
       </div>
     </section>
 
+    <!-- Download Center Section -->
+    <section v-if="documents && documents.length > 0" class="py-16 px-6 bg-white dark:bg-gray-900">
+      <div class="container mx-auto max-w-6xl">
+        <div class="flex items-center gap-3 mb-8">
+          <div class="w-12 h-12 rounded-xl bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center">
+            <Download class="w-6 h-6 text-teal-600 dark:text-teal-400" />
+          </div>
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white font-poppins">
+              Dokumen & Unduhan
+            </h2>
+            <p class="text-gray-500 dark:text-gray-400 text-sm">Download berkas kelengkapan pendaftaran</p>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div
+            v-for="doc in documents"
+            :key="doc.id"
+            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-600 transition-colors"
+          >
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                <FileText class="w-5 h-5 text-red-600 dark:text-red-400" />
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900 dark:text-white">{{ doc.title }}</h4>
+                <p v-if="doc.description" class="text-sm text-gray-500 dark:text-gray-400">{{ doc.description }}</p>
+                <p class="text-xs text-gray-400 dark:text-gray-500">{{ formatFileSize(doc.file_size) }}</p>
+              </div>
+            </div>
+            <a
+              :href="`/storage/documents/${doc.file_name}`"
+              download
+              class="inline-flex items-center gap-2 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium transition-colors"
+            >
+              <Download class="w-4 h-4" />
+              Download
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8 px-6">
       <div class="container mx-auto max-w-6xl">
@@ -183,27 +227,36 @@
 
 <script setup>
 import { useHead } from '@vueuse/head'
-import { ArrowRight, Calendar, Facebook, FileText, Instagram, Search, Wallet, Youtube } from 'lucide-vue-next'
-import { computed } from 'vue'
+import { ArrowRight, Calendar, Download, Facebook, FileText, Instagram, Search, Wallet, Youtube } from 'lucide-vue-next'
 
-// Calculate academic year
-const currentYear = new Date().getFullYear()
-const academicYear = computed(() => {
-  const month = new Date().getMonth()
-  // If July or later, use current/next year
-  return month >= 6 ? `${currentYear}/${currentYear + 1}` : `${currentYear}/${currentYear + 1}`
+// Props from backend
+const props = defineProps({
+  documents: {
+    type: Array,
+    default: () => []
+  },
+  academicYear: {
+    type: String,
+    default: '2025/2026'
+  }
 })
 
 useHead({
-  title: 'PPDB - SMA Mutiara Insan Nusantara',
+  title: `PPDB ${props.academicYear} - SMA Mutiara Insan Nusantara`,
   meta: [
-    { name: 'description', content: 'Pendaftaran Peserta Didik Baru SMA Mutiara Insan Nusantara. Daftar sekarang!' }
+    { name: 'description', content: `Pendaftaran Peserta Didik Baru SMA Mutiara Insan Nusantara Tahun Ajaran ${props.academicYear}. Daftar sekarang!` }
   ]
 })
 
 const onImageError = (e) => {
-  // Fallback to gradient background if image not found
   e.target.style.display = 'none'
+}
+
+const formatFileSize = (bytes) => {
+  if (!bytes) return ''
+  const kb = bytes / 1024
+  if (kb < 1024) return `${kb.toFixed(1)} KB`
+  return `${(kb / 1024).toFixed(1)} MB`
 }
 </script>
 

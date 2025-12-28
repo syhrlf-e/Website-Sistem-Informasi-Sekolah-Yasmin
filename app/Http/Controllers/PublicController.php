@@ -9,6 +9,8 @@ use App\Models\Gallery;
 use App\Models\Testimonial;
 use App\Models\Document;
 use App\Models\Guru;
+use App\Models\PpdbWave;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -338,14 +340,33 @@ class PublicController extends Controller
     }
 
     /**
-     * PPDB Landing Page
+     * PPDB Landing Page (All-in-One)
      */
     public function ppdbLanding()
     {
+        // Fetch documents for Download Center
+        $documents = Document::where('is_active', true)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->map(fn($doc) => [
+                'id' => $doc->id,
+                'title' => $doc->title,
+                'description' => $doc->description,
+                'file_name' => $doc->file_name,
+                'file_type' => $doc->file_type,
+                'file_size' => $doc->file_size,
+            ]);
+
+        // Get active wave info
+        $activeWave = PpdbWave::open()->first();
+        $academicYear = $activeWave ? $activeWave->academic_year : (date('Y') . '/' . (date('Y') + 1));
+
         return Inertia::render('PpdbLanding', [
+            'documents' => $documents,
+            'academicYear' => $academicYear,
             'meta' => [
-                'title' => 'PPDB - SMA Mutiara Insan Nusantara',
-                'description' => 'Pendaftaran Peserta Didik Baru SMA Mutiara Insan Nusantara',
+                'title' => 'PPDB ' . $academicYear . ' - SMA Mutiara Insan Nusantara',
+                'description' => 'Pendaftaran Peserta Didik Baru SMA Mutiara Insan Nusantara Tahun Ajaran ' . $academicYear,
             ],
         ]);
     }
