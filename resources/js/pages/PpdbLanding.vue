@@ -61,21 +61,15 @@
               <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 font-poppins">Jadwal Pendaftaran</h3>
             </div>
             <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Gelombang 1: <strong>1 Maret - 30 April 2025</strong></span>
+              <!-- Waves dari database -->
+              <li v-for="wave in landingInfo.waves" :key="wave.id" class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
+                <span>{{ wave.name }}: <strong>{{ formatDateRange(wave.start_date, wave.end_date) }}</strong></span>
               </li>
-              <li class="flex items-start gap-2">
+              <!-- Jadwal tambahan dari settings -->
+              <li v-for="(jadwal, index) in landingInfo.jadwal_tambahan" :key="'jadwal-' + index" class="flex items-start gap-2">
                 <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Gelombang 2: <strong>1 Mei - 30 Juni 2025</strong></span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Pengumuman Seleksi: <strong>5 Juli 2025</strong></span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Daftar Ulang: <strong>6 - 12 Juli 2025</strong></span>
+                <span>{{ jadwal.label }}: <strong>{{ jadwal.value }}</strong></span>
               </li>
             </ul>
           </div>
@@ -201,7 +195,9 @@ const landingInfo = ref({
     'Pas Foto Terbaru (4x6)',
     'Surat Keterangan Lulus (SKL)',
     'Sertifikat Prestasi (Jika Ada)'
-  ]
+  ],
+  waves: [],
+  jadwal_tambahan: []
 })
 
 const waves = ref([])
@@ -213,27 +209,11 @@ const fetchLandingInfo = async () => {
     const data = await response.json()
     if (data.success) {
       landingInfo.value = data.data
+      // Also populate waves for uang pangkal display
+      waves.value = data.data.waves || []
     }
   } catch (error) {
     console.error('Failed to fetch landing info:', error)
-  }
-}
-
-// Fetch waves for uang pangkal display
-const fetchWaves = async () => {
-  try {
-    const response = await fetch('/api/ppdb/wave/active')
-    const data = await response.json()
-    if (data.success && data.data) {
-      // For public display, we fetch all waves with fees
-      const allWavesResponse = await fetch('/api/ppdb/landing-info')
-      // Just use the active wave for now
-      if (data.data.fee) {
-        waves.value = [data.data]
-      }
-    }
-  } catch (error) {
-    console.error('Failed to fetch waves:', error)
   }
 }
 
@@ -261,9 +241,21 @@ const formatCurrency = (amount) => {
   }).format(amount)
 }
 
+const formatDateRange = (startDate, endDate) => {
+  const formatDate = (dateStr) => {
+    if (!dateStr) return ''
+    const date = new Date(dateStr)
+    return date.toLocaleDateString('id-ID', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+  }
+  return `${formatDate(startDate)} - ${formatDate(endDate)}`
+}
+
 onMounted(() => {
   fetchLandingInfo()
-  fetchWaves()
 })
 </script>
 

@@ -268,6 +268,11 @@ class AdminPpdbController extends Controller
         $persyaratan = \App\Models\Setting::get('ppdb_persyaratan');
         $jadwalTambahan = \App\Models\Setting::get('ppdb_jadwal_tambahan');
 
+        // Get all waves for jadwal display
+        $waves = \App\Models\PpdbWave::where('is_active', true)
+            ->orderBy('start_date', 'asc')
+            ->get(['id', 'name', 'start_date', 'end_date', 'fee']);
+
         // Parse persyaratan JSON, fallback to default if empty
         $persyaratanList = $persyaratan ? json_decode($persyaratan, true) : [
             'Scan Rapor Semester 1-5 (SMP/MTs)',
@@ -286,7 +291,8 @@ class AdminPpdbController extends Controller
                 'biaya_formulir' => $biayaFormulir,
                 'spp_bulanan' => $sppBulanan,
                 'persyaratan' => $persyaratanList,
-                'jadwal_tambahan' => $jadwalTambahanList
+                'jadwal_tambahan' => $jadwalTambahanList,
+                'waves' => $waves
             ]
         ]);
     }
