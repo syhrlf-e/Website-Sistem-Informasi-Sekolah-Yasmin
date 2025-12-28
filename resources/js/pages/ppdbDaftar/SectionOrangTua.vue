@@ -14,7 +14,7 @@
           <input v-model="modelValue.nama_ayah" type="text" class="form-input" placeholder="Nama lengkap ayah" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Ayah</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Ayah <span class="text-red-500">*</span></label>
           <input 
             :value="modelValue.nik_ayah" 
             @input="handleNik($event, 'nik_ayah')" 
@@ -45,7 +45,7 @@
           </select>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP <span class="text-red-500">*</span></label>
           <input 
             :value="modelValue.no_hp_ayah" 
             @input="handlePhone($event, 'no_hp_ayah')" 
@@ -71,7 +71,7 @@
           <input v-model="modelValue.nama_ibu" type="text" class="form-input" placeholder="Nama lengkap ibu" />
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Ibu</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Ibu <span class="text-red-500">*</span></label>
           <input 
             :value="modelValue.nik_ibu" 
             @input="handleNik($event, 'nik_ibu')" 
@@ -102,7 +102,7 @@
           </select>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP <span class="text-red-500">*</span></label>
           <input 
             :value="modelValue.no_hp_ibu" 
             @input="handlePhone($event, 'no_hp_ibu')" 

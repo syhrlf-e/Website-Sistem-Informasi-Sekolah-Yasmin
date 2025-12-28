@@ -160,10 +160,10 @@ const totalSections = computed(() => sections.value.length)
 
 const requiredFields = {
   identitas: ['nama_lengkap', 'nik', 'nisn', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'anak_ke', 'jumlah_saudara', 'no_hp', 'email'],
-  alamat: ['alamat_lengkap', 'rt', 'rw', 'kelurahan', 'kecamatan', 'kota_kabupaten', 'provinsi'],
+  alamat: ['alamat_lengkap', 'rt', 'rw', 'kelurahan', 'kecamatan', 'kota_kabupaten', 'provinsi', 'kode_pos'],
   pendidikan: ['asal_sekolah', 'npsn_sekolah', 'tahun_lulus', 'jurusan_pilihan'],
-  kesehatan: [],
-  orangtua: ['nama_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'nama_ibu', 'pekerjaan_ibu', 'pendidikan_ibu'],
+  kesehatan: ['golongan_darah', 'tinggi_badan', 'berat_badan'],
+  orangtua: ['nama_ayah', 'nik_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'no_hp_ayah', 'nama_ibu', 'nik_ibu', 'pekerjaan_ibu', 'pendidikan_ibu', 'no_hp_ibu'],
   wali: []
 }
 
@@ -186,7 +186,7 @@ const progressPercent = computed(() => {
 })
 
 const isFormValid = computed(() => {
-  return ['identitas', 'alamat', 'pendidikan', 'orangtua'].every(id => isSectionComplete(id))
+  return ['identitas', 'alamat', 'pendidikan', 'kesehatan', 'orangtua'].every(id => isSectionComplete(id))
 })
 
 /**
