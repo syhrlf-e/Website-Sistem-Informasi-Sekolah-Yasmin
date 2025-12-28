@@ -273,6 +273,9 @@ class AdminPpdbController extends Controller
             ->orderBy('start_date', 'asc')
             ->get(['id', 'name', 'start_date', 'end_date', 'fee']);
 
+        // Get currently open wave for biaya display (is_active + within date range)
+        $activeWave = \App\Models\PpdbWave::open()->first(['id', 'name', 'fee']);
+
         // Parse persyaratan JSON, fallback to default if empty
         $persyaratanList = $persyaratan ? json_decode($persyaratan, true) : [
             'Scan Rapor Semester 1-5 (SMP/MTs)',
@@ -292,7 +295,8 @@ class AdminPpdbController extends Controller
                 'spp_bulanan' => $sppBulanan,
                 'persyaratan' => $persyaratanList,
                 'jadwal_tambahan' => $jadwalTambahanList,
-                'waves' => $waves
+                'waves' => $waves,
+                'active_wave' => $activeWave
             ]
         ]);
     }

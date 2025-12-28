@@ -103,9 +103,9 @@
                 <span>Biaya Formulir:</span>
                 <span class="font-bold">{{ formatCurrency(landingInfo.biaya_formulir) }}</span>
               </div>
-              <div v-for="(wave, index) in waves" :key="wave.id" class="flex justify-between">
-                <span>Uang Pangkal ({{ wave.name }}):</span>
-                <span class="font-bold">{{ formatCurrency(wave.fee) }}</span>
+              <div v-if="landingInfo.active_wave" class="flex justify-between">
+                <span>Uang Pangkal ({{ landingInfo.active_wave.name }}):</span>
+                <span class="font-bold">{{ formatCurrency(landingInfo.active_wave.fee) }}</span>
               </div>
               <div class="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-600">
                 <span>SPP Bulanan:</span>
