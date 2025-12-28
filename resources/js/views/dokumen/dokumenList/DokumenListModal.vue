@@ -11,7 +11,7 @@
         class="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
         @click.self="$emit('close')"
       >
-        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full border border-gray-200 dark:border-gray-700 shadow-2xl">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full border border-gray-200 dark:border-gray-700 shadow-2xl" @click.stop>
           <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white font-poppins">
               {{ editMode ? 'Edit Dokumen' : 'Upload Dokumen Baru' }}
@@ -35,16 +35,17 @@
                 class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
               />
             </div>
-            <div v-if="!editMode">
+            <div>
               <label class="block text-sm font-semibold text-gray-900 dark:text-white mb-2">
-                File <span class="text-red-500">*</span>
+                File <span v-if="!editMode" class="text-red-500">*</span>
+                <span v-else class="text-xs text-gray-500 font-normal">(opsional - untuk mengganti file)</span>
               </label>
               <input
                 ref="fileInput"
                 type="file"
                 accept=".pdf,.doc,.docx,.xls,.xlsx"
                 @change="handleFileUpload"
-                required
+                :required="!editMode"
                 class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-50 dark:file:bg-blue-900/20 file:text-blue-700 dark:file:text-blue-400 file:font-semibold"
               />
               <p class="mt-1 text-xs text-gray-500">PDF, Word, Excel. Max: 10MB</p>
