@@ -90,6 +90,7 @@ Route::prefix('ppdb')->group(function () {
     Route::post('/register', [PpdbRegistrationController::class, 'store'])
         ->middleware('throttle:3,1'); // Max 3 registrations per minute per IP
     Route::post('/check-status', [PpdbRegistrationController::class, 'checkStatus']);
+    Route::get('/landing-info', [AdminPpdbController::class, 'getLandingSettings']); // Public landing info
 });
 
 // Sekolah Search API (proxy to Kemendikdasmen)
@@ -232,6 +233,10 @@ Route::middleware(['auth:sanctum', 'is_admin_api'])->prefix('yasmin-panel')->gro
         // Dashboard
         Route::get('/dashboard', [AdminPpdbController::class, 'dashboard']);
         Route::get('/status-options', [AdminPpdbController::class, 'getStatusOptions']);
+
+        // Landing Page Settings
+        Route::get('/landing-settings', [AdminPpdbController::class, 'getLandingSettings']);
+        Route::post('/landing-settings', [AdminPpdbController::class, 'updateLandingSettings']);
 
         // Registrations (Pendaftar)
         Route::get('/registrations', [AdminPpdbController::class, 'index']);

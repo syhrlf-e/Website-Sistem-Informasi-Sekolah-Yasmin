@@ -147,16 +147,111 @@
           </router-link>
         </div>
       </div>
+
+      <!-- Landing Page Settings Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+              <Settings class="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white font-poppins">
+                Pengaturan Info Landing Page
+              </h2>
+              <p class="text-xs text-gray-500 dark:text-gray-400">Biaya & persyaratan yang ditampilkan di halaman PPDB</p>
+            </div>
+          </div>
+          <button
+            @click="saveLandingSettings"
+            :disabled="isSaving"
+            class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-medium text-sm transition-all disabled:opacity-50"
+          >
+            {{ isSaving ? 'Menyimpan...' : 'Simpan' }}
+          </button>
+        </div>
+
+        <!-- Biaya Section -->
+        <div class="mb-6">
+          <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+            <Wallet class="w-4 h-4" /> Biaya
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Biaya Formulir</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">Rp</span>
+                <input
+                  v-model="landingSettings.biaya_formulir"
+                  type="number"
+                  class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">SPP Bulanan</label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">Rp</span>
+                <input
+                  v-model="landingSettings.spp_bulanan"
+                  type="number"
+                  class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            * Uang Pangkal per gelombang diatur di halaman <router-link to="/yasmin-panel/ppdb/gelombang" class="text-blue-600 hover:underline">Kelola Gelombang</router-link>
+          </p>
+        </div>
+
+        <!-- Persyaratan Section -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+            <FileText class="w-4 h-4" /> Persyaratan
+          </h3>
+          <div class="space-y-2">
+            <div
+              v-for="(item, index) in landingSettings.persyaratan"
+              :key="index"
+              class="flex items-center gap-2"
+            >
+              <span class="text-gray-400 text-sm w-6">{{ index + 1 }}.</span>
+              <input
+                v-model="landingSettings.persyaratan[index]"
+                type="text"
+                class="flex-1 px-3 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              />
+              <button
+                @click="removePersyaratan(index)"
+                class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                title="Hapus"
+              >
+                <Trash2 class="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+          <button
+            @click="addPersyaratan"
+            class="mt-3 w-full px-4 py-2 border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:border-blue-500 hover:text-blue-600 rounded-xl text-sm transition-colors flex items-center justify-center gap-2"
+          >
+            <Plus class="w-4 h-4" />
+            Tambah Item Persyaratan
+          </button>
+        </div>
+      </div>
     </template>
   </div>
 </template>
 
 <script setup>
-import { CalendarDays, ChevronRight, Clock, CheckCircle, UserCheck, XCircle, Users, UserPlus } from 'lucide-vue-next'
+import { CalendarDays, ChevronRight, Clock, CheckCircle, UserCheck, XCircle, Users, UserPlus, Settings, Wallet, FileText, Trash2, Plus } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
 
 const isLoading = ref(true)
+const isSaving = ref(false)
+
 const stats = ref({
   total: 0,
   by_status: {
@@ -171,6 +266,12 @@ const stats = ref({
   recent: []
 })
 
+const landingSettings = ref({
+  biaya_formulir: 250000,
+  spp_bulanan: 850000,
+  persyaratan: []
+})
+
 const fetchDashboard = async () => {
   try {
     const response = await api.get('/yasmin-panel/ppdb/dashboard')
@@ -182,6 +283,40 @@ const fetchDashboard = async () => {
   } finally {
     isLoading.value = false
   }
+}
+
+const fetchLandingSettings = async () => {
+  try {
+    const response = await api.get('/yasmin-panel/ppdb/landing-settings')
+    if (response.data.success) {
+      landingSettings.value = response.data.data
+    }
+  } catch (error) {
+    console.error('Failed to fetch landing settings:', error)
+  }
+}
+
+const saveLandingSettings = async () => {
+  isSaving.value = true
+  try {
+    const response = await api.post('/yasmin-panel/ppdb/landing-settings', landingSettings.value)
+    if (response.data.success) {
+      alert('Pengaturan berhasil disimpan!')
+    }
+  } catch (error) {
+    console.error('Failed to save landing settings:', error)
+    alert('Gagal menyimpan pengaturan')
+  } finally {
+    isSaving.value = false
+  }
+}
+
+const addPersyaratan = () => {
+  landingSettings.value.persyaratan.push('')
+}
+
+const removePersyaratan = (index) => {
+  landingSettings.value.persyaratan.splice(index, 1)
 }
 
 const getStatusLabel = (status) => {
@@ -208,6 +343,7 @@ const getStatusClass = (status) => {
 
 onMounted(() => {
   fetchDashboard()
+  fetchLandingSettings()
 })
 </script>
 

@@ -89,25 +89,9 @@
               <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400 font-poppins">Persyaratan</h3>
             </div>
             <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-              <li class="flex items-start gap-2">
+              <li v-for="(item, index) in landingInfo.persyaratan" :key="index" class="flex items-start gap-2">
                 <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Scan Rapor Semester 1-5 (SMP/MTs)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Scan Akta Kelahiran & Kartu Keluarga</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Pas Foto Terbaru (4x6)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Surat Keterangan Lulus (SKL)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 flex-shrink-0"></span>
-                <span>Sertifikat Prestasi (Jika Ada)</span>
+                <span>{{ item }}</span>
               </li>
             </ul>
           </div>
@@ -123,19 +107,15 @@
             <div class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
               <div class="flex justify-between">
                 <span>Biaya Formulir:</span>
-                <span class="font-bold">Rp 250.000</span>
+                <span class="font-bold">{{ formatCurrency(landingInfo.biaya_formulir) }}</span>
               </div>
-              <div class="flex justify-between">
-                <span>Uang Pangkal (Gel. 1):</span>
-                <span class="font-bold">Rp 8.500.000</span>
-              </div>
-              <div class="flex justify-between">
-                <span>Uang Pangkal (Gel. 2):</span>
-                <span class="font-bold">Rp 10.000.000</span>
+              <div v-for="(wave, index) in waves" :key="wave.id" class="flex justify-between">
+                <span>Uang Pangkal ({{ wave.name }}):</span>
+                <span class="font-bold">{{ formatCurrency(wave.fee) }}</span>
               </div>
               <div class="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-600">
                 <span>SPP Bulanan:</span>
-                <span class="font-bold">Rp 850.000</span>
+                <span class="font-bold">{{ formatCurrency(landingInfo.spp_bulanan) }}</span>
               </div>
             </div>
           </div>
@@ -195,6 +175,7 @@
 <script setup>
 import { useHead } from '@vueuse/head'
 import { ArrowRight, Calendar, Download, FileText, Search, Wallet } from 'lucide-vue-next'
+import { onMounted, ref } from 'vue'
 import Navbar from '../components/ui/Navbar.vue'
 import Footer from '../components/ui/Footer.vue'
 
@@ -210,6 +191,52 @@ const props = defineProps({
   }
 })
 
+// Reactive state
+const landingInfo = ref({
+  biaya_formulir: 250000,
+  spp_bulanan: 850000,
+  persyaratan: [
+    'Scan Rapor Semester 1-5 (SMP/MTs)',
+    'Scan Akta Kelahiran & Kartu Keluarga',
+    'Pas Foto Terbaru (4x6)',
+    'Surat Keterangan Lulus (SKL)',
+    'Sertifikat Prestasi (Jika Ada)'
+  ]
+})
+
+const waves = ref([])
+
+// Fetch landing info from API
+const fetchLandingInfo = async () => {
+  try {
+    const response = await fetch('/api/ppdb/landing-info')
+    const data = await response.json()
+    if (data.success) {
+      landingInfo.value = data.data
+    }
+  } catch (error) {
+    console.error('Failed to fetch landing info:', error)
+  }
+}
+
+// Fetch waves for uang pangkal display
+const fetchWaves = async () => {
+  try {
+    const response = await fetch('/api/ppdb/wave/active')
+    const data = await response.json()
+    if (data.success && data.data) {
+      // For public display, we fetch all waves with fees
+      const allWavesResponse = await fetch('/api/ppdb/landing-info')
+      // Just use the active wave for now
+      if (data.data.fee) {
+        waves.value = [data.data]
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch waves:', error)
+  }
+}
+
 useHead({
   title: `PPDB ${props.academicYear} - SMA Mutiara Insan Nusantara`,
   meta: [
@@ -223,6 +250,21 @@ const formatFileSize = (bytes) => {
   if (kb < 1024) return `${kb.toFixed(1)} KB`
   return `${(kb / 1024).toFixed(1)} MB`
 }
+
+const formatCurrency = (amount) => {
+  if (!amount) return 'Rp 0'
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount)
+}
+
+onMounted(() => {
+  fetchLandingInfo()
+  fetchWaves()
+})
 </script>
 
 <style scoped>

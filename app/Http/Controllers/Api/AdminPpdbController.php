@@ -257,4 +257,61 @@ class AdminPpdbController extends Controller
             ]
         ]);
     }
+
+    /**
+     * Get PPDB landing page settings
+     */
+    public function getLandingSettings()
+    {
+        $biayaFormulir = \App\Models\Setting::get('ppdb_biaya_formulir', '250000');
+        $sppBulanan = \App\Models\Setting::get('ppdb_spp_bulanan', '850000');
+        $persyaratan = \App\Models\Setting::get('ppdb_persyaratan');
+
+        // Parse persyaratan JSON, fallback to default if empty
+        $persyaratanList = $persyaratan ? json_decode($persyaratan, true) : [
+            'Scan Rapor Semester 1-5 (SMP/MTs)',
+            'Scan Akta Kelahiran & Kartu Keluarga',
+            'Pas Foto Terbaru (4x6)',
+            'Surat Keterangan Lulus (SKL)',
+            'Sertifikat Prestasi (Jika Ada)'
+        ];
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'biaya_formulir' => $biayaFormulir,
+                'spp_bulanan' => $sppBulanan,
+                'persyaratan' => $persyaratanList
+            ]
+        ]);
+    }
+
+    /**
+     * Update PPDB landing page settings
+     */
+    public function updateLandingSettings(Request $request)
+    {
+        $validated = $request->validate([
+            'biaya_formulir' => 'required|numeric|min:0',
+            'spp_bulanan' => 'required|numeric|min:0',
+            'persyaratan' => 'required|array',
+            'persyaratan.*' => 'required|string|max:255',
+        ]);
+
+        \App\Models\Setting::set('ppdb_biaya_formulir', $validated['biaya_formulir']);
+        \App\Models\Setting::set('ppdb_spp_bulanan', $validated['spp_bulanan']);
+        \App\Models\Setting::set('ppdb_persyaratan', json_encode($validated['persyaratan']));
+
+        $this->logUpdate('PpdbSettings', (object) ['id' => 1, 'name' => 'Landing Settings'], []);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengaturan berhasil disimpan!',
+            'data' => [
+                'biaya_formulir' => $validated['biaya_formulir'],
+                'spp_bulanan' => $validated['spp_bulanan'],
+                'persyaratan' => $validated['persyaratan']
+            ]
+        ]);
+    }
 }
