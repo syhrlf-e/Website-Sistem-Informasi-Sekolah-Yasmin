@@ -46,7 +46,14 @@
     <!-- Tempat Lahir -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tempat Lahir <span class="text-red-500">*</span></label>
-      <input v-model="modelValue.tempat_lahir" type="text" class="form-input" placeholder="Kota/Kabupaten" />
+      <input 
+        v-model="modelValue.tempat_lahir" 
+        @keypress="onlyLetters"
+        @input="handleTempatLahir"
+        type="text" 
+        class="form-input" 
+        placeholder="Kota/Kabupaten" 
+      />
     </div>
 
     <!-- Tanggal Lahir -->
@@ -165,6 +172,20 @@ const onlyNumbers = (event) => {
   if (!/[0-9]/.test(char)) {
     event.preventDefault()
   }
+}
+
+// Block non-letter keypress (allow letters and space only)
+const onlyLetters = (event) => {
+  const char = String.fromCharCode(event.which || event.keyCode)
+  if (!/[a-zA-Z\s]/.test(char)) {
+    event.preventDefault()
+  }
+}
+
+// Handle Tempat Lahir - only allow letters and spaces
+const handleTempatLahir = (event) => {
+  const value = event.target.value.replace(/[^a-zA-Z\s]/g, '')
+  props.modelValue.tempat_lahir = value
 }
 
 // Handle NIK/NISN - only allow numbers
