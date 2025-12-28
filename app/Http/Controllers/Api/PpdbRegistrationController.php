@@ -100,6 +100,17 @@ class PpdbRegistrationController extends Controller
 
         $registration = PpdbRegistration::create($data);
 
+        // Send confirmation email if email is provided
+        if ($registration->email) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($registration->email)
+                    ->send(new \App\Mail\PpdbRegistrationMail($registration));
+            } catch (\Exception $e) {
+                // Log error but don't fail registration
+                \Log::warning('Failed to send PPDB registration email: ' . $e->getMessage());
+            }
+        }
+
         // Return success with credentials
         return response()->json([
             'success' => true,

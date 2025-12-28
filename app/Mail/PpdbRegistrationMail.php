@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Mail;
+
+use App\Models\PpdbRegistration;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Queue\SerializesModels;
+
+class PpdbRegistrationMail extends Mailable implements ShouldQueue
+{
+    use Queueable, SerializesModels;
+
+    public PpdbRegistration $registration;
+
+    /**
+     * Create a new message instance.
+     */
+    public function __construct(PpdbRegistration $registration)
+    {
+        $this->registration = $registration;
+    }
+
+    /**
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            subject: 'Pendaftaran PPDB Berhasil - ' . $this->registration->registration_number,
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            markdown: 'emails.ppdb.registration',
+            with: [
+                'registration' => $this->registration,
+                'url' => config('app.url') . '/ppdb/status',
+            ],
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        return [];
+    }
+}

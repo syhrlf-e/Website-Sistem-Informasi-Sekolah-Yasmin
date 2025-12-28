@@ -157,6 +157,16 @@ class AdminPpdbController extends Controller
 
         $this->logUpdate('PpdbRegistration', $registration, ['status' => $oldStatus]);
 
+        // Send email notification if email exists and status actually changed
+        if ($registration->email && $oldStatus !== $validated['status']) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($registration->email)
+                    ->send(new \App\Mail\PpdbStatusUpdateMail($registration, $oldStatus));
+            } catch (\Exception $e) {
+                \Log::warning('Failed to send PPDB status update email: ' . $e->getMessage());
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Status berhasil diupdate!',
