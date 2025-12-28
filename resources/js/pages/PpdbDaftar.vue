@@ -284,10 +284,17 @@ const submitForm = async () => {
       })
       window.location.href = `/ppdb/sukses?${params.toString()}`
     } else {
+      console.error('Validation errors:', data.errors)
       errors.value = data.errors || {}
+      
+      // Show alert with error message
+      if (data.message) {
+        alert(data.message + '\n\nDetail error lihat di console (F12)')
+      }
+      
       // Find first section with error and open it
       for (const section of sections.value) {
-        const sectionFields = Object.keys(requiredFields[section.id] || {})
+        const sectionFields = requiredFields[section.id] || []
         if (sectionFields.some(f => errors.value[f])) {
           openSection.value = section.id
           break
@@ -296,6 +303,7 @@ const submitForm = async () => {
     }
   } catch (error) {
     console.error('Error submitting form:', error)
+    alert('Terjadi kesalahan saat mengirim pendaftaran. Silakan coba lagi.')
   } finally {
     isSubmitting.value = false
   }
