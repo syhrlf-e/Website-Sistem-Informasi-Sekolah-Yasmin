@@ -461,7 +461,8 @@ const fetchWaves = async () => {
   try {
     const response = await api.get('/yasmin-panel/ppdb/waves')
     if (response.data.success) {
-      waves.value = response.data.data || []
+      // Response is paginated, get data from response.data.data.data
+      waves.value = response.data.data?.data || response.data.data || []
     }
   } catch (error) {
     console.error('Failed to fetch waves:', error)
