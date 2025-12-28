@@ -31,3 +31,7 @@ database_backup.sql
 
 # Test files
 test-*.php
+
+# Clockwork debugging
+/storage/clockwork
+clockwork.db
