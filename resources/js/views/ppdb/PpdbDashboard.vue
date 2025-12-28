@@ -13,7 +13,7 @@
 
     <template v-else>
       <!-- Stats Cards (matching main dashboard style) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         <!-- Total Pendaftar -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
           <div class="flex items-center justify-between mb-4">
@@ -36,6 +36,18 @@
           </div>
           <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.by_status.pending }}</h3>
           <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Menunggu Verifikasi</p>
+        </div>
+
+        <!-- Dalam Seleksi -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
+              <UserCheck class="w-6 h-6 text-purple-600 dark:text-purple-400" />
+            </div>
+            <span class="text-xs font-medium text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full">Proses</span>
+          </div>
+          <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.by_status.selection }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Dalam Seleksi</p>
         </div>
 
         <!-- Diterima -->
@@ -140,7 +152,7 @@
 </template>
 
 <script setup>
-import { CalendarDays, ChevronRight, Clock, CheckCircle, XCircle, Users, UserPlus } from 'lucide-vue-next'
+import { CalendarDays, ChevronRight, Clock, CheckCircle, UserCheck, XCircle, Users, UserPlus } from 'lucide-vue-next'
 import { onMounted, ref } from 'vue'
 import api from '@/services/api'
 
