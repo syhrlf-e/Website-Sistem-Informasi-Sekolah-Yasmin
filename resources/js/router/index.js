@@ -138,6 +138,32 @@ const routes = [
         meta: { title: 'Yasmin Panel | Kelola User' }
       },
 
+      // PPDB Routes
+      {
+        path: 'ppdb',
+        name: 'PpdbDashboard',
+        component: () => import('../views/ppdb/PpdbDashboard.vue'),
+        meta: { title: 'Yasmin Panel | PPDB Dashboard' }
+      },
+      {
+        path: 'ppdb/pendaftar',
+        name: 'PpdbPendaftarList',
+        component: () => import('../views/ppdb/PpdbPendaftarList.vue'),
+        meta: { title: 'Yasmin Panel | Pendaftar PPDB' }
+      },
+      {
+        path: 'ppdb/pendaftar/:id',
+        name: 'PpdbPendaftarDetail',
+        component: () => import('../views/ppdb/PpdbPendaftarDetail.vue'),
+        meta: { title: 'Yasmin Panel | Detail Pendaftar PPDB' }
+      },
+      {
+        path: 'ppdb/gelombang',
+        name: 'PpdbGelombangList',
+        component: () => import('../views/ppdb/PpdbGelombangList.vue'),
+        meta: { title: 'Yasmin Panel | Gelombang PPDB' }
+      },
+
       {
         path: 'pengumuman',
         name: 'PengumumanList',

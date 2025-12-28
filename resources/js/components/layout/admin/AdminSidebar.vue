@@ -73,8 +73,14 @@
         :badge="pendingCount"
       />
 
-      <!-- TODO: PPDB Menu akan ditambahkan di Phase 3 -->
       <!-- PPDB Submenu - Visible for admin_ppdb, super_admin, admin -->
+      <SidebarSubmenu
+        :icon="UserPlus"
+        label="PPDB"
+        :items="ppdbItems"
+        :is-active="isPpdbActive"
+        :default-open="isAdminPpdb"
+      />
 
       <SidebarMenuItem
         to="/yasmin-panel/users"
@@ -113,6 +119,7 @@
 
 <script setup>
 import {
+  CalendarDays,
   ClipboardList,
   FileText,
   GraduationCap,
@@ -125,6 +132,7 @@ import {
   Newspaper,
   Target,
   Trophy,
+  UserPlus,
   Users
 } from 'lucide-vue-next'
 import { computed } from 'vue'
@@ -178,6 +186,19 @@ const isKontenActive = computed(() => {
     '/yasmin-panel/prestasi'
   ]
   return kontenRoutes.some((path) => route.path.startsWith(path))
+})
+
+/**
+ * PPDB menu items
+ */
+const ppdbItems = [
+  { to: '/yasmin-panel/ppdb', icon: LayoutDashboard, label: 'Dashboard PPDB' },
+  { to: '/yasmin-panel/ppdb/pendaftar', icon: ClipboardList, label: 'Data Pendaftar' },
+  { to: '/yasmin-panel/ppdb/gelombang', icon: CalendarDays, label: 'Gelombang' }
+]
+
+const isPpdbActive = computed(() => {
+  return route.path.startsWith('/yasmin-panel/ppdb')
 })
 </script>
 
