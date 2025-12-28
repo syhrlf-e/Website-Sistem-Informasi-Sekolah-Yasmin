@@ -5,9 +5,8 @@
 -->
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
-    <div class="max-w-lg mx-auto">
-      <BackButton to="/ppdb" text="Kembali ke Info PPDB" variant="ghost" />
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4 flex items-center justify-center">
+    <div class="max-w-lg w-full">
 
       <!-- Header -->
       <div class="text-center mb-8">
@@ -62,7 +61,7 @@
 
       <!-- Result -->
       <Transition name="fade">
-        <div v-if="result" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+        <div v-if="result" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
           <div class="text-center mb-6">
             <div
               :class="statusColors[result.status]?.bg"
@@ -111,6 +110,13 @@
           </div>
         </div>
       </Transition>
+
+      <!-- Back Link -->
+      <div class="text-center">
+        <a href="/ppdb/landing" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
+          ← Kembali ke halaman PPDB
+        </a>
+      </div>
     </div>
   </div>
 </template>

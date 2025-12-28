@@ -1,6 +1,6 @@
 <!--
   @component SectionIdentitas
-  @description Form section for personal identity data
+  @description Form section for personal identity data with validations
 -->
 
 <template>
@@ -15,14 +15,30 @@
     <!-- NIK -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK <span class="text-red-500">*</span></label>
-      <input v-model="modelValue.nik" type="text" maxlength="16" class="form-input" placeholder="16 digit NIK" />
+      <input 
+        :value="modelValue.nik" 
+        @input="handleNik($event, 'nik', 16)" 
+        type="text" 
+        inputmode="numeric"
+        maxlength="16" 
+        class="form-input" 
+        placeholder="16 digit NIK" 
+      />
       <p v-if="errors?.nik" class="text-red-500 text-xs mt-1">{{ errors.nik[0] }}</p>
     </div>
 
     <!-- NISN -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NISN</label>
-      <input v-model="modelValue.nisn" type="text" maxlength="10" class="form-input" placeholder="10 digit NISN" />
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NISN <span class="text-red-500">*</span></label>
+      <input 
+        :value="modelValue.nisn" 
+        @input="handleNik($event, 'nisn', 10)" 
+        type="text" 
+        inputmode="numeric"
+        maxlength="10" 
+        class="form-input" 
+        placeholder="10 digit NISN" 
+      />
     </div>
 
     <!-- Tempat Lahir -->
@@ -34,7 +50,7 @@
     <!-- Tanggal Lahir -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tanggal Lahir <span class="text-red-500">*</span></label>
-      <input v-model="modelValue.tanggal_lahir" type="date" class="form-input" />
+      <input v-model="modelValue.tanggal_lahir" type="date" class="form-input" :max="maxBirthDate" />
     </div>
 
     <!-- Jenis Kelamin -->
@@ -63,26 +79,48 @@
 
     <!-- Anak Ke -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Anak Ke</label>
-      <input v-model.number="modelValue.anak_ke" type="number" min="1" class="form-input" />
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Anak Ke <span class="text-red-500">*</span></label>
+      <select v-model.number="modelValue.anak_ke" class="form-input">
+        <option value="">Pilih</option>
+        <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+      </select>
     </div>
 
     <!-- Jumlah Saudara -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jumlah Saudara</label>
-      <input v-model.number="modelValue.jumlah_saudara" type="number" min="0" class="form-input" />
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jumlah Saudara <span class="text-red-500">*</span></label>
+      <select v-model.number="modelValue.jumlah_saudara" class="form-input">
+        <option value="">Pilih</option>
+        <option v-for="n in 11" :key="n - 1" :value="n - 1">{{ n - 1 }}</option>
+      </select>
     </div>
 
     <!-- No HP -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP/WhatsApp <span class="text-red-500">*</span></label>
-      <input v-model="modelValue.no_hp" type="tel" class="form-input" placeholder="08xxxxxxxxxx" />
+      <input 
+        :value="modelValue.no_hp" 
+        @input="handlePhone" 
+        type="tel" 
+        inputmode="numeric"
+        maxlength="13" 
+        class="form-input" 
+        placeholder="08xxxxxxxxxx" 
+      />
     </div>
 
     <!-- Email -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-      <input v-model="modelValue.email" type="email" class="form-input" placeholder="email@example.com" />
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email <span class="text-red-500">*</span></label>
+      <input 
+        v-model="modelValue.email" 
+        type="email" 
+        class="form-input" 
+        :class="{ 'border-red-500': emailError }"
+        placeholder="email@gmail.com" 
+        @blur="validateEmail"
+      />
+      <p v-if="emailError" class="text-red-500 text-xs mt-1">{{ emailError }}</p>
     </div>
 
     <!-- Hobi -->
@@ -100,14 +138,65 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed, ref } from 'vue'
+
+const props = defineProps({
   modelValue: { type: Object, required: true },
   errors: { type: Object, default: () => ({}) }
 })
+
+const emit = defineEmits(['update:modelValue'])
+
+const emailError = ref('')
+
+// Max birth date (must be at least 12 years old)
+const maxBirthDate = computed(() => {
+  const d = new Date()
+  d.setFullYear(d.getFullYear() - 12)
+  return d.toISOString().split('T')[0]
+})
+
+// Handle NIK/NISN - only allow numbers
+const handleNik = (event, field, maxLen) => {
+  const value = event.target.value.replace(/\D/g, '').slice(0, maxLen)
+  props.modelValue[field] = value
+}
+
+// Handle phone - auto prefix 08, only numbers
+const handlePhone = (event) => {
+  let value = event.target.value.replace(/\D/g, '')
+  
+  // Auto prefix with 08 if user starts with different digit
+  if (value.length > 0 && !value.startsWith('0')) {
+    value = '08' + value
+  }
+  
+  // Limit to 13 digits
+  value = value.slice(0, 13)
+  
+  props.modelValue.no_hp = value
+}
+
+// Validate email (Gmail format)
+const validateEmail = () => {
+  const email = props.modelValue.email
+  if (!email) {
+    emailError.value = 'Email wajib diisi'
+    return
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email)) {
+    emailError.value = 'Format email tidak valid'
+    return
+  }
+  
+  emailError.value = ''
+}
 </script>
 
 <style scoped>
 .form-input {
-  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
 }
 </style>

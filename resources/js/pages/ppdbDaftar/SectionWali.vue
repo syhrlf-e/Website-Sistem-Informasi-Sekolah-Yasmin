@@ -16,7 +16,15 @@
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Wali</label>
-        <input v-model="modelValue.nik_wali" type="text" maxlength="16" class="form-input" placeholder="16 digit NIK" />
+        <input 
+          :value="modelValue.nik_wali" 
+          @input="handleNik" 
+          type="text" 
+          inputmode="numeric"
+          maxlength="16" 
+          class="form-input" 
+          placeholder="16 digit NIK" 
+        />
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hubungan dengan Siswa</label>
@@ -35,23 +43,46 @@
       </div>
       <div>
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP</label>
-        <input v-model="modelValue.no_hp_wali" type="tel" class="form-input" placeholder="08xxxxxxxxxx" />
+        <input 
+          :value="modelValue.no_hp_wali" 
+          @input="handlePhone" 
+          type="tel" 
+          inputmode="numeric"
+          maxlength="13" 
+          class="form-input" 
+          placeholder="08xxxxxxxxxx" 
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   modelValue: { type: Object, required: true },
   errors: { type: Object, default: () => ({}) }
 })
 
 const pendidikanOptions = ['SD', 'SMP', 'SMA/SMK', 'D1', 'D2', 'D3', 'D4/S1', 'S2', 'S3']
+
+// Handle NIK - only allow numbers, 16 digits
+const handleNik = (event) => {
+  const value = event.target.value.replace(/\D/g, '').slice(0, 16)
+  props.modelValue.nik_wali = value
+}
+
+// Handle phone - only numbers, max 13 digits
+const handlePhone = (event) => {
+  let value = event.target.value.replace(/\D/g, '')
+  if (value.length > 0 && !value.startsWith('0')) {
+    value = '08' + value
+  }
+  props.modelValue.no_hp_wali = value.slice(0, 13)
+}
 </script>
 
 <style scoped>
 .form-input {
-  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
 }
 </style>

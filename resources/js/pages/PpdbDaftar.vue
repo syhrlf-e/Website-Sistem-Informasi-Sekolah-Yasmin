@@ -7,14 +7,13 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
     <div class="max-w-4xl mx-auto">
-      <BackButton to="/ppdb/landing" text="Kembali ke PPDB" variant="ghost" />
 
       <!-- Header -->
       <div class="text-center mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 font-poppins">
-          Formulir Pendaftaran PPDB
+          Formulir Pendaftaran
         </h1>
-        <p class="text-gray-600 dark:text-gray-300 font-poppins">
+        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 font-poppins">
           SMA Mutiara Insan Nusantara - Tahun Ajaran {{ activeWave?.academic_year || '2025/2026' }}
         </p>
       </div>
@@ -60,6 +59,9 @@
 
         <!-- Submit Button -->
         <div class="pt-6">
+          <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+            Pastikan semua data sudah benar sebelum mengirim
+          </p>
           <button
             @click="submitForm"
             :disabled="isSubmitting || !isFormValid"
@@ -73,9 +75,11 @@
             </span>
             {{ isSubmitting ? 'Mengirim...' : 'Kirim Pendaftaran' }}
           </button>
-          <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-3">
-            Pastikan semua data sudah benar sebelum mengirim
-          </p>
+          <div class="text-center mt-4">
+            <a href="/ppdb/landing" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
+              ← Kembali ke halaman PPDB
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -148,9 +152,9 @@ const sections = shallowRef([
 const totalSections = computed(() => sections.value.length)
 
 const requiredFields = {
-  identitas: ['nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'no_hp'],
+  identitas: ['nama_lengkap', 'nik', 'nisn', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'agama', 'anak_ke', 'jumlah_saudara', 'no_hp', 'email'],
   alamat: ['alamat_lengkap', 'rt', 'rw', 'kelurahan', 'kecamatan', 'kota_kabupaten', 'provinsi'],
-  pendidikan: ['asal_sekolah', 'tahun_lulus', 'jurusan_pilihan'],
+  pendidikan: ['asal_sekolah', 'npsn_sekolah', 'tahun_lulus', 'jurusan_pilihan'],
   kesehatan: [],
   orangtua: ['nama_ayah', 'pekerjaan_ayah', 'pendidikan_ayah', 'nama_ibu', 'pekerjaan_ibu', 'pendidikan_ibu'],
   wali: []

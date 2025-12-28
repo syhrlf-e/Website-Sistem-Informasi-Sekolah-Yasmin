@@ -15,7 +15,15 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Ayah</label>
-          <input v-model="modelValue.nik_ayah" type="text" maxlength="16" class="form-input" placeholder="16 digit NIK" />
+          <input 
+            :value="modelValue.nik_ayah" 
+            @input="handleNik($event, 'nik_ayah')" 
+            type="text" 
+            inputmode="numeric"
+            maxlength="16" 
+            class="form-input" 
+            placeholder="16 digit NIK" 
+          />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pekerjaan <span class="text-red-500">*</span></label>
@@ -37,7 +45,15 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP</label>
-          <input v-model="modelValue.no_hp_ayah" type="tel" class="form-input" placeholder="08xxxxxxxxxx" />
+          <input 
+            :value="modelValue.no_hp_ayah" 
+            @input="handlePhone($event, 'no_hp_ayah')" 
+            type="tel" 
+            inputmode="numeric"
+            maxlength="13" 
+            class="form-input" 
+            placeholder="08xxxxxxxxxx" 
+          />
         </div>
       </div>
     </div>
@@ -54,7 +70,15 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NIK Ibu</label>
-          <input v-model="modelValue.nik_ibu" type="text" maxlength="16" class="form-input" placeholder="16 digit NIK" />
+          <input 
+            :value="modelValue.nik_ibu" 
+            @input="handleNik($event, 'nik_ibu')" 
+            type="text" 
+            inputmode="numeric"
+            maxlength="16" 
+            class="form-input" 
+            placeholder="16 digit NIK" 
+          />
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pekerjaan <span class="text-red-500">*</span></label>
@@ -76,7 +100,15 @@
         </div>
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">No. HP</label>
-          <input v-model="modelValue.no_hp_ibu" type="tel" class="form-input" placeholder="08xxxxxxxxxx" />
+          <input 
+            :value="modelValue.no_hp_ibu" 
+            @input="handlePhone($event, 'no_hp_ibu')" 
+            type="tel" 
+            inputmode="numeric"
+            maxlength="13" 
+            class="form-input" 
+            placeholder="08xxxxxxxxxx" 
+          />
         </div>
       </div>
     </div>
@@ -84,7 +116,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   modelValue: { type: Object, required: true },
   errors: { type: Object, default: () => ({}) }
 })
@@ -97,10 +129,25 @@ const penghasilanOptions = [
   'Rp 5.000.000 - Rp 10.000.000',
   '> Rp 10.000.000'
 ]
+
+// Handle NIK - only allow numbers, 16 digits
+const handleNik = (event, field) => {
+  const value = event.target.value.replace(/\D/g, '').slice(0, 16)
+  props.modelValue[field] = value
+}
+
+// Handle phone - only numbers, max 13 digits
+const handlePhone = (event, field) => {
+  let value = event.target.value.replace(/\D/g, '')
+  if (value.length > 0 && !value.startsWith('0')) {
+    value = '08' + value
+  }
+  props.modelValue[field] = value.slice(0, 13)
+}
 </script>
 
 <style scoped>
 .form-input {
-  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
 }
 </style>
