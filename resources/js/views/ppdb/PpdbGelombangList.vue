@@ -195,11 +195,17 @@ const fetchWaves = async () => {
 const openModal = (wave = null) => {
   editingWave.value = wave
   if (wave) {
+    // Format dates to YYYY-MM-DD for HTML date input
+    const formatDateForInput = (dateStr) => {
+      if (!dateStr) return ''
+      const date = new Date(dateStr)
+      return date.toISOString().split('T')[0]
+    }
     Object.assign(form, {
       name: wave.name,
       academic_year: wave.academic_year,
-      start_date: wave.start_date,
-      end_date: wave.end_date,
+      start_date: formatDateForInput(wave.start_date),
+      end_date: formatDateForInput(wave.end_date),
       quota: wave.quota,
       fee: wave.fee,
       description: wave.description || '',
