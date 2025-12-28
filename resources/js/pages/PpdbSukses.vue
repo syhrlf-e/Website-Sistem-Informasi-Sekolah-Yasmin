@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
     <div class="max-w-xl mx-auto">
       <!-- Success Card -->
       <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 text-center">
@@ -15,19 +15,19 @@
         </div>
 
         <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2 font-poppins">
-          Pendaftaran Berhasil! 🎉
+          Pendaftaran Berhasil!
         </h1>
         <p class="text-gray-600 dark:text-gray-300 mb-8">
-          Selamat, <strong>{{ nama }}</strong>! Data kamu telah tersimpan.
+          Selamat, <strong>{{ nama }}</strong>! Data kamu telah terkirim.
         </p>
 
         <!-- Credentials Card -->
-        <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl p-6 text-white mb-6">
-          <p class="text-sm opacity-80 mb-1">Nomor Registrasi</p>
-          <p class="text-2xl font-bold font-mono mb-4">{{ registrationNumber }}</p>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 border-blue-500 mb-6">
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Nomor Registrasi</p>
+          <p class="text-2xl font-bold font-mono text-gray-900 dark:text-white mb-4">{{ registrationNumber }}</p>
           
-          <p class="text-sm opacity-80 mb-1">Token Akses</p>
-          <p class="text-3xl font-bold font-mono tracking-widest">{{ token }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Kode Akses</p>
+          <p class="text-3xl font-bold font-mono tracking-widest text-blue-600 dark:text-blue-400">{{ token }}</p>
         </div>
 
         <!-- Important Notice -->
