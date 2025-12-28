@@ -163,6 +163,18 @@ const routes = [
         component: () => import('../views/ppdb/PpdbGelombangList.vue'),
         meta: { title: 'Yasmin Panel | Gelombang PPDB' }
       },
+      {
+        path: 'ppdb/seleksi',
+        name: 'PpdbSeleksiList',
+        component: () => import('../views/ppdb/PpdbSeleksiList.vue'),
+        meta: { title: 'Yasmin Panel | Seleksi PPDB' }
+      },
+      {
+        path: 'ppdb/pengumuman',
+        name: 'PpdbPengumumanList',
+        component: () => import('../views/ppdb/PpdbPengumumanList.vue'),
+        meta: { title: 'Yasmin Panel | Pengumuman PPDB' }
+      },
 
       {
         path: 'pengumuman',

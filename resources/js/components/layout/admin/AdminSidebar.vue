@@ -20,74 +20,91 @@
     </div>
 
     <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto custom-scrollbar">
-      <SidebarMenuItem
-        to="/yasmin-panel/dashboard"
-        :icon="LayoutDashboard"
-        label="Dashboard"
-      />
+      <!-- ========== ADMIN PPDB MENU (Flat Structure) ========== -->
+      <template v-if="isAdminPpdb">
+        <SidebarMenuItem
+          to="/yasmin-panel/ppdb"
+          :icon="LayoutDashboard"
+          label="Dashboard"
+        />
+        <SidebarMenuItem
+          to="/yasmin-panel/ppdb/pendaftar"
+          :icon="ClipboardList"
+          label="Pendaftar"
+        />
+        <SidebarMenuItem
+          to="/yasmin-panel/ppdb/seleksi"
+          :icon="UserCheck"
+          label="Seleksi"
+        />
+        <SidebarMenuItem
+          to="/yasmin-panel/ppdb/pengumuman"
+          :icon="Megaphone"
+          label="Pengumuman"
+        />
+        <SidebarMenuItem
+          to="/yasmin-panel/dokumen"
+          :icon="FileText"
+          label="Dokumen PPDB"
+        />
+      </template>
 
-      <!-- Konten Submenu - Hidden for admin_ppdb -->
-      <SidebarSubmenu
-        v-if="!isAdminPpdb"
-        :icon="FileText"
-        label="Konten"
-        :items="kontenItems"
-        :is-active="isKontenActive"
-        :default-open="true"
-      />
+      <!-- ========== SUPER ADMIN & ADMIN MENU ========== -->
+      <template v-else>
+        <SidebarMenuItem
+          to="/yasmin-panel/dashboard"
+          :icon="LayoutDashboard"
+          label="Dashboard"
+        />
 
-      <!-- Regular menus - Hidden for admin_ppdb -->
-      <SidebarMenuItem
-        v-if="!isAdminPpdb"
-        to="/yasmin-panel/pengumuman"
-        :icon="Megaphone"
-        label="Pengumuman"
-      />
+        <SidebarSubmenu
+          :icon="FileText"
+          label="Konten"
+          :items="kontenItems"
+          :is-active="isKontenActive"
+          :default-open="true"
+        />
 
-      <SidebarMenuItem
-        v-if="!isAdminPpdb"
-        to="/yasmin-panel/testimoni"
-        :icon="MessageSquareQuote"
-        label="Testimoni"
-      />
+        <SidebarMenuItem
+          to="/yasmin-panel/pengumuman"
+          :icon="Megaphone"
+          label="Pengumuman"
+        />
 
-      <SidebarMenuItem
-        v-if="!isAdminPpdb"
-        to="/yasmin-panel/dokumen"
-        :icon="FileText"
-        label="Dokumen PPDB"
-      />
+        <SidebarMenuItem
+          to="/yasmin-panel/testimoni"
+          :icon="MessageSquareQuote"
+          label="Testimoni"
+        />
 
-      <SidebarMenuItem
-        v-if="!isAdminPpdb"
-        to="/yasmin-panel/guru"
-        :icon="GraduationCap"
-        label="Data Guru"
-      />
+        <SidebarMenuItem
+          to="/yasmin-panel/guru"
+          :icon="GraduationCap"
+          label="Data Guru"
+        />
 
-      <SidebarMenuItem
-        v-if="!isAdminPpdb"
-        to="/yasmin-panel/pendaftar"
-        :icon="ClipboardList"
-        label="Pendaftar Ekskul"
-        :badge="pendingCount"
-      />
+        <SidebarMenuItem
+          to="/yasmin-panel/pendaftar"
+          :icon="ClipboardList"
+          label="Pendaftar Ekskul"
+          :badge="pendingCount"
+        />
 
-      <!-- PPDB Submenu - Visible for admin_ppdb, super_admin, admin -->
-      <SidebarSubmenu
-        :icon="UserPlus"
-        label="PPDB"
-        :items="ppdbItems"
-        :is-active="isPpdbActive"
-        :default-open="isAdminPpdb"
-      />
+        <!-- PPDB Submenu -->
+        <SidebarSubmenu
+          :icon="UserPlus"
+          label="PPDB"
+          :items="ppdbItems"
+          :is-active="isPpdbActive"
+        />
 
-      <SidebarMenuItem
-        to="/yasmin-panel/users"
-        :icon="Users"
-        label="Pengguna"
-        :show-if="isSuperAdmin"
-      />
+        <SidebarMenuItem
+          to="/yasmin-panel/users"
+          :icon="Users"
+          label="Pengguna"
+          :show-if="isSuperAdmin"
+        />
+      </template>
     </nav>
 
     <!-- Bottom Section -->
@@ -132,6 +149,7 @@ import {
   Newspaper,
   Target,
   Trophy,
+  UserCheck,
   UserPlus,
   Users
 } from 'lucide-vue-next'
@@ -165,7 +183,6 @@ const route = useRoute()
 
 /**
  * Submenu items untuk group "Konten"
- * @note Tambah item baru di sini jika ada menu konten baru
  */
 const kontenItems = [
   { to: '/yasmin-panel/berita', icon: Newspaper, label: 'Berita' },
@@ -174,10 +191,6 @@ const kontenItems = [
   { to: '/yasmin-panel/prestasi', icon: Trophy, label: 'Prestasi' }
 ]
 
-/**
- * Computed: detect active state untuk parent submenu "Konten"
- * @returns {Boolean} true jika current route match dengan salah satu kontenRoutes
- */
 const isKontenActive = computed(() => {
   const kontenRoutes = [
     '/yasmin-panel/berita',
@@ -189,12 +202,14 @@ const isKontenActive = computed(() => {
 })
 
 /**
- * PPDB menu items
+ * PPDB submenu items (for Super Admin & Admin)
  */
 const ppdbItems = [
   { to: '/yasmin-panel/ppdb', icon: LayoutDashboard, label: 'Dashboard PPDB' },
-  { to: '/yasmin-panel/ppdb/pendaftar', icon: ClipboardList, label: 'Data Pendaftar' },
-  { to: '/yasmin-panel/ppdb/gelombang', icon: CalendarDays, label: 'Gelombang' }
+  { to: '/yasmin-panel/ppdb/pendaftar', icon: ClipboardList, label: 'Pendaftar' },
+  { to: '/yasmin-panel/ppdb/seleksi', icon: UserCheck, label: 'Seleksi' },
+  { to: '/yasmin-panel/ppdb/pengumuman', icon: Megaphone, label: 'Pengumuman' },
+  { to: '/yasmin-panel/dokumen', icon: FileText, label: 'Dokumen' }
 ]
 
 const isPpdbActive = computed(() => {
