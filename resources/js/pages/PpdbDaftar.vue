@@ -51,6 +51,7 @@
           :icon="section.icon"
           :is-open="openSection === section.id"
           :is-complete="isSectionComplete(section.id)"
+          :is-locked="!isSectionUnlocked(section.id)"
           :number="index + 1"
           @toggle="toggleSection(section.id)"
         >
@@ -182,8 +183,45 @@ const isFormValid = computed(() => {
   return ['identitas', 'alamat', 'pendidikan', 'orangtua'].every(id => isSectionComplete(id))
 })
 
+/**
+ * Check if a section is unlocked (all previous required sections are complete)
+ * First section is always unlocked
+ */
+const isSectionUnlocked = (sectionId) => {
+  const sectionIndex = sections.value.findIndex(s => s.id === sectionId)
+  
+  // First section is always unlocked
+  if (sectionIndex === 0) return true
+  
+  // Check all previous sections with required fields
+  for (let i = 0; i < sectionIndex; i++) {
+    const prevSectionId = sections.value[i].id
+    const prevRequiredFields = requiredFields[prevSectionId] || []
+    
+    // Only check sections that have required fields
+    if (prevRequiredFields.length > 0 && !isSectionComplete(prevSectionId)) {
+      return false
+    }
+  }
+  
+  return true
+}
+
+/**
+ * Toggle section with sequential validation
+ * Can only open if section is unlocked
+ */
 const toggleSection = (id) => {
-  openSection.value = openSection.value === id ? null : id
+  // Always allow closing current section
+  if (openSection.value === id) {
+    openSection.value = null
+    return
+  }
+  
+  // Check if section is unlocked before opening
+  if (isSectionUnlocked(id)) {
+    openSection.value = id
+  }
 }
 
 const fetchActiveWave = async () => {
