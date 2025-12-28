@@ -92,7 +92,7 @@ import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
 import { useHead } from '@vueuse/head'
 import { AlertTriangle, Send } from 'lucide-vue-next'
 import { computed, onMounted, ref, shallowRef } from 'vue'
-import { useRouter } from 'vue-router'
+// Note: This is an Inertia page, uses window.location for navigation
 import FormSection from './ppdbDaftar/FormSection.vue'
 import SectionIdentitas from './ppdbDaftar/SectionIdentitas.vue'
 import SectionAlamat from './ppdbDaftar/SectionAlamat.vue'
@@ -101,7 +101,7 @@ import SectionKesehatan from './ppdbDaftar/SectionKesehatan.vue'
 import SectionOrangTua from './ppdbDaftar/SectionOrangTua.vue'
 import SectionWali from './ppdbDaftar/SectionWali.vue'
 
-const router = useRouter()
+
 
 useHead({
   title: 'Daftar PPDB - SMA Mutiara Insan Nusantara',

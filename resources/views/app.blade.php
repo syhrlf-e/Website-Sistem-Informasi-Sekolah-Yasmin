@@ -43,8 +43,8 @@
     {{-- ========== SCHEMA.ORG STRUCTURED DATA ========== --}}
     @if($schema)
         <script type="application/ld+json">
-                {!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-            </script>
+                    {!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+                </script>
     @endif
 
     {{-- Favicons --}}
@@ -65,8 +65,8 @@
             rel="stylesheet">
     </noscript>
 
-    {{-- Preload Images - Only for public pages, not admin panel --}}
-    @if(!request()->is('yasmin-panel*'))
+    {{-- Preload Images - Only for homepage where hero images are used --}}
+    @if(request()->is('/') || request()->is(''))
         <link rel="preload" href="/images/hero/hero-light.webp" as="image" type="image/webp">
         <link rel="preload" href="/images/hero/hero-dark.webp" as="image" type="image/webp">
         <link rel="preload" href="/img/logo_yasmin.png" as="image" type="image/png">
