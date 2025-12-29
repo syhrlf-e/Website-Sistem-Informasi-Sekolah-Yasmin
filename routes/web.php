@@ -25,13 +25,36 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/news', 'news')->name('news.index');
     Route::get('/news/{slug}', 'newsDetail')->name('news.show');
     Route::get('/prestasi', 'prestasi')->name('prestasi');
-    Route::get('/ppdb', 'ppdb')->name('ppdb');
-    Route::get('/ppdb/landing', 'ppdbLanding')->name('ppdb.landing');
-    Route::get('/ppdb/daftar', 'ppdbDaftar')->name('ppdb.daftar');
-    Route::get('/ppdb/sukses', 'ppdbSukses')->name('ppdb.sukses');
-    Route::get('/ppdb/status', 'ppdbStatus')->name('ppdb.status');
+    Route::get('/ppdb', 'ppdb')->name('ppdb'); // Info page on main domain
     Route::get('/guru', 'guru')->name('guru');
 });
+
+/*
+|--------------------------------------------------------------------------
+| PPDB ROUTES
+|--------------------------------------------------------------------------
+| Path-based routes always available for internal navigation.
+| Subdomain routes added in production for direct access.
+*/
+
+// Path-based PPDB routes (always available - for internal navigation)
+Route::controller(PublicController::class)->prefix('ppdb')->group(function () {
+    Route::get('/landing', 'ppdbLanding')->name('ppdb.landing');
+    Route::get('/daftar', 'ppdbDaftar')->name('ppdb.daftar');
+    Route::get('/sukses', 'ppdbSukses')->name('ppdb.sukses');
+    Route::get('/status', 'ppdbStatus')->name('ppdb.status');
+});
+
+// Subdomain routes (production only - for direct access & SEO)
+$appDomain = env('APP_DOMAIN');
+if ($appDomain) {
+    Route::domain('ppdb.' . $appDomain)->controller(PublicController::class)->group(function () {
+        Route::get('/', 'ppdbLanding')->name('ppdb.subdomain.landing');
+        Route::get('/daftar', 'ppdbDaftar')->name('ppdb.subdomain.daftar');
+        Route::get('/sukses', 'ppdbSukses')->name('ppdb.subdomain.sukses');
+        Route::get('/status', 'ppdbStatus')->name('ppdb.subdomain.status');
+    });
+}
 
 // Sitemap for SEO
 Route::get('/sitemap.xml', [PublicController::class, 'sitemap'])->name('sitemap');

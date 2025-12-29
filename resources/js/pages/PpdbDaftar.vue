@@ -82,7 +82,7 @@
             {{ isSubmitting ? 'Mengirim...' : 'Kirim Pendaftaran' }}
           </button>
           <div class="text-center mt-4">
-            <a href="/ppdb/landing" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
+            <a :href="ppdbUrl('/')" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
               ← Kembali ke halaman PPDB
             </a>
           </div>
@@ -106,6 +106,13 @@ import SectionPendidikan from './ppdbDaftar/SectionPendidikan.vue'
 import SectionKesehatan from './ppdbDaftar/SectionKesehatan.vue'
 import SectionOrangTua from './ppdbDaftar/SectionOrangTua.vue'
 import SectionWali from './ppdbDaftar/SectionWali.vue'
+
+// Helper to generate PPDB URLs based on current domain
+const ppdbUrl = (path) => {
+  const isSubdomain = window.location.hostname.startsWith('ppdb.')
+  if (isSubdomain) return path
+  return '/ppdb' + (path === '/' ? '/landing' : path)
+}
 
 
 
@@ -293,7 +300,7 @@ const submitForm = async () => {
         token: data.data.token,
         nama: data.data.nama
       })
-      window.location.href = `/ppdb/sukses?${params.toString()}`
+      window.location.href = ppdbUrl('/sukses') + `?${params.toString()}`
     } else {
       console.error('Validation errors:', JSON.stringify(data.errors, null, 2))
       errors.value = data.errors || {}

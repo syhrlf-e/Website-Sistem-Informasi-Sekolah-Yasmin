@@ -108,7 +108,7 @@
 
       <!-- Back Link -->
       <div class="text-center">
-        <a href="/ppdb/landing" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
+        <a :href="ppdbUrl('/')" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
           ← Kembali ke halaman PPDB
         </a>
       </div>
@@ -132,6 +132,13 @@ useHead({
 const isLoading = ref(false)
 const error = ref('')
 const result = ref(null)
+
+// Helper to generate PPDB URLs based on current domain
+const ppdbUrl = (path) => {
+  const isSubdomain = window.location.hostname.startsWith('ppdb.')
+  if (isSubdomain) return path
+  return '/ppdb' + (path === '/' ? '/landing' : path)
+}
 
 const form = reactive({
   registration_number: '',

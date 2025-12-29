@@ -23,13 +23,9 @@
 <script setup>
 import { useAuth } from '@/composables/useAuth'
 import { useInactivity } from '@/composables/useInactivity'
-import { computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import SessionWarningModal from '@/components/SessionWarningModal.vue'
-import router from '@/router'
-
-// Initialize Vue Router for admin panel
-import { createApp } from 'vue'
 
 const route = useRoute()
 const { logout } = useAuth()

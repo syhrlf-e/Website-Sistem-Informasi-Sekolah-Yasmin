@@ -25,7 +25,11 @@ return [
         'http://localhost:3000',
     ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        // Allow all subdomains of APP_DOMAIN in production
+        // e.g., ppdb.sma-mutiarainsannusantara.my.id
+        env('APP_DOMAIN') ? '/^https?:\/\/([a-z0-9\-]+\.)?' . preg_quote(env('APP_DOMAIN'), '/') . '$/' : '',
+    ],
 
     'allowed_headers' => ['*'],
 

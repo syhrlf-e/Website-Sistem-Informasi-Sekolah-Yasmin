@@ -62,7 +62,7 @@
         <!-- Action Buttons -->
         <div class="space-y-3">
           <a
-            href="/ppdb/status"
+            :href="ppdbUrl('/status')"
             class="block w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-medium transition-colors"
           >
             Cek Status Pendaftaran
@@ -87,6 +87,13 @@ import { computed, ref } from 'vue'
 
 const copied = ref(false)
 const cardRef = ref(null)
+
+// Helper to generate PPDB URLs based on current domain
+const ppdbUrl = (path) => {
+  const isSubdomain = window.location.hostname.startsWith('ppdb.')
+  if (isSubdomain) return path
+  return '/ppdb' + (path === '/' ? '/landing' : path)
+}
 
 // Get query params from URL
 const urlParams = new URLSearchParams(window.location.search)

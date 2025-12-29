@@ -1,7 +1,7 @@
 <!--
   @component PpdbLanding
   @description Landing page untuk pendaftaran PPDB dengan Hero, Info Cards, dan CTA
-  @route /ppdb/landing (nanti subdomain ppdb.smayasmin.com)
+  @route ppdb.sma-mutiarainsannusantara.my.id/ (production) atau /ppdb/landing (development)
 -->
 
 <template>
@@ -29,14 +29,14 @@
             <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4">
               <a
-                href="/ppdb/daftar"
+                :href="ppdbUrl('/daftar')"
                 class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
               >
                 Daftar Sekarang
                 <ArrowRight class="w-5 h-5" />
               </a>
               <a
-                href="/ppdb/status"
+                :href="ppdbUrl('/status')"
                 class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-xl font-semibold text-lg transition-all font-poppins"
               >
                 <Search class="w-5 h-5" />
@@ -201,6 +201,17 @@ const landingInfo = ref({
 })
 
 const waves = ref([])
+
+// Helper to generate PPDB URLs based on current domain
+// On subdomain (ppdb.*): returns relative path (/daftar)
+// On main domain: returns full path (/ppdb/daftar)
+const ppdbUrl = (path) => {
+  const isSubdomain = window.location.hostname.startsWith('ppdb.')
+  if (isSubdomain) {
+    return path // e.g., /daftar
+  }
+  return '/ppdb' + (path === '/' ? '/landing' : path) // e.g., /ppdb/daftar
+}
 
 // Fetch landing info from API
 const fetchLandingInfo = async () => {

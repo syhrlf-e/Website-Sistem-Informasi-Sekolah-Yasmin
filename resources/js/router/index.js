@@ -8,68 +8,15 @@
 import { useAuth } from '@/composables/useAuth'
 import { createRouter, createWebHistory } from 'vue-router'
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import('../pages/Home.vue'),
-    meta: { title: 'SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/news',
-    name: 'news.index',
-    component: () => import('@/pages/News/NewsPage.vue'),
-    meta: { title: 'Berita Sekolah - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/news/:slug',
-    name: 'news.detail',
-    component: () => import('@/pages/News/NewsDetail.vue'),
-    meta: { title: 'Detail Berita - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/profil',
-    name: 'Profil',
-    component: () => import('@/components/sections/ProfilDetail.vue'),
-    meta: { title: 'Profil Sekolah - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/guru',
-    name: 'GuruLengkap',
-    component: () => import('../components/sections/ProfilDetail/TenagaPendidikLengkap.vue'),
-    meta: { title: 'Direktori Guru - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/prestasi',
-    name: 'PrestasiListPublic',
-    component: () => import('@/pages/PrestasiList.vue'),
-    meta: { title: 'Semua Prestasi - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/ppdb',
-    name: 'PPDB',
-    component: () => import('@/pages/PPDB.vue'),
-    meta: { title: 'Info PPDB - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/ppdb/daftar',
-    name: 'PpdbDaftar',
-    component: () => import('@/pages/PpdbDaftar.vue'),
-    meta: { title: 'Daftar PPDB - SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/ppdb/sukses',
-    name: 'PpdbSukses',
-    component: () => import('@/pages/PpdbSukses.vue'),
-    meta: { title: 'Pendaftaran Berhasil - PPDB SMA Mutiara Insan Nusantara' }
-  },
-  {
-    path: '/ppdb/status',
-    name: 'PpdbStatus',
-    component: () => import('@/pages/PpdbStatus.vue'),
-    meta: { title: 'Cek Status PPDB - SMA Mutiara Insan Nusantara' }
-  },
+/**
+ * Vue Router is ONLY used for Admin Panel SPA navigation.
+ * Public pages are handled by Inertia.js (server-side routing with SEO).
+ * 
+ * This separation prevents Vite warnings about static/dynamic import conflicts.
+ */
 
+const routes = [
+  // Admin Login (outside AdminLayout)
   {
     path: '/yasmin-panel/login',
     name: 'Login',
