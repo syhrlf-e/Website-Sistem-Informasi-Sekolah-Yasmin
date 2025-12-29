@@ -14,42 +14,42 @@
       </div>
     </div>
 
-    <!-- Summary Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div class="bg-green-50 dark:bg-green-900/20 rounded-2xl p-5 border border-green-200 dark:border-green-800">
-        <div class="flex items-center gap-3">
-          <div class="p-3 bg-green-100 dark:bg-green-900/50 rounded-xl">
-            <CheckCircle class="w-6 h-6 text-green-600" />
+    <!-- Summary Cards (matching dashboard style) -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <!-- Diterima -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
+            <CheckCircle class="w-6 h-6 text-green-600 dark:text-green-400" />
           </div>
-          <div>
-            <p class="text-3xl font-bold text-green-600">{{ counts.accepted || 0 }}</p>
-            <p class="text-sm text-green-700 dark:text-green-400">Diterima</p>
-          </div>
+          <span class="text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-3 py-1 rounded-full">Lulus</span>
         </div>
+        <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ counts.accepted || 0 }}</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Diterima</p>
       </div>
       
-      <div class="bg-red-50 dark:bg-red-900/20 rounded-2xl p-5 border border-red-200 dark:border-red-800">
-        <div class="flex items-center gap-3">
-          <div class="p-3 bg-red-100 dark:bg-red-900/50 rounded-xl">
-            <XCircle class="w-6 h-6 text-red-600" />
+      <!-- Ditolak -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+            <XCircle class="w-6 h-6 text-red-600 dark:text-red-400" />
           </div>
-          <div>
-            <p class="text-3xl font-bold text-red-600">{{ counts.rejected || 0 }}</p>
-            <p class="text-sm text-red-700 dark:text-red-400">Ditolak</p>
-          </div>
+          <span class="text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-3 py-1 rounded-full">Tidak Lolos</span>
         </div>
+        <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ counts.rejected || 0 }}</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Ditolak</p>
       </div>
       
-      <div class="bg-purple-50 dark:bg-purple-900/20 rounded-2xl p-5 border border-purple-200 dark:border-purple-800">
-        <div class="flex items-center gap-3">
-          <div class="p-3 bg-purple-100 dark:bg-purple-900/50 rounded-xl">
-            <Clock class="w-6 h-6 text-purple-600" />
+      <!-- Menunggu -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
+        <div class="flex items-center justify-between mb-4">
+          <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
+            <Clock class="w-6 h-6 text-purple-600 dark:text-purple-400" />
           </div>
-          <div>
-            <p class="text-3xl font-bold text-purple-600">{{ counts.selection || 0 }}</p>
-            <p class="text-sm text-purple-700 dark:text-purple-400">Menunggu</p>
-          </div>
+          <span class="text-xs font-medium text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full">Proses</span>
         </div>
+        <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ counts.selection || 0 }}</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Menunggu</p>
       </div>
     </div>
 
