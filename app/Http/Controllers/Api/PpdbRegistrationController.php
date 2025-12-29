@@ -140,7 +140,7 @@ class PpdbRegistrationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'registration_number' => 'required|string',
-            'token' => 'required|string|size:16',
+            'token' => 'required|string|size:8',
         ]);
 
         if ($validator->fails()) {

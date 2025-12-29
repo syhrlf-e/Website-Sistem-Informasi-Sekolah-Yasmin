@@ -27,7 +27,7 @@
           <p class="text-2xl font-bold font-mono text-gray-900 dark:text-white mb-4">{{ registrationNumber }}</p>
           
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Kode Akses</p>
-          <p class="text-xl font-bold font-mono tracking-wide text-gray-900 dark:text-white break-all">{{ token }}</p>
+          <p class="text-3xl font-bold font-mono tracking-widest text-gray-900 dark:text-white">{{ token }}</p>
         </div>
 
         <!-- Important Notice -->

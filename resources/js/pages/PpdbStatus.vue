@@ -14,7 +14,7 @@
           Cek Status Pendaftaran
         </h1>
         <p class="text-gray-600 dark:text-gray-300 font-poppins">
-          Masukkan Nomor Registrasi dan Token Anda
+          Masukkan Nomor Registrasi dan Kode Akses Anda
         </p>
       </div>
 
@@ -32,14 +32,15 @@
             />
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Token</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kode Akses</label>
             <input
               v-model="form.token"
+              @input="formatToken"
               type="text"
               required
-              maxlength="6"
+              maxlength="8"
               class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white font-mono text-center text-2xl tracking-widest uppercase focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              placeholder="ABC123"
+              placeholder="XX-XX-XX"
             />
           </div>
           <button
@@ -142,6 +143,21 @@ const form = reactive({
   registration_number: '',
   token: ''
 })
+
+// Auto-format token with dashes: XX-XX-XX
+const formatToken = (event) => {
+  let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+  if (value.length > 6) value = value.slice(0, 6)
+  
+  // Add dashes
+  if (value.length > 4) {
+    value = value.slice(0, 2) + '-' + value.slice(2, 4) + '-' + value.slice(4)
+  } else if (value.length > 2) {
+    value = value.slice(0, 2) + '-' + value.slice(2)
+  }
+  
+  form.token = value
+}
 
 const statusColors = {
   pending: { bg: 'bg-yellow-100 dark:bg-yellow-900/30', text: 'text-yellow-600', badge: 'bg-yellow-100 text-yellow-800' },

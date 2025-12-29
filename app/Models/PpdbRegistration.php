@@ -131,8 +131,9 @@ class PpdbRegistration extends Model
 
             $registration->registration_number = sprintf('PPDB-%s-%04d', $year, $nextNumber);
 
-            // Auto-generate 16-character alphanumeric token (mixed case)
-            $registration->token = Str::random(16);
+            // Auto-generate 6-letter token with dashes format: XX-XX-XX
+            $chars = strtoupper(Str::random(6));
+            $registration->token = substr($chars, 0, 2) . '-' . substr($chars, 2, 2) . '-' . substr($chars, 4, 2);
         });
     }
 
