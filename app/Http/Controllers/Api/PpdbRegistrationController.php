@@ -93,6 +93,15 @@ class PpdbRegistrationController extends Controller
             ], 422);
         }
 
+        // Check for duplicate NISN (if provided)
+        if ($request->nisn && PpdbRegistration::where('nisn', $request->nisn)->exists()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'NISN sudah terdaftar.',
+                'errors' => ['nisn' => ['NISN sudah terdaftar dalam sistem.']]
+            ], 422);
+        }
+
         // Create registration
         $data = $validator->validated();
         $data['wave_id'] = $wave->id;
