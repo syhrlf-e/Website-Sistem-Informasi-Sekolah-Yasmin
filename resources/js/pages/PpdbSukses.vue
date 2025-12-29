@@ -42,20 +42,20 @@
         </div>
 
         <!-- Action Buttons Row -->
-        <div class="grid grid-cols-2 gap-3 mb-4">
+        <div class="grid grid-cols-2 gap-2 mb-4">
           <button
             @click="copyCredentials"
-            class="py-3 px-4 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+            class="py-2.5 px-3 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl text-xs md:text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-1.5"
           >
-            <Copy class="w-5 h-5" />
-            {{ copied ? 'Tersalin!' : 'Salin Kode' }}
+            <Copy class="w-4 h-4" />
+            {{ copied ? 'Tersalin!' : 'Salin' }}
           </button>
           <button
             @click="takeScreenshot"
-            class="py-3 px-4 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+            class="py-2.5 px-3 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl text-xs md:text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-1.5"
           >
-            <Camera class="w-5 h-5" />
-            Tangkap Layar
+            <Camera class="w-4 h-4" />
+            Screenshot
           </button>
         </div>
 

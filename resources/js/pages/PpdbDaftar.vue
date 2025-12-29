@@ -295,13 +295,16 @@ const submitForm = async () => {
       })
       window.location.href = `/ppdb/sukses?${params.toString()}`
     } else {
-      console.error('Validation errors:', data.errors)
+      console.error('Validation errors:', JSON.stringify(data.errors, null, 2))
       errors.value = data.errors || {}
       
-      // Show alert with error message
-      if (data.message) {
-        alert(data.message + '\n\nDetail error lihat di console (F12)')
+      // Build detailed error message
+      let errorMsg = data.message || 'Data tidak valid'
+      if (data.errors) {
+        const fields = Object.keys(data.errors)
+        errorMsg += '\n\nField bermasalah: ' + fields.join(', ')
       }
+      alert(errorMsg)
       
       // Find first section with error and open it
       for (const section of sections.value) {

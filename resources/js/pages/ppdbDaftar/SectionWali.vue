@@ -60,7 +60,7 @@
     <!-- Skip Button -->
     <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
       <div class="flex items-center justify-between gap-3">
-        <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">
+        <p class="text-sm md:text-sm text-gray-500 dark:text-gray-400">
           Tidak relevan? Klik lewati
         </p>
         <button
