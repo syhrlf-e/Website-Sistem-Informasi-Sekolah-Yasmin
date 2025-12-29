@@ -30,14 +30,14 @@
             <div class="flex flex-col sm:flex-row gap-4">
               <a
                 :href="ppdbUrl('/daftar')"
-                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
               >
                 Daftar Sekarang
                 <ArrowRight class="w-5 h-5" />
               </a>
               <a
                 :href="ppdbUrl('/status')"
-                class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-xl font-semibold text-lg transition-all font-poppins"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-xl font-semibold text-lg transition-all font-poppins"
               >
                 <Search class="w-5 h-5" />
                 Cek Status Pendaftaran
