@@ -209,8 +209,15 @@ const startCountdown = (seconds) => {
 const handleLogin = async () => {
   errorMessage.value = ''
   try {
-    await login({ email: form.value.email, password: form.value.password })
-    router.push('/yasmin-panel/dashboard')
+    const result = await login({ email: form.value.email, password: form.value.password })
+    
+    // Redirect based on user role
+    const role = result?.user?.role || 'admin'
+    if (role === 'admin_ppdb') {
+      router.push('/yasmin-panel/ppdb')
+    } else {
+      router.push('/yasmin-panel/dashboard')
+    }
   } catch (err) {
     if (err.response?.status === 429) {
       const seconds = err.response.data.retry_after || 60
