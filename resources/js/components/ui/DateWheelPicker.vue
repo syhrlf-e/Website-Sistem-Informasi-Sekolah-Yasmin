@@ -26,18 +26,12 @@
         <!-- Picker Modal -->
         <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden">
           <!-- Header -->
-          <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-            <button @click="cancel" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 font-medium">
-              Batal
-            </button>
+          <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-center">
             <span class="font-semibold text-gray-900 dark:text-white">Tanggal Lahir</span>
-            <button @click="confirm" class="text-blue-600 hover:text-blue-700 font-semibold">
-              OK
-            </button>
           </div>
 
           <!-- Picker Wheels -->
-          <div class="flex items-center justify-center py-4">
+          <div class="flex items-center justify-center py-4 relative">
             <!-- Selection Highlight -->
             <div class="absolute left-4 right-4 h-10 bg-blue-50 dark:bg-blue-900/30 rounded-lg pointer-events-none"></div>
             
@@ -100,6 +94,17 @@
                 <div class="h-[76px]"></div>
               </div>
             </div>
+          </div>
+
+          <!-- Footer Buttons -->
+          <div class="flex border-t border-gray-200 dark:border-gray-700">
+            <button @click="cancel" class="flex-1 py-3 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium transition-colors">
+              Batal
+            </button>
+            <div class="w-px bg-gray-200 dark:bg-gray-700"></div>
+            <button @click="confirm" class="flex-1 py-3 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 font-semibold transition-colors">
+              OK
+            </button>
           </div>
         </div>
       </div>
