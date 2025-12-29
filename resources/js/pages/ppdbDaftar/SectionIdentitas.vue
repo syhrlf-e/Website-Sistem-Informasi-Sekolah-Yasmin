@@ -59,7 +59,7 @@
     <!-- Tanggal Lahir -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tanggal Lahir <span class="text-red-500">*</span></label>
-      <input v-model="modelValue.tanggal_lahir" type="date" class="form-input" :max="maxBirthDate" />
+      <DateWheelPicker v-model="modelValue.tanggal_lahir" />
     </div>
 
     <!-- Jenis Kelamin -->
@@ -148,6 +148,7 @@
 </template>
 
 <script setup>
+import DateWheelPicker from '@/components/ui/DateWheelPicker.vue'
 import { computed, ref } from 'vue'
 
 const props = defineProps({
