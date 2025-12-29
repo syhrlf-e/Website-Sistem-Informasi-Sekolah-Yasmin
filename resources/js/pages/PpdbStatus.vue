@@ -62,53 +62,48 @@
 
       <!-- Result -->
       <Transition name="fade">
-        <div v-if="result" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
-          <div class="text-center mb-6">
-            <div
-              :class="statusColors[result.status]?.bg"
-              class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4"
+        <div v-if="result" class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
+          <!-- Status Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Status</span>
+            <span
+              :class="statusColors[result.status]?.badge"
+              class="px-3 py-1 rounded-full text-xs font-medium"
             >
-              <component :is="statusIcons[result.status]" class="w-8 h-8" :class="statusColors[result.status]?.text" />
-            </div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">{{ result.nama_lengkap }}</h2>
-            <p class="text-gray-500 font-mono text-sm">{{ result.registration_number }}</p>
+              {{ result.status_label }}
+            </span>
           </div>
 
-          <div class="space-y-4">
-            <!-- Status -->
-            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-              <span class="text-gray-600 dark:text-gray-400">Status</span>
-              <span
-                :class="statusColors[result.status]?.badge"
-                class="px-4 py-1.5 rounded-full font-semibold"
-              >
-                {{ result.status_label }}
-              </span>
+          <!-- Info List -->
+          <div class="space-y-3">
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Nama</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ result.nama_lengkap }}</span>
             </div>
-
-            <!-- Info -->
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                <p class="text-xs text-gray-500 mb-1">Jurusan</p>
-                <p class="font-semibold text-gray-900 dark:text-white">{{ result.jurusan_pilihan }}</p>
-              </div>
-              <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-                <p class="text-xs text-gray-500 mb-1">Asal Sekolah</p>
-                <p class="font-semibold text-gray-900 dark:text-white text-sm">{{ result.asal_sekolah }}</p>
-              </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-500 dark:text-gray-400">No. Registrasi</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ result.registration_number }}</span>
             </div>
-
-            <!-- Catatan -->
-            <div v-if="result.catatan_admin" class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
-              <p class="text-xs text-blue-600 mb-1">Catatan dari Admin</p>
-              <p class="text-blue-800 dark:text-blue-200">{{ result.catatan_admin }}</p>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Jurusan</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ result.jurusan_pilihan }}</span>
             </div>
-
-            <!-- Date -->
-            <p class="text-center text-sm text-gray-500">
-              Terdaftar pada: {{ result.registered_at }}
-            </p>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Asal Sekolah</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white text-right max-w-[60%]">{{ result.asal_sekolah }}</span>
+            </div>
           </div>
+
+          <!-- Catatan -->
+          <div v-if="result.catatan_admin" class="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <p class="text-xs text-blue-600 dark:text-blue-400 mb-1">Catatan Admin</p>
+            <p class="text-sm text-blue-800 dark:text-blue-200">{{ result.catatan_admin }}</p>
+          </div>
+
+          <!-- Date -->
+          <p class="mt-4 text-center text-xs text-gray-400">
+            Terdaftar: {{ result.registered_at }}
+          </p>
         </div>
       </Transition>
 
