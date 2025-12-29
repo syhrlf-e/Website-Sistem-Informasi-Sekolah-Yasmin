@@ -59,16 +59,16 @@
 
     <!-- Skip Button -->
     <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-      <div class="flex items-center justify-between">
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Tidak relevan? Silakan klik tombol lewati
+      <div class="flex items-center justify-between gap-3">
+        <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400">
+          Tidak relevan? Klik lewati
         </p>
         <button
           @click="$emit('skip')"
           type="button"
-          class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition-colors"
+          class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-xl transition-colors flex-shrink-0"
         >
-          Lewati →
+          Lewati
         </button>
       </div>
     </div>
