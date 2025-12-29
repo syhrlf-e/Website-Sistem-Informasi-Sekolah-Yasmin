@@ -92,6 +92,10 @@
               <span class="text-sm text-gray-500 dark:text-gray-400">Asal Sekolah</span>
               <span class="text-sm font-medium text-gray-900 dark:text-white text-right max-w-[60%]">{{ result.asal_sekolah }}</span>
             </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Terdaftar</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ result.registered_at }}</span>
+            </div>
           </div>
 
           <!-- Catatan -->
@@ -99,11 +103,6 @@
             <p class="text-xs text-blue-600 dark:text-blue-400 mb-1">Catatan Admin</p>
             <p class="text-sm text-blue-800 dark:text-blue-200">{{ result.catatan_admin }}</p>
           </div>
-
-          <!-- Date -->
-          <p class="mt-4 text-center text-xs text-gray-400">
-            Terdaftar: {{ result.registered_at }}
-          </p>
         </div>
       </Transition>
 
