@@ -8,7 +8,7 @@
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
     <div class="max-w-xl mx-auto">
       <!-- Success Card -->
-      <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 text-center">
+      <div class="success-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 text-center">
         <!-- Icon -->
         <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
           <CheckCircle class="w-14 h-14 text-white" />
@@ -27,7 +27,7 @@
           <p class="text-2xl font-bold font-mono text-gray-900 dark:text-white mb-4">{{ registrationNumber }}</p>
           
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Kode Akses</p>
-          <p class="text-3xl font-bold font-mono tracking-widest text-blue-600 dark:text-blue-400">{{ token }}</p>
+          <p class="text-xl font-bold font-mono tracking-wide text-gray-900 dark:text-white break-all">{{ token }}</p>
         </div>
 
         <!-- Important Notice -->
@@ -41,14 +41,23 @@
           </div>
         </div>
 
-        <!-- Copy Button -->
-        <button
-          @click="copyCredentials"
-          class="w-full py-3 px-6 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2 mb-4"
-        >
-          <Copy class="w-5 h-5" />
-          {{ copied ? 'Tersalin!' : 'Salin Nomor & Token' }}
-        </button>
+        <!-- Action Buttons Row -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <button
+            @click="copyCredentials"
+            class="py-3 px-4 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+          >
+            <Copy class="w-5 h-5" />
+            {{ copied ? 'Tersalin!' : 'Salin Kode' }}
+          </button>
+          <button
+            @click="takeScreenshot"
+            class="py-3 px-4 border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors flex items-center justify-center gap-2"
+          >
+            <Camera class="w-5 h-5" />
+            Tangkap Layar
+          </button>
+        </div>
 
         <!-- Action Buttons -->
         <div class="space-y-3">
@@ -73,15 +82,16 @@
 
 <script setup>
 import { useHead } from '@vueuse/head'
-import { AlertTriangle, CheckCircle, Copy } from 'lucide-vue-next'
+import { AlertTriangle, Camera, CheckCircle, Copy } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 
 const copied = ref(false)
+const cardRef = ref(null)
 
 // Get query params from URL
 const urlParams = new URLSearchParams(window.location.search)
 const registrationNumber = computed(() => urlParams.get('reg') || 'PPDB-2024-0001')
-const token = computed(() => urlParams.get('token') || 'ABC123')
+const token = computed(() => urlParams.get('token') || 'ABC123DEF456GH78')
 const nama = computed(() => urlParams.get('nama') || 'Pendaftar')
 
 useHead({
@@ -92,13 +102,36 @@ useHead({
 })
 
 const copyCredentials = async () => {
-  const text = `Nomor Registrasi: ${registrationNumber.value}\nToken: ${token.value}`
+  const text = `Nomor Registrasi: ${registrationNumber.value}\nKode Akses: ${token.value}`
   try {
     await navigator.clipboard.writeText(text)
     copied.value = true
     setTimeout(() => { copied.value = false }, 2000)
   } catch (error) {
     console.error('Failed to copy:', error)
+  }
+}
+
+const takeScreenshot = async () => {
+  try {
+    // Use html2canvas library (needs to be loaded)
+    const html2canvas = (await import('html2canvas')).default
+    const card = document.querySelector('.success-card')
+    if (!card) return
+    
+    const canvas = await html2canvas(card, {
+      backgroundColor: '#ffffff',
+      scale: 2
+    })
+    
+    // Download image
+    const link = document.createElement('a')
+    link.download = `PPDB-${registrationNumber.value}.png`
+    link.href = canvas.toDataURL('image/png')
+    link.click()
+  } catch (error) {
+    console.error('Failed to take screenshot:', error)
+    alert('Gagal mengambil screenshot. Silakan gunakan fitur screenshot bawaan perangkat.')
   }
 }
 </script>
