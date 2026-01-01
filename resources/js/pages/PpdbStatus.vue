@@ -11,48 +11,90 @@
       <!-- Header -->
       <div class="text-center mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 font-poppins">
-          Cek Status Pendaftaran
+          Cek Status
         </h1>
         <p class="text-gray-600 dark:text-gray-300 font-poppins">
-          Masukkan Nomor Registrasi dan Kode Akses Anda
+          {{ isAlternateMode ? 'Masukkan Nama dan NISN Anda' : 'Masukkan Nomor Registrasi dan Kode Akses Anda' }}
         </p>
       </div>
 
       <!-- Form -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
         <form @submit.prevent="checkStatus" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nomor Registrasi</label>
-            <input
-              v-model="form.registration_number"
-              type="text"
-              required
-              class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              placeholder="PPDB-2024-0001"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kode Akses</label>
-            <input
-              v-model="form.token"
-              @input="formatToken"
-              type="text"
-              required
-              maxlength="8"
-              class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white font-mono text-center text-2xl tracking-widest uppercase focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-              placeholder="XX-XX-XX"
-            />
-          </div>
+          <!-- Normal Mode -->
+          <template v-if="!isAlternateMode">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nomor Registrasi</label>
+              <input
+                v-model="form.registration_number"
+                type="text"
+                required
+                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="PPDB-2024-0001"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kode Akses</label>
+              <input
+                v-model="form.token"
+                @input="formatToken"
+                type="text"
+                required
+                maxlength="8"
+                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white font-mono text-center text-2xl tracking-widest uppercase focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="XX-XX-XX"
+              />
+            </div>
+          </template>
+
+          <!-- Alternate Mode (Forgot credentials) -->
+          <template v-else>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Lengkap</label>
+              <input
+                v-model="altForm.nama"
+                type="text"
+                required
+                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="Masukkan nama lengkap"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">NISN</label>
+              <input
+                v-model="altForm.nisn"
+                @input="formatNisn"
+                @keypress="onlyNumbers"
+                type="text"
+                required
+                maxlength="10"
+                inputmode="numeric"
+                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="10 digit NISN"
+              />
+            </div>
+          </template>
+
           <button
             type="submit"
             :disabled="isLoading"
-            class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2"
+            class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-semibold transition-all flex items-center justify-center"
           >
-            <div v-if="isLoading" class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
-            <Search v-else class="w-5 h-5" />
-            {{ isLoading ? 'Mencari...' : 'Cek Status' }}
+            <div v-if="isLoading" class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+            {{ isLoading ? 'Mencari...' : (isAlternateMode ? 'Cari Data' : 'Cek Status') }}
           </button>
         </form>
+
+        <!-- Toggle Mode Link -->
+        <div class="mt-4 text-center">
+          <button 
+            @click="toggleMode" 
+            type="button"
+            class="text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+          >
+            {{ isAlternateMode ? '← Kembali ke cek dengan Nomor Registrasi' : 'Lupa Nomor Registrasi & Kode Akses? Klik disini' }}
+          </button>
+        </div>
 
         <!-- Error -->
         <div v-if="error" class="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
@@ -117,9 +159,8 @@
 </template>
 
 <script setup>
-import BackButton from '@/components/ui/BackButton.vue'
 import { useHead } from '@vueuse/head'
-import { CheckCircle, Clock, Search, UserCheck, XCircle } from 'lucide-vue-next'
+import { CheckCircle, Clock, UserCheck, XCircle } from 'lucide-vue-next'
 import { reactive, ref, shallowRef } from 'vue'
 
 useHead({
@@ -132,6 +173,7 @@ useHead({
 const isLoading = ref(false)
 const error = ref('')
 const result = ref(null)
+const isAlternateMode = ref(false)
 
 // Helper to generate PPDB URLs based on current domain
 const ppdbUrl = (path) => {
@@ -144,6 +186,31 @@ const form = reactive({
   registration_number: '',
   token: ''
 })
+
+const altForm = reactive({
+  nama: '',
+  nisn: ''
+})
+
+// Toggle between normal and alternate mode
+const toggleMode = () => {
+  isAlternateMode.value = !isAlternateMode.value
+  error.value = ''
+  result.value = null
+}
+
+// Block non-numeric keypress
+const onlyNumbers = (event) => {
+  const char = String.fromCharCode(event.which || event.keyCode)
+  if (!/[0-9]/.test(char)) {
+    event.preventDefault()
+  }
+}
+
+// Format NISN - only numbers
+const formatNisn = (event) => {
+  altForm.nisn = event.target.value.replace(/\D/g, '').slice(0, 10)
+}
 
 // Auto-format token with dashes: XX-XX-XX
 const formatToken = (event) => {
@@ -182,11 +249,29 @@ const checkStatus = async () => {
   result.value = null
 
   try {
-    const response = await fetch('/api/ppdb/check-status', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form)
-    })
+    let response
+    
+    if (isAlternateMode.value) {
+      // Search by name + NISN
+      response = await fetch('/api/ppdb/find-registration', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(altForm)
+      })
+    } else {
+      // Normal check by reg number + token
+      response = await fetch('/api/ppdb/check-status', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(form)
+      })
+    }
     
     const data = await response.json()
     

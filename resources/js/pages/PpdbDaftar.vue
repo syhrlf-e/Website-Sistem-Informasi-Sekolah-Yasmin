@@ -78,17 +78,18 @@
 
         <!-- Submit Button -->
         <div class="pt-6">
-          <p class="text-center text-xs text-gray-500 dark:text-gray-400 mb-3">
-            sudah selesai? klik kirim (Kirim Pendaftaran)
-          </p>
-          <button
-            @click="confirmSubmit"
-            :disabled="isSubmitting || !isFormValid"
-            class="w-full py-3.5 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-medium text-base transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed font-poppins"
-          >
-            {{ isSubmitting ? 'Mengirim...' : 'Kirim Pendaftaran' }}
-          </button>
-
+          <div class="flex items-center justify-between gap-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              sudah selesai? klik kirim
+            </p>
+            <button
+              @click="confirmSubmit"
+              :disabled="isSubmitting || !isFormValid"
+              class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-medium text-sm transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed font-poppins flex-shrink-0"
+            >
+              {{ isSubmitting ? 'Mengirim...' : 'Kirim Pendaftaran' }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -134,7 +135,7 @@ useHead({
   ]
 })
 
-const { showConfirm } = usePopup()
+const { confirm } = usePopup()
 
 const isLoading = ref(true)
 const isSubmitting = ref(false)
@@ -280,14 +281,13 @@ const fetchActiveWave = async () => {
 
 // Confirmation before submit
 const confirmSubmit = async () => {
-  const confirmed = await showConfirm({
-    title: 'Konfirmasi Pengiriman',
-    message: 'Kamu yakin data yang diisi sudah benar? Mau langsung kirim atau cek ulang dulu?',
-    confirmText: 'Kirim',
-    cancelText: 'Cek Ulang'
-  })
+  const result = await confirm(
+    'Konfirmasi Pengiriman',
+    'Kamu yakin data yang diisi sudah benar? Mau langsung kirim atau cek ulang dulu?',
+    'Kirim'
+  )
   
-  if (confirmed) {
+  if (result.isConfirmed) {
     submitForm()
   }
 }
@@ -312,7 +312,10 @@ const submitForm = async () => {
   try {
     const response = await fetch('/api/ppdb/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify(cleanData)
     })
     

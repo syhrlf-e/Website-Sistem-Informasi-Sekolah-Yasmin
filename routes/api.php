@@ -90,6 +90,7 @@ Route::prefix('ppdb')->group(function () {
     Route::post('/register', [PpdbRegistrationController::class, 'store'])
         ->middleware('throttle:3,1'); // Max 3 registrations per minute per IP
     Route::post('/check-status', [PpdbRegistrationController::class, 'checkStatus']);
+    Route::post('/find-registration', [PpdbRegistrationController::class, 'findByNameAndNisn']);
     Route::get('/landing-info', [AdminPpdbController::class, 'getLandingSettings']); // Public landing info
 });
 

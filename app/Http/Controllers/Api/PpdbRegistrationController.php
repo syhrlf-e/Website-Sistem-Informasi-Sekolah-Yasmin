@@ -183,6 +183,55 @@ class PpdbRegistrationController extends Controller
     }
 
     /**
+     * Find registration by name and NISN (for users who forgot credentials)
+     */
+    public function findByNameAndNisn(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string|min:3',
+            'nisn' => 'required|string|size:10',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak valid.',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $registration = PpdbRegistration::where('nisn', $request->nisn)
+            ->whereRaw('LOWER(nama_lengkap) LIKE ?', ['%' . strtolower($request->nama) . '%'])
+            ->first();
+
+        if (!$registration) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data pendaftaran tidak ditemukan. Pastikan nama dan NISN sudah benar.'
+            ], 404);
+        }
+
+        $registration->load('wave:id,name,academic_year');
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'registration_number' => $registration->registration_number,
+                'token' => $registration->token,
+                'nama_lengkap' => $registration->nama_lengkap,
+                'status' => $registration->status,
+                'status_label' => $registration->status_label,
+                'status_color' => $registration->status_color,
+                'wave' => $registration->wave,
+                'jurusan_pilihan' => $registration->jurusan_pilihan,
+                'asal_sekolah' => $registration->asal_sekolah,
+                'registered_at' => $registration->created_at->format('d F Y H:i'),
+                'catatan_admin' => $registration->catatan_admin,
+            ]
+        ]);
+    }
+
+    /**
      * Get validation rules for registration form
      */
     private function getValidationRules(): array
