@@ -60,48 +60,63 @@
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tanggal Lahir <span class="text-red-500">*</span></label>
       <DateWheelPicker v-model="modelValue.tanggal_lahir" />
+      <p v-if="age" class="text-[11px] text-gray-500 dark:text-gray-400 mt-1">
+        Umur kamu {{ age.years }} tahun {{ age.months }} bulan
+      </p>
     </div>
 
     <!-- Jenis Kelamin -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jenis Kelamin <span class="text-red-500">*</span></label>
-      <select v-model="modelValue.jenis_kelamin" class="form-input">
-        <option value="">Pilih</option>
-        <option value="Laki-laki">Laki-laki</option>
-        <option value="Perempuan">Perempuan</option>
-      </select>
+      <div class="relative">
+        <select v-model="modelValue.jenis_kelamin" class="form-select">
+          <option value="">Pilih</option>
+          <option value="Laki-laki">Laki-laki</option>
+          <option value="Perempuan">Perempuan</option>
+        </select>
+        <ChevronDown class="select-icon" />
+      </div>
     </div>
 
     <!-- Agama -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Agama <span class="text-red-500">*</span></label>
-      <select v-model="modelValue.agama" class="form-input">
-        <option value="">Pilih</option>
-        <option value="Islam">Islam</option>
-        <option value="Kristen">Kristen</option>
-        <option value="Katolik">Katolik</option>
-        <option value="Hindu">Hindu</option>
-        <option value="Buddha">Buddha</option>
-        <option value="Konghucu">Konghucu</option>
-      </select>
+      <div class="relative">
+        <select v-model="modelValue.agama" class="form-select">
+          <option value="">Pilih</option>
+          <option value="Islam">Islam</option>
+          <option value="Kristen">Kristen</option>
+          <option value="Katolik">Katolik</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Buddha">Buddha</option>
+          <option value="Konghucu">Konghucu</option>
+        </select>
+        <ChevronDown class="select-icon" />
+      </div>
     </div>
 
     <!-- Anak Ke -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Anak Ke <span class="text-red-500">*</span></label>
-      <select v-model.number="modelValue.anak_ke" class="form-input">
-        <option value="">Pilih</option>
-        <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
-      </select>
+      <div class="relative">
+        <select v-model.number="modelValue.anak_ke" class="form-select">
+          <option value="">Pilih</option>
+          <option v-for="n in 10" :key="n" :value="n">{{ n }}</option>
+        </select>
+        <ChevronDown class="select-icon" />
+      </div>
     </div>
 
     <!-- Jumlah Saudara -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Jumlah Saudara <span class="text-red-500">*</span></label>
-      <select v-model.number="modelValue.jumlah_saudara" class="form-input">
-        <option value="">Pilih</option>
-        <option v-for="n in 11" :key="n - 1" :value="n - 1">{{ n - 1 }}</option>
-      </select>
+      <div class="relative">
+        <select v-model.number="modelValue.jumlah_saudara" class="form-select">
+          <option value="">Pilih</option>
+          <option v-for="n in 11" :key="n - 1" :value="n - 1">{{ n - 1 }}</option>
+        </select>
+        <ChevronDown class="select-icon" />
+      </div>
     </div>
 
     <!-- No HP -->
@@ -149,6 +164,7 @@
 
 <script setup>
 import DateWheelPicker from '@/components/ui/DateWheelPicker.vue'
+import { ChevronDown } from 'lucide-vue-next'
 import { computed, ref } from 'vue'
 
 const props = defineProps({
@@ -159,6 +175,27 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const emailError = ref('')
+
+// Calculate age from birth date
+const age = computed(() => {
+  if (!props.modelValue.tanggal_lahir) return null
+  const birth = new Date(props.modelValue.tanggal_lahir)
+  const today = new Date()
+  let years = today.getFullYear() - birth.getFullYear()
+  let months = today.getMonth() - birth.getMonth()
+  if (months < 0) {
+    years--
+    months += 12
+  }
+  if (today.getDate() < birth.getDate()) {
+    months--
+    if (months < 0) {
+      years--
+      months += 12
+    }
+  }
+  return { years, months }
+})
 
 // Max birth date (must be at least 12 years old)
 const maxBirthDate = computed(() => {
@@ -230,6 +267,31 @@ const validateEmail = () => {
 
 <style scoped>
 .form-input {
-  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  @apply w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all;
+}
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* Custom select dropdown styling */
+.form-select {
+  @apply w-full px-4 py-2.5 pr-10 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all cursor-pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.form-select:-webkit-autofill,
+.form-select:-webkit-autofill:hover,
+.form-select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* Chevron icon for select */
+.select-icon {
+  @apply absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none;
 }
 </style>

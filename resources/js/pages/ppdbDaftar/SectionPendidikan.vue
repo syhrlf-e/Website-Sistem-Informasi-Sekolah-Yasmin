@@ -106,9 +106,12 @@
     <!-- Tahun Lulus -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tahun Lulus <span class="text-red-500">*</span></label>
-      <select v-model.number="modelValue.tahun_lulus" class="form-input">
-        <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
-      </select>
+      <div class="relative">
+        <select v-model.number="modelValue.tahun_lulus" class="form-select">
+          <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+        </select>
+        <ChevronDown class="select-icon" />
+      </div>
     </div>
 
     <!-- Alamat Sekolah (readonly when auto-filled) -->
@@ -154,6 +157,7 @@
 </template>
 
 <script setup>
+import { ChevronDown } from 'lucide-vue-next'
 import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
@@ -274,6 +278,31 @@ const handleNpsn = (event) => {
 
 <style scoped>
 .form-input {
-  @apply w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+  @apply w-full px-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all;
+}
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* Custom select dropdown styling */
+.form-select {
+  @apply w-full px-4 py-2.5 pr-10 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all cursor-pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.form-select:-webkit-autofill,
+.form-select:-webkit-autofill:hover,
+.form-select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* Chevron icon for select */
+.select-icon {
+  @apply absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none;
 }
 </style>

@@ -5,8 +5,21 @@
 -->
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-6 pb-12 px-4">
     <div class="max-w-4xl mx-auto">
+
+      <!-- Top Bar: Back Button + Date -->
+      <div class="flex items-center justify-between mb-6">
+        <a 
+          :href="ppdbUrl('/')"
+          class="inline-flex items-center justify-center w-8 h-8 bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 rounded-full transition-colors"
+        >
+          <ChevronLeft class="w-4 h-4" />
+        </a>
+        <div class="px-3 py-1.5 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium font-poppins">
+          {{ currentDate }}
+        </div>
+      </div>
 
       <!-- Header -->
       <div class="text-center mb-8">
@@ -31,12 +44,12 @@
       </div>
 
       <!-- Registration Form -->
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-2">
         <!-- Progress Indicator -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-200 dark:border-gray-700 mb-6">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Progress Pengisian</span>
-            <span class="text-sm font-bold text-blue-600">{{ completedSections }}/{{ totalSections }} Bagian</span>
+            <span class="text-sm text-gray-600 dark:text-gray-400">Progress Pengisian</span>
+            <span class="text-sm text-blue-600">{{ completedSections }}/{{ totalSections }} Bagian</span>
           </div>
           <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
             <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500" :style="`width: ${progressPercent}%`"></div>
@@ -65,27 +78,17 @@
 
         <!-- Submit Button -->
         <div class="pt-6">
-          <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-3">
-            Pastikan semua data sudah benar sebelum mengirim
+          <p class="text-center text-xs text-gray-500 dark:text-gray-400 mb-3">
+            sudah selesai? klik kirim (Kirim Pendaftaran)
           </p>
           <button
-            @click="submitForm"
+            @click="confirmSubmit"
             :disabled="isSubmitting || !isFormValid"
-            class="w-full py-4 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-2xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed font-poppins flex items-center justify-center gap-2"
+            class="w-full py-3.5 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-medium text-base transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed font-poppins"
           >
-            <span v-if="isSubmitting">
-              <div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
-            </span>
-            <span v-else>
-              <Send class="w-5 h-5" />
-            </span>
             {{ isSubmitting ? 'Mengirim...' : 'Kirim Pendaftaran' }}
           </button>
-          <div class="text-center mt-4">
-            <a :href="ppdbUrl('/')" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
-              ← Kembali ke halaman PPDB
-            </a>
-          </div>
+
         </div>
       </div>
     </div>
@@ -95,8 +98,9 @@
 <script setup>
 import BackButton from '@/components/ui/BackButton.vue'
 import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
+import { usePopup } from '@/composables/usePopup'
 import { useHead } from '@vueuse/head'
-import { AlertTriangle, Send } from 'lucide-vue-next'
+import { AlertTriangle, ChevronLeft } from 'lucide-vue-next'
 import { computed, onMounted, ref, shallowRef, watch } from 'vue'
 // Note: This is an Inertia page, uses window.location for navigation
 import FormSection from './ppdbDaftar/FormSection.vue'
@@ -114,6 +118,13 @@ const ppdbUrl = (path) => {
   return '/ppdb' + (path === '/' ? '/landing' : path)
 }
 
+// Current date display
+const currentDate = computed(() => {
+  const now = new Date()
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']
+  return `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`
+})
 
 
 useHead({
@@ -122,6 +133,8 @@ useHead({
     { name: 'description', content: 'Formulir pendaftaran PPDB SMA Mutiara Insan Nusantara' }
   ]
 })
+
+const { showConfirm } = usePopup()
 
 const isLoading = ref(true)
 const isSubmitting = ref(false)
@@ -262,6 +275,20 @@ const fetchActiveWave = async () => {
     console.error('Error fetching wave:', error)
   } finally {
     isLoading.value = false
+  }
+}
+
+// Confirmation before submit
+const confirmSubmit = async () => {
+  const confirmed = await showConfirm({
+    title: 'Konfirmasi Pengiriman',
+    message: 'Kamu yakin data yang diisi sudah benar? Mau langsung kirim atau cek ulang dulu?',
+    confirmText: 'Kirim',
+    cancelText: 'Cek Ulang'
+  })
+  
+  if (confirmed) {
+    submitForm()
   }
 }
 
