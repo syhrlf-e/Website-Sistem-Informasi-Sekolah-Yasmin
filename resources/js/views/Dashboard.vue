@@ -14,13 +14,39 @@
 
     <!-- Content (shown after initial load) -->
     <template v-else>
+      <!-- Welcome Greeting with Date/Time -->
+      <div class="flex items-start justify-between mb-2">
+        <div>
+          <h1 class="text-base font-semibold text-gray-900 dark:text-white font-poppins">
+            {{ greeting }}, {{ userName }}! 👋
+          </h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-poppins">sebagai {{ userRole }}</p>
+        </div>
+        <div class="text-right cursor-pointer hover:opacity-75 transition-opacity" @click="showCalendar = true" title="Buka Kalender">
+          <p class="text-base font-semibold text-gray-900 dark:text-white font-poppins">{{ currentDate }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-poppins">{{ currentTime }}</p>
+        </div>
+      </div>
+
       <DashboardStats :stats="displayStats" />
 
-      <DashboardPendaftar
-        :items="store.recentPendaftar"
-        :pending-count="displayStats.pendaftar_pending"
-        :is-loading="store.isInitialLoading"
-      />
+      <!-- Two Column Layout: PPDB Overview (Left) + Pendaftar Ekskul (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <!-- PPDB Overview - Left (wider) -->
+        <div class="lg:col-span-3">
+          <DashboardPpdbOverview />
+        </div>
+
+        <!-- Pendaftar Ekskul - Right (narrower) -->
+        <div class="lg:col-span-2">
+          <DashboardPendaftar
+            :items="store.recentPendaftar"
+            :pending-count="displayStats.pendaftar_pending"
+            :approved-count="displayStats.pendaftar_approved || 0"
+            :rejected-count="displayStats.pendaftar_rejected || 0"
+          />
+        </div>
+      </div>
 
       <DashboardModals
         :show-reject="showRejectModal"
@@ -32,6 +58,9 @@
         @approve-from-modal="handleApproveFromModal"
         @reject-from-modal="handleRejectFromModal"
       />
+
+      <!-- Calendar Sidebar -->
+      <CalendarSidebar :is-open="showCalendar" @close="showCalendar = false" />
     </template>
   </div>
 </template>
@@ -41,16 +70,55 @@ import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
 import { usePopup } from '@/composables/usePopup'
 import api from '@/services/api'
 import { usePendaftarStore } from '@/stores/pendaftar'
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import DashboardModals from './dashboard/DashboardModals.vue'
 import DashboardPendaftar from './dashboard/DashboardPendaftar.vue'
+import DashboardPpdbOverview from './dashboard/DashboardPpdbOverview.vue'
 import DashboardStats from './dashboard/DashboardStats.vue'
+import CalendarSidebar from './dashboard/CalendarSidebar.vue'
 
 const { showSuccess, showError, showWarning, confirm } = usePopup()
 const store = usePendaftarStore()
+const showCalendar = ref(false)
+
+// User greeting
+const userName = computed(() => {
+  const user = JSON.parse(sessionStorage.getItem('admin_user') || '{}')
+  return user.name || 'Admin'
+})
+
+const userRole = computed(() => {
+  const user = JSON.parse(sessionStorage.getItem('admin_user') || '{}')
+  const roles = { super_admin: 'Super Admin', admin: 'Admin', admin_ppdb: 'Admin PPDB' }
+  return roles[user.role] || 'Admin'
+})
+
+const greeting = computed(() => {
+  const hour = new Date().getHours()
+  if (hour < 11) return 'Selamat pagi'
+  if (hour < 15) return 'Selamat siang'
+  if (hour < 18) return 'Selamat sore'
+  return 'Selamat malam'
+})
+
+// Date/Time
+const clockTime = ref(new Date())
+let clockInterval = null
+
+const currentDate = computed(() => {
+  const options = { day: 'numeric', month: 'long', year: 'numeric' }
+  return clockTime.value.toLocaleDateString('id-ID', options)
+})
+
+const currentTime = computed(() => {
+  const hours = clockTime.value.getHours().toString().padStart(2, '0')
+  const minutes = clockTime.value.getMinutes().toString().padStart(2, '0')
+  const seconds = clockTime.value.getSeconds().toString().padStart(2, '0')
+  return `${hours}.${minutes}.${seconds}`
+})
 
 // Display stats with animation
-const displayStats = ref({ berita: 0, ekskul: 0, galeri: 0, prestasi: 0, pendaftar_pending: 0 })
+const displayStats = ref({ berita: 0, ekskul: 0, galeri: 0, prestasi: 0, pendaftar_pending: 0, pendaftar_approved: 0, pendaftar_rejected: 0 })
 
 const showDetailModal = ref(false)
 const showRejectModal = ref(false)
@@ -95,11 +163,16 @@ watch(() => store.stats, (newStats) => {
 onMounted(() => {
   // Start polling - store handles caching and initial load
   store.startPolling()
+  // Update clock every second
+  clockInterval = setInterval(() => {
+    clockTime.value = new Date()
+  }, 1000)
 })
 
 onUnmounted(() => {
   // Stop polling when leaving dashboard
   store.stopPolling()
+  if (clockInterval) clearInterval(clockInterval)
 })
 
 const handleApprove = async (id) => {

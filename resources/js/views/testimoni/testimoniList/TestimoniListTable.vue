@@ -24,7 +24,7 @@
       <table class="w-full">
         <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
           <tr>
-            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase font-poppins w-16">Order</th>
+            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase font-poppins w-10"></th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase font-poppins">Nama</th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase font-poppins">Role</th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase font-poppins">Testimoni</th>
@@ -37,18 +37,10 @@
             @dragstart="$emit('drag-start', index)" @dragover.prevent @drop="$emit('drop', index)"
             class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-move">
             <td class="px-6 py-4">
-              <div class="flex items-center gap-2">
-                <GripVertical class="w-4 h-4 text-gray-400" />
-                <span class="text-sm font-semibold text-gray-900 dark:text-white font-poppins">{{ testimonial.order + 1 }}</span>
-              </div>
+              <GripVertical class="w-4 h-4 text-gray-400" />
             </td>
             <td class="px-6 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
-                  {{ getInitials(testimonial.author) }}
-                </div>
-                <p class="font-semibold text-gray-900 dark:text-white font-poppins">{{ testimonial.author }}</p>
-              </div>
+              <p class="font-semibold text-gray-900 dark:text-white font-poppins">{{ testimonial.author }}</p>
             </td>
             <td class="px-6 py-4 text-sm text-gray-600 dark:text-gray-400 font-poppins">{{ testimonial.role }}</td>
             <td class="px-6 py-4">

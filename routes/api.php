@@ -229,6 +229,13 @@ Route::middleware(['auth:sanctum', 'is_admin_api'])->prefix('yasmin-panel')->gro
         Route::get('/users', [\App\Http\Controllers\Api\ActivityLogController::class, 'users']);
     });
 
+    // Calendar Events
+    Route::prefix('calendar')->group(function () {
+        Route::get('/events', [\App\Http\Controllers\Api\CalendarEventController::class, 'index']);
+        Route::post('/events', [\App\Http\Controllers\Api\CalendarEventController::class, 'store']);
+        Route::delete('/events/{id}', [\App\Http\Controllers\Api\CalendarEventController::class, 'destroy']);
+    });
+
     // PPDB Admin Routes
     Route::prefix('ppdb')->group(function () {
         // Dashboard
