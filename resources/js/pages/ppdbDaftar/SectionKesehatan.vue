@@ -23,13 +23,31 @@
     <!-- Tinggi Badan -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tinggi Badan (cm) <span class="text-red-500">*</span></label>
-      <input v-model.number="modelValue.tinggi_badan" type="number" min="50" max="250" class="form-input" placeholder="165" />
+      <input 
+        :value="modelValue.tinggi_badan" 
+        @input="handleNumeric($event, 'tinggi_badan', 3)" 
+        @keypress="onlyNumbers"
+        type="text" 
+        inputmode="numeric"
+        maxlength="3" 
+        class="form-input" 
+        placeholder="165" 
+      />
     </div>
 
     <!-- Berat Badan -->
     <div>
       <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Berat Badan (kg) <span class="text-red-500">*</span></label>
-      <input v-model.number="modelValue.berat_badan" type="number" min="20" max="200" class="form-input" placeholder="55" />
+      <input 
+        :value="modelValue.berat_badan" 
+        @input="handleNumeric($event, 'berat_badan', 3)" 
+        @keypress="onlyNumbers"
+        type="text" 
+        inputmode="numeric"
+        maxlength="3" 
+        class="form-input" 
+        placeholder="55" 
+      />
     </div>
 
     <!-- Riwayat Penyakit Dropdown -->
@@ -74,6 +92,20 @@ const props = defineProps({
   modelValue: { type: Object, required: true },
   errors: { type: Object, default: () => ({}) }
 })
+
+// Block non-numeric keypress
+const onlyNumbers = (event) => {
+  const char = String.fromCharCode(event.which || event.keyCode)
+  if (!/[0-9]/.test(char)) {
+    event.preventDefault()
+  }
+}
+
+// Handle numeric input with max length
+const handleNumeric = (event, field, maxLen) => {
+  const value = event.target.value.replace(/\D/g, '').slice(0, maxLen)
+  props.modelValue[field] = value ? Number(value) : null
+}
 
 // Track if user has riwayat penyakit
 const hasRiwayatPenyakit = ref(props.modelValue.riwayat_penyakit ? 'ada' : 'tidak')

@@ -137,19 +137,17 @@
         <div
           @click="modelValue.jurusan_pilihan = 'IPA'"
           :class="modelValue.jurusan_pilihan === 'IPA' ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-green-400'"
-          class="flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all"
+          class="flex items-center justify-center py-3 border-2 rounded-xl cursor-pointer transition-all"
         >
           <p class="font-semibold text-gray-900 dark:text-white">IPA</p>
-          <p class="text-xs text-gray-500 text-center">Ilmu Pengetahuan Alam</p>
         </div>
 
         <div
           @click="modelValue.jurusan_pilihan = 'IPS'"
           :class="modelValue.jurusan_pilihan === 'IPS' ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20' : 'border-gray-200 dark:border-gray-700 hover:border-orange-400'"
-          class="flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all"
+          class="flex items-center justify-center py-3 border-2 rounded-xl cursor-pointer transition-all"
         >
           <p class="font-semibold text-gray-900 dark:text-white">IPS</p>
-          <p class="text-xs text-gray-500 text-center">Ilmu Pengetahuan Sosial</p>
         </div>
       </div>
     </div>

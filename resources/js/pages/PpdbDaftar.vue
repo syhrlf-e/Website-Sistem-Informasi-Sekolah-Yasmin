@@ -49,7 +49,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-200 dark:border-gray-700 mb-6">
           <div class="flex items-center justify-between mb-2">
             <span class="text-sm text-gray-600 dark:text-gray-400">Progress Pengisian</span>
-            <span class="text-sm text-blue-600">{{ completedSections }}/{{ totalSections }} Bagian</span>
+            <span class="text-sm text-blue-600 dark:text-blue-400 font-normal">{{ completedSections }}/{{ totalSections }} Bagian</span>
           </div>
           <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
             <div class="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500" :style="`width: ${progressPercent}%`"></div>
