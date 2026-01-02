@@ -5,7 +5,6 @@
   @props {Number} pendingCount - Badge count untuk menu Pendaftar Ekskul  
   @props {Boolean} isSuperAdmin - Role-based visibility untuk menu Users
   @props {Boolean} isAdminPpdb - Role-based visibility untuk admin PPDB (only PPDB menus)
-  @emits logout - Trigger logout flow di parent
 -->
 
 <template>
@@ -66,24 +65,6 @@
         />
 
         <SidebarMenuItem
-          to="/yasmin-panel/pengumuman"
-          :icon="Megaphone"
-          label="Pengumuman"
-        />
-
-        <SidebarMenuItem
-          to="/yasmin-panel/testimoni"
-          :icon="MessageSquareQuote"
-          label="Testimoni"
-        />
-
-        <SidebarMenuItem
-          to="/yasmin-panel/guru"
-          :icon="GraduationCap"
-          label="Data Guru"
-        />
-
-        <SidebarMenuItem
           to="/yasmin-panel/pendaftar"
           :icon="ClipboardList"
           label="Pendaftar Ekskul"
@@ -106,44 +87,16 @@
         />
       </template>
     </nav>
-
-    <!-- Bottom Section -->
-    <div class="flex-shrink-0">
-      <!-- Riwayat Aktivitas (Super Admin only) -->
-      <div v-if="isSuperAdmin" class="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
-        <router-link
-          to="/yasmin-panel/activity-logs"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 font-medium font-poppins"
-        >
-          <History class="w-5 h-5" />
-          <span>Riwayat Aktivitas</span>
-        </router-link>
-      </div>
-
-      <!-- Logout Button -->
-      <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-        <button
-          @click="$emit('logout')"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 font-medium font-poppins"
-        >
-          <LogOut class="w-5 h-5" />
-          <span>Logout</span>
-        </button>
-      </div>
-    </div>
   </aside>
 </template>
 
 <script setup>
 import {
-  CalendarDays,
   ClipboardList,
   FileText,
   GraduationCap,
-  History,
   Image,
   LayoutDashboard,
-  LogOut,
   Megaphone,
   MessageSquareQuote,
   Newspaper,
@@ -177,8 +130,6 @@ const props = defineProps({
   }
 })
 
-defineEmits(['logout'])
-
 const route = useRoute()
 
 /**
@@ -188,7 +139,10 @@ const kontenItems = [
   { to: '/yasmin-panel/berita', icon: Newspaper, label: 'Berita' },
   { to: '/yasmin-panel/ekskul', icon: Target, label: 'Ekstrakurikuler' },
   { to: '/yasmin-panel/galeri', icon: Image, label: 'Galeri' },
-  { to: '/yasmin-panel/prestasi', icon: Trophy, label: 'Prestasi' }
+  { to: '/yasmin-panel/prestasi', icon: Trophy, label: 'Prestasi' },
+  { to: '/yasmin-panel/pengumuman', icon: Megaphone, label: 'Pengumuman' },
+  { to: '/yasmin-panel/testimoni', icon: MessageSquareQuote, label: 'Testimoni' },
+  { to: '/yasmin-panel/guru', icon: GraduationCap, label: 'Data Guru' }
 ]
 
 const isKontenActive = computed(() => {
@@ -196,7 +150,10 @@ const isKontenActive = computed(() => {
     '/yasmin-panel/berita',
     '/yasmin-panel/ekskul',
     '/yasmin-panel/galeri',
-    '/yasmin-panel/prestasi'
+    '/yasmin-panel/prestasi',
+    '/yasmin-panel/pengumuman',
+    '/yasmin-panel/testimoni',
+    '/yasmin-panel/guru'
   ]
   return kontenRoutes.some((path) => route.path.startsWith(path))
 })

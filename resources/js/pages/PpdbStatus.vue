@@ -5,21 +5,21 @@
 -->
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4 flex items-center justify-center">
-    <div class="max-w-lg w-full">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-6 pb-12 px-4">
+    <div class="max-w-lg w-full mx-auto">
 
-      <!-- Header -->
-      <div class="text-center mb-8">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 font-poppins">
-          Cek Status
-        </h1>
-        <p class="text-gray-600 dark:text-gray-300 font-poppins">
-          {{ isAlternateMode ? 'Masukkan Nama dan NISN Anda' : 'Masukkan Nomor Registrasi dan Kode Akses Anda' }}
-        </p>
-      </div>
+      <!-- Form Card -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mb-3">
+        <!-- Header (inside card) -->
+        <div class="text-center mb-6">
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2 font-poppins">
+            Cek Status
+          </h1>
+          <p class="text-sm text-gray-600 dark:text-gray-300 font-poppins">
+            {{ isAlternateMode ? 'Masukkan Nama dan NISN Anda' : 'Masukkan Nomor Registrasi dan Kode Akses Anda' }}
+          </p>
+        </div>
 
-      <!-- Form -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
         <form @submit.prevent="checkStatus" class="space-y-4">
           <!-- Normal Mode -->
           <template v-if="!isAlternateMode">
@@ -41,7 +41,7 @@
                 type="text"
                 required
                 maxlength="8"
-                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white font-mono text-center text-2xl tracking-widest uppercase focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white font-mono tracking-widest uppercase focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="XX-XX-XX"
               />
             </div>
@@ -75,24 +75,56 @@
             </div>
           </template>
 
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="w-full py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-semibold transition-all flex items-center justify-center"
-          >
-            <div v-if="isLoading" class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
-            {{ isLoading ? 'Mencari...' : (isAlternateMode ? 'Cari Data' : 'Cek Status') }}
-          </button>
+          <!-- Normal Mode: Chevron Back + CTA Button -->
+          <template v-if="!isAlternateMode">
+            <div class="flex items-center gap-3">
+              <a
+                :href="ppdbUrl('/')"
+                class="p-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-full transition-colors"
+              >
+                <ChevronLeft class="w-5 h-5" />
+              </a>
+              <button
+                type="submit"
+                :disabled="isLoading"
+                class="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-semibold transition-all flex items-center justify-center"
+              >
+                <div v-if="isLoading" class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                {{ isLoading ? 'Mencari...' : 'Cek Status' }}
+              </button>
+            </div>
+          </template>
+
+          <!-- Alternate Mode: Chevron Back + CTA Button -->
+          <template v-else>
+            <div class="flex items-center gap-3">
+              <button
+                @click.prevent="toggleMode"
+                type="button"
+                class="p-3 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-full transition-colors"
+              >
+                <ChevronLeft class="w-5 h-5" />
+              </button>
+              <button
+                type="submit"
+                :disabled="isLoading"
+                class="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full font-semibold transition-all flex items-center justify-center"
+              >
+                <div v-if="isLoading" class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                {{ isLoading ? 'Mencari...' : 'Cari Data' }}
+              </button>
+            </div>
+          </template>
         </form>
 
-        <!-- Toggle Mode Link -->
-        <div class="mt-4 text-center">
+        <!-- Toggle Mode Link (only in normal mode) -->
+        <div v-if="!isAlternateMode" class="mt-4 text-center">
           <button 
             @click="toggleMode" 
             type="button"
             class="text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
           >
-            {{ isAlternateMode ? '← Kembali ke cek dengan Nomor Registrasi' : 'Lupa Nomor Registrasi & Kode Akses? Klik disini' }}
+            Lupa data cek status? Klik Disini
           </button>
         </div>
 
@@ -102,9 +134,9 @@
         </div>
       </div>
 
-      <!-- Result -->
+      <!-- Result (separate card) -->
       <Transition name="fade">
-        <div v-if="result" class="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
+        <div v-if="result" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
           <!-- Status Badge -->
           <div class="flex items-center justify-between mb-4">
             <span class="text-sm text-gray-500 dark:text-gray-400">Status</span>
@@ -148,19 +180,13 @@
         </div>
       </Transition>
 
-      <!-- Back Link -->
-      <div class="text-center">
-        <a :href="ppdbUrl('/')" class="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 text-sm transition-colors">
-          ← Kembali ke halaman PPDB
-        </a>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { useHead } from '@vueuse/head'
-import { CheckCircle, Clock, UserCheck, XCircle } from 'lucide-vue-next'
+import { CheckCircle, ChevronLeft, Clock, UserCheck, XCircle } from 'lucide-vue-next'
 import { reactive, ref, shallowRef } from 'vue'
 
 useHead({
@@ -261,6 +287,20 @@ const checkStatus = async () => {
         },
         body: JSON.stringify(altForm)
       })
+      
+      const data = await response.json()
+      
+      if (data.success) {
+        // Redirect to success page with credentials
+        const params = new URLSearchParams({
+          reg: data.data.registration_number,
+          token: data.data.token,
+          nama: data.data.nama_lengkap
+        })
+        window.location.href = ppdbUrl('/sukses') + `?${params.toString()}`
+      } else {
+        error.value = data.message || 'Data tidak valid'
+      }
     } else {
       // Normal check by reg number + token
       response = await fetch('/api/ppdb/check-status', {
@@ -271,14 +311,14 @@ const checkStatus = async () => {
         },
         body: JSON.stringify(form)
       })
-    }
-    
-    const data = await response.json()
-    
-    if (data.success) {
-      result.value = data.data
-    } else {
-      error.value = data.message || 'Data tidak ditemukan'
+      
+      const data = await response.json()
+      
+      if (data.success) {
+        result.value = data.data
+      } else {
+        error.value = data.message || 'Data tidak ditemukan'
+      }
     }
   } catch (err) {
     error.value = 'Terjadi kesalahan. Silakan coba lagi.'

@@ -13,7 +13,6 @@
       :pending-count="isOnPendaftarRoute ? 0 : pendingCount"
       :is-super-admin="isSuperAdmin"
       :is-admin-ppdb="isAdminPpdb"
-      @logout="handleLogout"
     />
 
     <MobileOverlay :show="sidebarOpen" @close="sidebarOpen = false" />
@@ -25,6 +24,7 @@
         :is-dark="isDark"
         @toggle-sidebar="sidebarOpen = !sidebarOpen"
         @toggle-dark-mode="toggleDarkMode"
+        @logout="handleLogout"
       />
 
       <main class="flex-1 p-6 overflow-y-auto bg-gray-50 dark:bg-gray-900">
