@@ -16,8 +16,8 @@
       <table class="w-full">
         <thead class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
           <tr>
-            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins">Preview</th>
-            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins">Nama Ekskul</th>
+            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins w-12">#</th>
+            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins">Judul</th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins">Kategori</th>
             <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins">Status Pendaftaran</th>
             <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider font-poppins">Batas Pendaftaran</th>
@@ -27,27 +27,26 @@
         </thead>
         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
           <tr
-            v-for="ekskul in items"
+            v-for="(ekskul, index) in items"
             :key="ekskul.id"
             class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150"
           >
+            <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400 font-poppins w-12">{{ index + 1 }}</td>
             <td class="px-6 py-4">
-              <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
-                <img
-                  v-if="ekskul.gambar"
-                  :src="getImageUrl(ekskul.gambar)"
-                  :alt="ekskul.nama"
-                  class="w-full h-full object-cover"
-                />
-                <ImageIcon v-else class="w-6 h-6 text-gray-400" />
-              </div>
-            </td>
-            <td class="px-6 py-4">
-              <div>
-                <p class="font-semibold text-gray-900 dark:text-white font-poppins">{{ ekskul.nama }}</p>
-                <p v-if="ekskul.tagline" class="text-xs text-gray-900 dark:text-white font-poppins italic mt-0.5">
-                  "{{ ekskul.tagline }}"
-                </p>
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                  <img
+                    v-if="ekskul.gambar"
+                    :src="getImageUrl(ekskul.gambar)"
+                    :alt="ekskul.nama"
+                    class="w-full h-full object-cover"
+                  />
+                  <ImageIcon v-else class="w-5 h-5 text-gray-400" />
+                </div>
+                <div class="min-w-0">
+                  <p class="font-semibold text-gray-900 dark:text-white font-poppins">{{ ekskul.nama }}</p>
+                  <p v-if="ekskul.tagline" class="text-xs text-gray-500 dark:text-gray-400 font-poppins truncate">{{ ekskul.tagline }}</p>
+                </div>
               </div>
             </td>
             <td class="px-6 py-4">
@@ -60,20 +59,17 @@
             <td class="px-6 py-4">
               <div class="flex items-center justify-center">
                 <button
-                  @click="$emit('toggle-status', ekskul)"
-                  :disabled="isDeadlinePassed(ekskul)"
+                  @click="handleToggleStatus(ekskul)"
                   class="px-3 py-2 rounded-lg transition-colors duration-200 group flex items-center gap-2"
                   :class="[
-                    isDeadlinePassed(ekskul)
-                      ? 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 cursor-not-allowed opacity-75'
-                      : ekskul.enable_registration
+                    getRegistrationStatus(ekskul)
                       ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-100'
                       : 'bg-gray-50 dark:bg-gray-900/20 text-gray-600 dark:text-gray-400 hover:bg-gray-100'
                   ]"
                 >
                   <Power class="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span class="text-xs font-semibold font-poppins">
-                    {{ isDeadlinePassed(ekskul) ? 'EXPIRED' : ekskul.enable_registration ? 'BUKA' : 'TUTUP' }}
+                    {{ getRegistrationStatus(ekskul) ? 'BUKA' : 'TUTUP' }}
                   </span>
                 </button>
               </div>
@@ -133,6 +129,9 @@
 <script setup>
 import { Edit2, ImageIcon, Power, Target, Trash2 } from 'lucide-vue-next'
 import BaseBadge from '@/components/ui/shared/BaseBadge.vue'
+import { usePopup } from '@/composables/usePopup'
+
+const { showWarning } = usePopup()
 
 defineProps({
   items: {
@@ -141,7 +140,7 @@ defineProps({
   }
 })
 
-defineEmits(['edit', 'delete', 'toggle-status'])
+const emit = defineEmits(['edit', 'delete', 'toggle-status'])
 
 const getImageUrl = (path) => {
   if (!path) return null
@@ -162,6 +161,26 @@ const getBadgeVariant = (badge) => {
 const isDeadlinePassed = (ekskul) => {
   if (!ekskul.registration_deadline) return false
   return new Date(ekskul.registration_deadline) < new Date()
+}
+
+// Registration status: BUKA if enabled AND not expired
+const getRegistrationStatus = (ekskul) => {
+  if (isDeadlinePassed(ekskul)) return false
+  return ekskul.enable_registration
+}
+
+// Handle toggle with deadline validation
+const handleToggleStatus = (ekskul) => {
+  // If currently closed and trying to open
+  if (!ekskul.enable_registration || isDeadlinePassed(ekskul)) {
+    // Check if deadline has passed
+    if (isDeadlinePassed(ekskul)) {
+      showWarning('Batas pendaftaran sudah lewat', 'Silakan ubah batas pendaftaran terlebih dahulu untuk membuka pendaftaran.')
+      return
+    }
+  }
+  // Emit toggle event to parent
+  emit('toggle-status', ekskul)
 }
 
 const formatDate = (dateString) => {

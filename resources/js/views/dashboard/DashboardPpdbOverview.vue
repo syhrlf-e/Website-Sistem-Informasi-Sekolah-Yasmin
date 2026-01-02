@@ -13,10 +13,8 @@
           <UserPlus class="w-5 h-5 text-blue-600 dark:text-blue-400" />
         </div>
         <div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white font-poppins">PPDB Overview</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ activeWave?.name || 'Tidak ada gelombang aktif' }}
-          </p>
+          <h3 class="text-base font-bold text-gray-900 dark:text-white font-poppins">PPDB Overview</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 font-poppins">{{ activeWave?.name || 'Tidak ada gelombang aktif' }}</p>
         </div>
       </div>
       <router-link 
@@ -81,7 +79,7 @@
 
       <!-- Recent Registrants -->
       <div>
-        <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Pendaftar Terbaru</h4>
+        <h4 class="text-xs font-medium text-gray-700 dark:text-gray-300 mb-3">Pendaftar Terbaru</h4>
         <div v-if="recentRegistrants.length" class="space-y-2">
           <div 
             v-for="registrant in recentRegistrants" 

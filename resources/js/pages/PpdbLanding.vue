@@ -10,12 +10,12 @@
     <Navbar />
 
     <!-- Hero Section -->
-    <section class="relative h-[60vh] min-h-[500px] overflow-hidden pt-24">
+    <section class="relative min-h-[60vh] overflow-hidden pt-32 pb-16">
       <!-- Background Gradient -->
       <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
 
       <!-- Hero Content -->
-      <div class="relative z-10 h-full flex items-center">
+      <div class="relative z-10">
         <div class="container-content">
           <div class="max-w-2xl">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 font-poppins leading-tight">
@@ -27,19 +27,17 @@
             </p>
 
             <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex flex-col md:flex-row gap-3 w-full">
               <a
                 :href="ppdbUrl('/daftar')"
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl font-poppins"
+                class="flex-1 inline-flex items-center justify-center px-6 py-3.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full font-medium text-base transition-all shadow-lg hover:shadow-xl font-poppins"
               >
                 Daftar Sekarang
-                <ArrowRight class="w-5 h-5" />
               </a>
               <a
                 :href="ppdbUrl('/status')"
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-white dark:bg-gray-800 border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-xl font-semibold text-lg transition-all font-poppins"
+                class="flex-1 inline-flex items-center justify-center px-6 py-3 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-500 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400 rounded-full font-medium text-base transition-all font-poppins"
               >
-                <Search class="w-5 h-5" />
                 Cek Status Pendaftaran
               </a>
             </div>

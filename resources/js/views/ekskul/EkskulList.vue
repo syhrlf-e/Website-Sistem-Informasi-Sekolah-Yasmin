@@ -354,7 +354,6 @@ const toggleStatus = async (ekskul) => {
     const response = await api.put(`/yasmin-panel/ekstrakurikuler/${ekskul.id}/toggle-registration`)
     if (response.data.success && index !== -1) {
       ekskulList.value[index] = response.data.data
-      await Swal.fire({ title: 'Berhasil!', text: response.data.message, icon: 'success', timer: 1500, showConfirmButton: false })
     }
   } catch (err) {
     if (index !== -1) ekskulList.value[index].enable_registration = oldStatus

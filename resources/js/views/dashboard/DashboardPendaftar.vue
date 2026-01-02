@@ -12,10 +12,8 @@
           <Target class="w-5 h-5 text-orange-600 dark:text-orange-400" />
         </div>
         <div>
-          <h3 class="text-lg font-bold text-gray-900 dark:text-white font-poppins">Pendaftar Ekskul</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            Ekstrakurikuler
-          </p>
+          <h3 class="text-base font-bold text-gray-900 dark:text-white font-poppins">Pendaftar Ekskul</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 font-poppins">Ekstrakurikuler</p>
         </div>
       </div>
       <router-link 

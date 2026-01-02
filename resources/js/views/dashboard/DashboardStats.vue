@@ -1,62 +1,80 @@
 /**
  * @component DashboardStats
- * @description Stats cards untuk dashboard (berita, ekskul, galeri, prestasi)
+ * @description Unified stats card untuk dashboard (berita, ekskul, galeri, prestasi)
  */
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <!-- Berita -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
-          <Newspaper class="w-6 h-6 text-blue-600 dark:text-blue-400" />
+  <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-5 border-b border-gray-200 dark:border-gray-700">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center">
+          <LayoutGrid class="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
         </div>
-        <span class="text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">Terpublikasi</span>
+        <div>
+          <h2 class="text-base font-bold text-gray-900 dark:text-white font-poppins">Konten Website</h2>
+          <p class="text-xs text-gray-500 dark:text-gray-400 font-poppins">Publikasi & Kegiatan</p>
+        </div>
       </div>
-      <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.berita }}</h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Total Berita</p>
     </div>
 
-    <!-- Ekskul -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center">
-          <Target class="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-2 lg:grid-cols-4">
+      <!-- Berita -->
+      <div class="py-8 px-6 flex items-start justify-between relative">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white font-poppins">{{ stats.berita }}</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-poppins">Total Berita</p>
         </div>
-        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-1 rounded-full">Aktif</span>
+        <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+          <Newspaper class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        </div>
+        <!-- Divider -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-px bg-gray-200 dark:bg-gray-700 hidden lg:block" />
       </div>
-      <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.ekskul }}</h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Ekstrakurikuler</p>
-    </div>
 
-    <!-- Galeri -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center">
-          <Image class="w-6 h-6 text-purple-600 dark:text-purple-400" />
+      <!-- Ekskul -->
+      <div class="py-8 px-6 flex items-start justify-between relative border-l border-gray-200 dark:border-gray-700 lg:border-l-0">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white font-poppins">{{ stats.ekskul }}</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-poppins">Ekstrakurikuler</p>
         </div>
-        <span class="text-xs font-medium text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full">Foto</span>
+        <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+          <Target class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        </div>
+        <!-- Divider -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-px bg-gray-200 dark:bg-gray-700 hidden lg:block" />
       </div>
-      <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.galeri }}</h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Foto Galeri</p>
-    </div>
 
-    <!-- Prestasi -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-      <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 rounded-xl bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center">
-          <Trophy class="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+      <!-- Galeri -->
+      <div class="py-8 px-6 flex items-start justify-between relative border-t border-gray-200 dark:border-gray-700 lg:border-t-0">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white font-poppins">{{ stats.galeri }}</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-poppins">Foto Galeri</p>
         </div>
-        <span class="text-xs font-medium text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 px-3 py-1 rounded-full">Pencapaian</span>
+        <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+          <Image class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        </div>
+        <!-- Divider -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-px bg-gray-200 dark:bg-gray-700 hidden lg:block" />
       </div>
-      <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-1 font-poppins">{{ stats.prestasi }}</h3>
-      <p class="text-sm text-gray-600 dark:text-gray-400 font-poppins">Total Prestasi</p>
+
+      <!-- Prestasi -->
+      <div class="py-8 px-6 flex items-start justify-between border-t border-l border-gray-200 dark:border-gray-700 lg:border-t-0 lg:border-l-0">
+        <div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white font-poppins">{{ stats.prestasi }}</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 font-poppins">Total Prestasi</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center flex-shrink-0">
+          <Trophy class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { Image, Newspaper, Target, Trophy } from 'lucide-vue-next'
+import { Image, LayoutGrid, Newspaper, Target, Trophy } from 'lucide-vue-next'
 
 defineProps({
   stats: { type: Object, required: true }

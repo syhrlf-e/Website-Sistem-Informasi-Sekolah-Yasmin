@@ -28,23 +28,31 @@
         </div>
       </div>
 
-      <DashboardStats :stats="displayStats" />
-
-      <!-- Two Column Layout: PPDB Overview (Left) + Pendaftar Ekskul (Right) -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <!-- PPDB Overview - Left (wider) -->
-        <div class="lg:col-span-3">
-          <DashboardPpdbOverview />
+      <!-- All Dashboard Cards with consistent spacing -->
+      <div class="space-y-4">
+        <!-- Stats Card - same width as PPDB Overview -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          <div class="lg:col-span-3">
+            <DashboardStats :stats="displayStats" />
+          </div>
         </div>
 
-        <!-- Pendaftar Ekskul - Right (narrower) -->
-        <div class="lg:col-span-2">
-          <DashboardPendaftar
-            :items="store.recentPendaftar"
-            :pending-count="displayStats.pendaftar_pending"
-            :approved-count="displayStats.pendaftar_approved || 0"
-            :rejected-count="displayStats.pendaftar_rejected || 0"
-          />
+        <!-- Two Column Layout: PPDB Overview (Left) + Pendaftar Ekskul (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          <!-- PPDB Overview - Left (wider) -->
+          <div class="lg:col-span-3">
+            <DashboardPpdbOverview />
+          </div>
+
+          <!-- Pendaftar Ekskul - Right (narrower) -->
+          <div class="lg:col-span-2">
+            <DashboardPendaftar
+              :items="store.recentPendaftar"
+              :pending-count="displayStats.pendaftar_pending"
+              :approved-count="displayStats.pendaftar_approved || 0"
+              :rejected-count="displayStats.pendaftar_rejected || 0"
+            />
+          </div>
         </div>
       </div>
 
