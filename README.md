@@ -1,215 +1,225 @@
-# SMA - Yayasan Mutiara Insan Nusantara - Website Sekolah
+# 🏫 SMA Mutiara Insan Nusantara - Website & CMS
 
-Website sistem informasi yayasan mutiara insan nusantara yang dibangun dengan **Laravel**, **VueJs**, dan **TailwindCss**.
+Website sistem informasi sekolah SMA Yayasan Mutiara Insan Nusantara dengan fitur PPDB Online, CMS Admin, dan Landing Page modern.
+
+**Live Production:** [sma-mutiarainsannusantara.my.id](https://sma-mutiarainsannusantara.my.id)
+
+---
 
 ## 🚀 Tech Stack
 
-- **Backend**: Laravel 11
-- **Frontend**: Vue.js 3 (Composition API)
-- **Styling**: Tailwind CSS 3
-- **State Management**: Pinia
-- **Routing**: Vue Router
-- **Build Tool**: Vite
+| Layer | Technology |
+|-------|------------|
+| Backend | Laravel 11, PHP 8.2+ |
+| Frontend | Vue.js 3 (Composition API) |
+| Styling | Tailwind CSS 3 |
+| State | Pinia |
+| Routing | Vue Router 4 |
+| Build | Vite 6 |
+| Auth | Laravel Sanctum |
+| Rich Text | TipTap Editor |
+| Icons | Lucide Icons |
+| Animation | GSAP, Lenis |
+
+---
+
+## ✨ Fitur Utama
+
+### 🌐 Public Website
+- **Landing Page** - Homepage dengan animasi smooth scroll
+- **Berita** - Artikel/berita sekolah dengan kategori
+- **Galeri** - Galeri foto kegiatan sekolah
+- **Prestasi** - Showcase prestasi siswa
+- **Ekstrakurikuler** - Daftar ekskul dengan pendaftaran online
+- **Profil Sekolah** - Visi misi, sambutan kepala sekolah
+
+### 📝 PPDB (Pendaftaran Peserta Didik Baru)
+- **Form Pendaftaran Multi-step** - 6 section (Identitas, Alamat, Pendidikan, Orang Tua, Wali, Kesehatan)
+- **Gelombang Pendaftaran** - Multiple waves dengan kuota & deadline
+- **Cek Status** - Halaman cek status pendaftaran via nomor registrasi
+- **Pengumuman** - Pengumuman hasil seleksi
+
+### 🔐 Admin Panel (`/yasmin-panel`)
+- **Dashboard** - Overview statistik PPDB, Ekskul, Konten Website
+- **PPDB Management** - Kelola pendaftar, gelombang, seleksi, pengumuman
+- **Content Management** - Kelola berita, galeri, prestasi, pengumuman
+- **Ekstrakurikuler** - Kelola ekskul dengan sistem token pendaftaran
+- **User Management** - Kelola admin/users
+- **Activity Logs** - Log aktivitas admin
+- **Calendar** - Agenda sekolah dengan sidebar kalender
+
+---
 
 ## 📁 Struktur Project
 
 ```
-resources/
-├── css/
-│   └── app.css                 # Tailwind CSS & Custom Styles
-├── js/
-│   ├── app.js                  # Entry Point
-│   ├── App.vue                 # Root Component
-│   ├── components/             # Vue Components
-│   │   ├── Navbar.vue
-│   │   ├── HeroSection.vue
-│   │   ├── InfoCards.vue
-│   │   ├── SambutanSection.vue
-│   │   ├── VisiMisiSection.vue
-│   │   ├── PrestasiSection.vue
-│   │   ├── EkskulSection.vue
-│   │   ├── GaleriSection.vue
-│   │   ├── StudiTourSection.vue
-│   │   └── Footer.vue
-│   ├── pages/
-│   │   └── Home.vue            # Home Page
-│   ├── router/
-│   │   └── index.js            # Vue Router Config
-│   └── stores/
-│       └── theme.js            # Pinia Store (Dark Mode)
+├── app/
+│   ├── Http/Controllers/
+│   │   ├── Api/             # API Controllers
+│   │   └── Admin/           # Admin Controllers
+│   └── Models/              # Eloquent Models
+├── resources/
+│   ├── js/
+│   │   ├── components/      # Vue Components
+│   │   │   ├── layout/      # Layout Components
+│   │   │   ├── sections/    # Page Sections
+│   │   │   └── ui/          # UI Components (Buttons, Modals, etc)
+│   │   ├── pages/           # Vue Pages
+│   │   ├── views/           # Admin Views
+│   │   ├── stores/          # Pinia Stores
+│   │   ├── composables/     # Vue Composables
+│   │   └── router/          # Vue Router Config
+│   └── css/
+│       └── app.css          # Tailwind + Custom Styles
+├── routes/
+│   ├── api.php              # API Routes
+│   └── web.php              # Web Routes
+└── public/
+    └── build/               # Built Assets (Vite)
 ```
-
-## 🎨 Fitur
-
-### ✅ Dark Mode
-
-- Toggle dark mode di navbar
-- Persistent dengan localStorage
-- Deteksi system preference
-- Smooth transition
-
-### ✅ Dynamic Hero Image
-
-- Gambar hero berubah otomatis saat dark mode
-- Smooth fade transition
-
-### ✅ Smooth Scroll
-
-- Smooth scroll antar section
-- Offset untuk fixed navbar
-- Custom scrollbar dengan tema
-
-### ✅ Responsive Design
-
-- Mobile-first approach
-- Breakpoints: mobile (90%), tablet (85%), desktop (80%)
-- Max-width: calc(100vw - 480px)
-
-### ✅ Animations
-
-- Hover effects pada cards
-- Fade-in animations
-- Transform transitions
-- Bounce scroll indicator
-
-## 📸 Setup Images
-
-Untuk menampilkan website dengan sempurna, Anda perlu menambahkan gambar-gambar berikut ke folder `public/images/`:
-
-### Required Images:
-
-1. **Logo Sekolah**
-   - Path: `public/images/logo.png`
-   - Ukuran: 200x200px (square)
-
-2. **Hero Images (Light & Dark Mode)**
-   - Light: `public/images/hero-light.jpg`
-   - Dark: `public/images/hero-dark.jpg`
-   - Ukuran: 1920x1080px (landscape)
-
-3. **Kepala Sekolah**
-   - Path: `public/images/kepala-sekolah.jpg`
-   - Ukuran: 600x800px (portrait)
-
-4. **Prestasi**
-   - Path: `public/images/prestasi.jpg`
-   - Ukuran: 800x600px (landscape)
-
-5. **Galeri** (8 images)
-   - Path: `public/images/gallery/1.jpg` sampai `8.jpg`
-   - Ukuran: 600x400px (landscape)
-
-6. **Studi Tour** (4 images)
-   - Path: `public/images/tour/1.jpg` sampai `4.jpg`
-   - Ukuran: 800x600px (landscape)
-
-### Cara Setup:
-
-```bash
-# Buat folder images
-mkdir public/images
-mkdir public/images/gallery
-mkdir public/images/tour
-
-# Copy gambar Anda ke folder yang sesuai
-```
-
-## 🛠️ Installation
-
-1. **Install Dependencies**
-
-```bash
-npm install
-composer install
-```
-
-2. **Setup Environment**
-
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-3. **Run Development Server**
-
-```bash
-# Terminal 1: Laravel
-php artisan serve
-
-# Terminal 2: Vite
-npm run dev
-```
-
-4. **Build for Production**
-
-```bash
-npm run build
-```
-
-## 🎯 Sections
-
-Website ini terdiri dari beberapa section:
-
-1. **Navbar** - Fixed navbar dengan dark mode toggle
-2. **Hero** - Full-screen hero dengan gambar gedung sekolah
-3. **Info Cards** - 3 cards (Sambutan, Logo, Visi Misi)
-4. **Sambutan** - Sambutan Kepala Sekolah
-5. **Visi & Misi** - Visi dan Misi sekolah
-6. **Prestasi** - Prestasi dan penghargaan
-7. **Ekstrakurikuler** - Grid cards ekstrakurikuler
-8. **Galeri** - Galeri foto kegiatan
-9. **Studi Tour** - Dokumentasi studi tour
-10. **Footer** - Informasi kontak dan social media
-
-## 🎨 Color Scheme
-
-### Light Mode
-
-- Primary: Teal (#14b8a6)
-- Secondary: Blue (#3b82f6)
-- Background: White (#ffffff)
-- Text: Gray (#1f2937)
-
-### Dark Mode
-
-- Primary: Teal (#14b8a6)
-- Secondary: Blue (#3b82f6)
-- Background: Gray (#111827)
-- Text: White (#ffffff)
-
-## 📱 Responsive Breakpoints
-
-- **Mobile**: < 768px (width: 90%)
-- **Tablet**: 768px - 1024px (width: 85%)
-- **Desktop**: > 1024px (width: 80%, max-width: calc(100vw - 480px))
-
-## 🔧 Customization
-
-### Mengubah Warna
-
-Edit `resources/css/app.css` untuk custom colors.
-
-### Menambah Section
-
-1. Buat component baru di `resources/js/components/ui`
-2. Import di `resources/js/pages/Home.vue`
-3. Tambahkan menu di `Navbar.vue`
-
-### Mengubah Konten
-
-Edit langsung di component yang sesuai di folder `resources/js/components/ui`.
-
-## 📝 Notes
-
-- Pastikan gambar hero dark mode sudah disiapkan
-- Semua link smooth scroll menggunakan hash (#section-id)
-- Dark mode state disimpan di localStorage
-- Custom scrollbar hanya bekerja di browser berbasis Chromium
-
-## 🤝 Support
-
-Jika ada pertanyaan atau issue, silakan hubungi developer.
 
 ---
 
-**Built with ❤️ by Tim Pengabdian Masyarakat Universitas Pamulang. All rights reserved.**
+## 🛠️ Installation
+
+### Prerequisites
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- MySQL 8+
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/syhrlf-e/Website-Sistem-Informasi-Sekolah-Yasmin.git
+cd Website-Sistem-Informasi-Sekolah-Yasmin
+
+# Install dependencies
+composer install
+npm install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+
+# Configure database in .env
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+# Run migrations & seeders
+php artisan migrate --seed
+
+# Create storage link
+php artisan storage:link
+```
+
+### Development
+
+```bash
+# Terminal 1: Laravel server
+php artisan serve
+
+# Terminal 2: Vite dev server
+npm run dev
+```
+
+### Production Build
+
+```bash
+npm run build
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+---
+
+## 🚀 Deployment (Hostinger)
+
+### Via SCP
+
+```bash
+# Upload Vue files
+scp -P 65002 resources/js/views/Dashboard.vue u658831449@153.92.8.118:domains/sma-mutiarainsannusantara.my.id/public_html/resources/js/views/
+
+# Upload build assets
+scp -r -P 65002 public/build/* u658831449@153.92.8.118:domains/sma-mutiarainsannusantara.my.id/public_html/public/build/
+
+# Clear caches via SSH
+ssh -p 65002 u658831449@153.92.8.118 "cd domains/sma-mutiarainsannusantara.my.id/public_html && php artisan config:cache && php artisan view:cache"
+```
+
+---
+
+## 🎨 Color Scheme
+
+| Mode | Primary | Secondary | Background | Text |
+|------|---------|-----------|------------|------|
+| Light | Teal `#14b8a6` | Blue `#3b82f6` | White `#ffffff` | Gray `#1f2937` |
+| Dark | Teal `#14b8a6` | Blue `#3b82f6` | Gray `#111827` | White `#ffffff` |
+
+---
+
+## 📱 Responsive Breakpoints
+
+- **Mobile**: < 768px
+- **Tablet**: 768px - 1024px
+- **Desktop**: > 1024px
+
+---
+
+## 🔒 Admin Panel Routes
+
+| Route | Description |
+|-------|-------------|
+| `/yasmin-panel` | Dashboard |
+| `/yasmin-panel/berita` | Kelola Berita |
+| `/yasmin-panel/galeri` | Kelola Galeri |
+| `/yasmin-panel/prestasi` | Kelola Prestasi |
+| `/yasmin-panel/ekskul` | Kelola Ekstrakurikuler |
+| `/yasmin-panel/ppdb` | PPDB Dashboard |
+| `/yasmin-panel/ppdb/gelombang` | Gelombang PPDB |
+| `/yasmin-panel/ppdb/pendaftar` | Pendaftar PPDB |
+| `/yasmin-panel/users` | Kelola Users |
+
+---
+
+## 📝 Environment Variables
+
+```env
+APP_NAME="SMA Mutiara Insan Nusantara"
+APP_URL=https://sma-mutiarainsannusantara.my.id
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+
+# Optional: Pusher for real-time
+PUSHER_APP_ID=your_app_id
+PUSHER_APP_KEY=your_key
+PUSHER_APP_SECRET=your_secret
+```
+
+---
+
+## 🤝 Contributors
+
+| Role | Name |
+|------|------|
+| Developer | Tim Pengabdian Masyarakat Universitas Pamulang |
+| AI Assistant | Antigravity (Claude) |
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+---
+
+**Built with ❤️ for SMA Yayasan Mutiara Insan Nusantara**
