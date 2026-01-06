@@ -227,6 +227,24 @@ router.beforeEach((to, from, next) => {
     next('/yasmin-panel/login')
   } else if (requiresGuest && isAuthenticated) {
     next('/yasmin-panel/dashboard')
+  } else if (isAuthenticated) {
+    // Role-based route protection
+    const user = JSON.parse(userJson)
+    const role = user.role?.toLowerCase()
+
+    // Regular Admin: Block access to PPDB routes
+    if (role === 'admin' && to.path.startsWith('/yasmin-panel/ppdb')) {
+      next('/yasmin-panel/dashboard')
+      return
+    }
+
+    // Regular Admin: Block access to Users route
+    if (role === 'admin' && to.path === '/yasmin-panel/users') {
+      next('/yasmin-panel/dashboard')
+      return
+    }
+
+    next()
   } else {
     next()
   }

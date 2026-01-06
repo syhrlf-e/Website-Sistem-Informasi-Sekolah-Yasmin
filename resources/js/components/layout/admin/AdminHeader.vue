@@ -48,7 +48,7 @@
           :class="{ 'bg-gray-100 dark:bg-gray-700': showSettings }"
           title="Pengaturan"
         >
-          <Settings class="w-5 h-5 text-gray-600 dark:text-gray-300" />
+          <MoreVertical class="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </button>
 
         <!-- Dropdown Menu -->
@@ -118,7 +118,7 @@
 </template>
 
 <script setup>
-import { Bell, HelpCircle, History, LogOut, Menu, Moon, Settings, Sun } from 'lucide-vue-next'
+import { Bell, HelpCircle, History, LogOut, Menu, Moon, MoreVertical, Sun } from 'lucide-vue-next'
 import { onMounted, onUnmounted, ref } from 'vue'
 import UserAvatar from './UserAvatar.vue'
 

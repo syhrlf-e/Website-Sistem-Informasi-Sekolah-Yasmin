@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manual Book - SMA Mutiara Insan Nusantara</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            color: #000;
+        }
+
+        h1 {
+            font-size: 24pt;
+            text-align: center;
+            font-weight: bold;
+            margin: 30px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            font-size: 18pt;
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+            margin-top: 40px;
+            font-family: Arial, sans-serif;
+        }
+
+        h3 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 25px;
+            font-family: Arial, sans-serif;
+        }
+
+        h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        p,
+        li {
+            font-size: 12pt;
+            text-align: justify;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f0f0f0;
+            font-weight: bold;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            padding: 2px 5px;
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+            font-family: monospace;
+            white-space: pre;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .page-break {
+            page-break-before: always;
+            margin-top: 50px;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+
+        .info {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+
+        ul,
+        ol {
+            margin: 10px 0 10px 20px;
+        }
+
+        .toc {
+            margin: 30px 0;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="center">
+        <h1>MANUAL BOOK</h1>
+        <h2 style="border:none;">APLIKASI WEB SMA MUTIARA INSAN NUSANTARA</h2>
+        <p><strong>Versi:</strong> 1.0 | <strong>Tanggal:</strong> 4 Januari 2026</p>
+        <p><strong>URL:</strong> https://sma-mutiarainsannusantara.my.id</p>
+    </div>
+
+    <div class="page-break">
+        <h1>DAFTAR ISI</h1>
+        <div class="toc">
+            <p><strong>BAB I - PENDAHULUAN</strong></p>
+            <ul>
+                <li>1.1 Latar Belakang Pengembangan</li>
+                <li>1.2 Maksud dan Tujuan</li>
+                <li>1.3 Spesifikasi Teknologi Sistem</li>
+                <li>1.4 Arsitektur Sistem</li>
+            </ul>
+            <p><strong>BAB II - PANDUAN PENGGUNA</strong></p>
+            <ul>
+                <li>2.1 Halaman Beranda</li>
+                <li>2.2 Profil Sekolah</li>
+                <li>2.3 Berita &amp; Artikel</li>
+                <li>2.4 Galeri Kegiatan</li>
+                <li>2.5 Prestasi Siswa</li>
+                <li>2.6 Ekstrakurikuler</li>
+                <li>2.7 PPDB Online</li>
+                <li>2.8 Fitur Aksesibilitas</li>
+            </ul>
+            <p><strong>BAB III - PANDUAN ADMINISTRATOR</strong></p>
+            <ul>
+                <li>3.1 Akses Panel Admin</li>
+                <li>3.2 Dashboard</li>
+                <li>3.3 Manajemen PPDB</li>
+                <li>3.4 Manajemen Berita</li>
+                <li>3.5 Manajemen Ekstrakurikuler</li>
+                <li>3.6 Manajemen Galeri</li>
+                <li>3.7 Manajemen Prestasi</li>
+                <li>3.8 Manajemen Pengumuman</li>
+                <li>3.9 Manajemen Testimoni</li>
+                <li>3.10 Manajemen Dokumen</li>
+                <li>3.11 Manajemen Data Guru</li>
+                <li>3.12 Kalender Sekolah</li>
+                <li>3.13 Manajemen User</li>
+                <li>3.14 Activity Logs</li>
+                <li>3.15 Pengaturan Website</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page-break">
+        <h1>BAB I PENDAHULUAN</h1>
+
+        <h2>1.1 Latar Belakang Pengembangan</h2>
+        <p>Dalam upaya mewujudkan visi sekolah yang berorientasi pada kemajuan teknologi dan globalisasi (<em>Go Digital
+                &amp; Global</em>), SMA Mutiara Insan Nusantara mengembangkan sebuah platform sistem informasi terpadu.
+            Aplikasi berbasis web ini hadir sebagai solusi atas kebutuhan manajemen data sekolah yang transparan dan
+            efisien, serta sebagai media komunikasi interaktif antara sekolah, siswa, wali murid, dan masyarakat luas.
+        </p>
+        <p>Pengembangan aplikasi ini mengintegrasikan fungsi profil sekolah, manajemen data pendidik, monitoring
+            prestasi, sistem kegiatan ekstrakurikuler, hingga sistem Penerimaan Peserta Didik Baru (PPDB) yang
+            terautomasi. Sistem ini diharapkan dapat mendukung terciptanya ekosistem pendidikan digital yang profesional
+            dan modern.</p>
+        <p>Aplikasi web ini dikembangkan dengan pendekatan <em>Content Management System</em> (CMS) yang memungkinkan
+            administrator sekolah mengelola seluruh konten website tanpa memerlukan keahlian pemrograman khusus.</p>
+
+        <h2>1.2 Maksud dan Tujuan</h2>
+        <p>Aplikasi Web SMA Mutiara Insan Nusantara dikembangkan dengan tujuan sebagai berikut:</p>
+        <ol>
+            <li><strong>Digitalisasi Profil Instansi</strong> - Menyajikan informasi komprehensif mengenai sejarah, visi
+                misi, akreditasi, dan filosofi sekolah secara daring.</li>
+            <li><strong>Transparansi Akademik</strong> - Menyediakan akses mudah bagi publik untuk memantau prestasi
+                siswa, data pendidik, kegiatan ekstrakurikuler, dan galeri dokumentasi.</li>
+            <li><strong>Automasi PPDB</strong> - Menyederhanakan proses pendaftaran siswa baru melalui formulir digital
+                multi-step dengan fitur pengecekan status pendaftaran secara mandiri.</li>
+            <li><strong>Manajemen Ekstrakurikuler Digital</strong> - Memfasilitasi pendaftaran kegiatan ekstrakurikuler
+                secara online dengan sistem token pendaftaran yang aman.</li>
+            <li><strong>Optimalisasi Komunikasi</strong> - Memfasilitasi penyebaran informasi melalui publikasi berita,
+                pengumuman, dan testimoni.</li>
+            <li><strong>Peningkatan User Experience</strong> - Menyediakan antarmuka responsif dengan fitur
+                aksesibilitas seperti Dark/Light Mode.</li>
+        </ol>
+
+        <h2>1.3 Spesifikasi Teknologi Sistem</h2>
+
+        <h3>1.3.1 Sisi Klien (Frontend)</h3>
+        <table>
+            <tr>
+                <th>Teknologi</th>
+                <th>Fungsi</th>
+            </tr>
+            <tr>
+                <td><strong>Vue.js 3</strong></td>
+                <td>Framework JavaScript dengan Composition API untuk antarmuka reaktif dan interaktif</td>
+            </tr>
+            <tr>
+                <td><strong>Tailwind CSS 3</strong></td>
+                <td>Framework CSS utility-first untuk desain responsif</td>
+            </tr>
+            <tr>
+                <td><strong>Vue Router 4</strong></td>
+                <td>Routing SPA untuk navigasi halaman seamless</td>
+            </tr>
+            <tr>
+                <td><strong>Pinia</strong></td>
+                <td>State management untuk pengelolaan data global</td>
+            </tr>
+            <tr>
+                <td><strong>GSAP &amp; Lenis</strong></td>
+                <td>Library animasi untuk smooth scrolling dan transisi visual</td>
+            </tr>
+            <tr>
+                <td><strong>Lucide Icons</strong></td>
+                <td>Paket ikon modern untuk antarmuka</td>
+            </tr>
+        </table>
+
+        <h3>1.3.2 Sisi Server (Backend)</h3>
+        <table>
+            <tr>
+                <th>Teknologi</th>
+                <th>Fungsi</th>
+            </tr>
+            <tr>
+                <td><strong>PHP 8.2+</strong></td>
+                <td>Bahasa pemrograman utama dengan fitur modern</td>
+            </tr>
+            <tr>
+                <td><strong>Laravel 11</strong></td>
+                <td>Framework PHP full-stack yang scalable dan maintainable</td>
+            </tr>
+            <tr>
+                <td><strong>Laravel Sanctum</strong></td>
+                <td>Sistem autentikasi berbasis token untuk keamanan API</td>
+            </tr>
+            <tr>
+                <td><strong>MySQL 8+</strong></td>
+                <td>Sistem manajemen basis data relasional</td>
+            </tr>
+            <tr>
+                <td><strong>Intervention Image</strong></td>
+                <td>Library pemrosesan gambar dengan auto-convert ke WebP</td>
+            </tr>
+            <tr>
+                <td><strong>TipTap Editor</strong></td>
+                <td>Rich text editor berbasis ProseMirror</td>
+            </tr>
+        </table>
+
+        <h3>1.3.3 Build Tools &amp; Development</h3>
+        <table>
+            <tr>
+                <th>Teknologi</th>
+                <th>Fungsi</th>
+            </tr>
+            <tr>
+                <td><strong>Vite 6</strong></td>
+                <td>Build tool modern dengan Hot Module Replacement (HMR)</td>
+            </tr>
+            <tr>
+                <td><strong>Composer</strong></td>
+                <td>Dependency manager untuk paket PHP</td>
+            </tr>
+            <tr>
+                <td><strong>NPM</strong></td>
+                <td>Package manager untuk paket JavaScript</td>
+            </tr>
+        </table>
+
+        <h3>1.3.4 Keamanan &amp; Hosting</h3>
+        <table>
+            <tr>
+                <th>Aspek</th>
+                <th>Implementasi</th>
+            </tr>
+            <tr>
+                <td><strong>HTTPS (SSL)</strong></td>
+                <td>Enkripsi data pada seluruh komunikasi</td>
+            </tr>
+            <tr>
+                <td><strong>Rate Limiting</strong></td>
+                <td>Pembatasan request untuk mencegah brute-force</td>
+            </tr>
+            <tr>
+                <td><strong>CSRF Protection</strong></td>
+                <td>Proteksi terhadap Cross-Site Request Forgery</td>
+            </tr>
+            <tr>
+                <td><strong>Sanctum Token</strong></td>
+                <td>Token-based authentication untuk API admin</td>
+            </tr>
+        </table>
+
+        <h2>1.4 Arsitektur Sistem</h2>
+        <p>Aplikasi ini mengimplementasikan arsitektur <strong>RESTful API</strong> dengan pemisahan antara backend
+            (Laravel) dan frontend (Vue.js SPA untuk admin panel).</p>
+
+        <h3>1.4.1 Alur Data Sistem</h3>
+        <pre>
+┌─────────────────┐     HTTPS      ┌─────────────────┐
+│   Web Browser   │◄──────────────►│   Web Server    │
+│   (Client)      │                │   (Nginx)       │
+└────────┬────────┘                └────────┬────────┘
+         │                                  │
+         ▼                                  ▼
+┌─────────────────┐                ┌─────────────────┐
+│   Vue.js 3      │                │  Laravel 11     │
+│   (Frontend)    │                │  (API Backend)  │
+└─────────────────┘                └────────┬────────┘
+                                           ▼
+                                   ┌─────────────────┐
+                                   │    MySQL 8      │
+                                   │   (Database)    │
+                                   └─────────────────┘
+</pre>
+
+        <h3>1.4.2 Mekanisme Interaksi Data</h3>
+        <ol>
+            <li><strong>Pengguna Publik</strong> melakukan permintaan data melalui browser</li>
+            <li><strong>Web Server</strong> menerima permintaan dan meneruskan ke Laravel backend</li>
+            <li><strong>Laravel Backend</strong> memproses request dan berkomunikasi dengan database MySQL</li>
+            <li><strong>Response</strong> dikirim kembali dalam format JSON</li>
+            <li><strong>Admin Panel</strong> (Vue.js SPA) memungkinkan administrator mengelola konten</li>
+        </ol>
+
+        <h3>1.4.3 Struktur Database</h3>
+        <p>Sistem menggunakan <strong>20 model data</strong> utama yang saling terelasi:</p>
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Fungsi</th>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td>Data akun administrator</td>
+            </tr>
+            <tr>
+                <td>News</td>
+                <td>Artikel berita dengan kategori</td>
+            </tr>
+            <tr>
+                <td>Gallery</td>
+                <td>Album galeri dengan posisi grid</td>
+            </tr>
+            <tr>
+                <td>Prestasi</td>
+                <td>Data prestasi siswa</td>
+            </tr>
+            <tr>
+                <td>Ekstrakurikuler</td>
+                <td>Data kegiatan ekstrakurikuler</td>
+            </tr>
+            <tr>
+                <td>PpdbWave</td>
+                <td>Gelombang pendaftaran PPDB</td>
+            </tr>
+            <tr>
+                <td>PpdbRegistration</td>
+                <td>Data pendaftar PPDB</td>
+            </tr>
+            <tr>
+                <td>Announcement</td>
+                <td>Pengumuman/banner</td>
+            </tr>
+            <tr>
+                <td>Testimonial</td>
+                <td>Testimoni alumni/wali murid</td>
+            </tr>
+            <tr>
+                <td>Document</td>
+                <td>Dokumen yang dapat diunduh</td>
+            </tr>
+            <tr>
+                <td>Guru</td>
+                <td>Data guru dan staf pengajar</td>
+            </tr>
+            <tr>
+                <td>CalendarEvent</td>
+                <td>Agenda kegiatan sekolah</td>
+            </tr>
+            <tr>
+                <td>ActivityLog</td>
+                <td>Log aktivitas administrator</td>
+            </tr>
+            <tr>
+                <td>Setting</td>
+                <td>Pengaturan website</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="page-break">
+        <h1>BAB II PANDUAN PENGGUNA</h1>
+        <p>Bab ini menjelaskan fitur-fitur yang dapat diakses oleh pengguna publik (pengunjung website) tanpa perlu
+            melakukan login.</p>
+
+        <h2>2.1 Halaman Beranda (Homepage)</h2>
+        <h3>2.1.1 Deskripsi</h3>
+        <p>Halaman beranda merupakan halaman utama website yang menampilkan informasi ringkas tentang sekolah dengan
+            desain modern dan animasi smooth scrolling.</p>
+
+        <h3>2.1.2 Komponen yang Ditampilkan</h3>
+        <table>
+            <tr>
+                <th>Komponen</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td><strong>Hero Section</strong></td>
+                <td>Banner utama dengan tagline sekolah dan tombol CTA</td>
+            </tr>
+            <tr>
+                <td><strong>Statistik Sekolah</strong></td>
+                <td>Angka-angka pencapaian (jumlah siswa, guru, prestasi)</td>
+            </tr>
+            <tr>
+                <td><strong>Berita Unggulan</strong></td>
+                <td>3-4 berita terbaru atau featured</td>
+            </tr>
+            <tr>
+                <td><strong>Galeri Highlight</strong></td>
+                <td>Preview galeri kegiatan</td>
+            </tr>
+            <tr>
+                <td><strong>Prestasi Terbaru</strong></td>
+                <td>Showcase prestasi siswa</td>
+            </tr>
+            <tr>
+                <td><strong>Ekstrakurikuler</strong></td>
+                <td>Daftar kegiatan ekskul</td>
+            </tr>
+            <tr>
+                <td><strong>Testimoni</strong></td>
+                <td>Slider testimoni dari alumni/wali murid</td>
+            </tr>
+            <tr>
+                <td><strong>Footer</strong></td>
+                <td>Informasi kontak sekolah</td>
+            </tr>
+        </table>
+
+        <h3>2.1.3 Fitur Interaktif</h3>
+        <ul>
+            <li><strong>Smooth Scroll</strong>: Navigasi halus antar section menggunakan GSAP &amp; Lenis</li>
+            <li><strong>Animated Counter</strong>: Angka statistik yang beranimasi</li>
+            <li><strong>Parallax Effect</strong>: Efek parallax pada elemen visual</li>
+            <li><strong>Floating Buttons</strong>: Tombol WhatsApp dan scroll-to-top</li>
+        </ul>
+
+        <h2>2.2 Profil Sekolah</h2>
+        <h3>2.2.1 Mengakses Profil Sekolah</h3>
+        <ol>
+            <li>Klik menu <strong>"Profil"</strong> pada navigation bar</li>
+            <li>Atau scroll ke bawah dari homepage</li>
+        </ol>
+
+        <h3>2.2.2 Informasi yang Tersedia</h3>
+        <table>
+            <tr>
+                <th>Section</th>
+                <th>Isi</th>
+            </tr>
+            <tr>
+                <td><strong>Visi &amp; Misi</strong></td>
+                <td>Pernyataan visi dan misi sekolah</td>
+            </tr>
+            <tr>
+                <td><strong>Sejarah Sekolah</strong></td>
+                <td>Perjalanan berdirinya sekolah</td>
+            </tr>
+            <tr>
+                <td><strong>Sambutan Kepala Sekolah</strong></td>
+                <td>Pesan dari kepala sekolah</td>
+            </tr>
+            <tr>
+                <td><strong>Data Guru</strong></td>
+                <td>Daftar tenaga pendidik</td>
+            </tr>
+            <tr>
+                <td><strong>Fasilitas</strong></td>
+                <td>Informasi sarana dan prasarana</td>
+            </tr>
+        </table>
+
+        <h2>2.3 Berita &amp; Artikel</h2>
+        <h3>2.3.1 Melihat Daftar Berita</h3>
+        <ol>
+            <li>Klik menu <strong>"Berita"</strong> pada navigation bar</li>
+            <li>Halaman menampilkan daftar artikel dengan thumbnail, judul, tanggal, kategori, excerpt, dan views</li>
+        </ol>
+
+        <h3>2.3.2 Filter dan Pencarian</h3>
+        <ul>
+            <li><strong>Kategori</strong>: Filter artikel berdasarkan kategori</li>
+            <li><strong>Search</strong>: Cari artikel berdasarkan kata kunci</li>
+        </ul>
+
+        <h3>2.3.3 Membaca Artikel</h3>
+        <ol>
+            <li>Klik pada kartu artikel atau judul</li>
+            <li>Halaman detail menampilkan gambar thumbnail, judul, info penulis &amp; tanggal, konten lengkap, dan
+                artikel terkait</li>
+        </ol>
+
+        <h3>2.3.4 Berbagi Artikel</h3>
+        <p>Tersedia tombol share untuk: WhatsApp, Facebook, Twitter, Copy Link</p>
+
+        <h2>2.4 Galeri Kegiatan</h2>
+        <h3>2.4.1 Melihat Galeri</h3>
+        <ol>
+            <li>Klik menu <strong>"Galeri"</strong> pada navigation bar</li>
+            <li>Tampilan grid dengan 6 slot berbeda ukuran</li>
+            <li>Setiap slot dapat berisi hingga 3 foto (slideshow)</li>
+        </ol>
+
+        <h3>2.4.2 Melihat Detail Foto</h3>
+        <ol>
+            <li>Klik pada foto di galeri</li>
+            <li>Lightbox akan terbuka menampilkan foto ukuran penuh</li>
+            <li>Navigasi dengan tombol panah, swipe gesture (mobile), atau keyboard arrow keys</li>
+            <li>Tekan <strong>ESC</strong> untuk menutup</li>
+        </ol>
+
+        <h2>2.5 Prestasi Siswa</h2>
+        <h3>2.5.1 Melihat Daftar Prestasi</h3>
+        <ol>
+            <li>Klik menu <strong>"Prestasi"</strong> pada navigation bar</li>
+            <li>Tampilan kartu prestasi dengan foto, nama kejuaraan, kategori, tingkat, tahun, dan nama peserta</li>
+        </ol>
+
+        <h3>2.5.2 Filter Prestasi</h3>
+        <table>
+            <tr>
+                <th>Filter</th>
+                <th>Pilihan</th>
+            </tr>
+            <tr>
+                <td><strong>Kategori</strong></td>
+                <td>Semua, Akademik, Olahraga, Seni</td>
+            </tr>
+            <tr>
+                <td><strong>Tingkat</strong></td>
+                <td>Semua, Sekolah, Kota, Provinsi, Nasional, Internasional</td>
+            </tr>
+            <tr>
+                <td><strong>Tahun</strong></td>
+                <td>Dropdown tahun</td>
+            </tr>
+        </table>
+
+        <h2>2.6 Ekstrakurikuler</h2>
+        <h3>2.6.1 Melihat Daftar Ekstrakurikuler</h3>
+        <ol>
+            <li>Klik menu <strong>"Ekstrakurikuler"</strong> pada navigation bar</li>
+            <li>Tampilan kartu ekskul dengan foto, nama, badge kategori, tagline, dan status pendaftaran</li>
+        </ol>
+
+        <h3>2.6.2 Detail Ekstrakurikuler</h3>
+        <p>Klik kartu ekskul untuk melihat: deskripsi lengkap, pembina, jadwal latihan, lokasi, manfaat, dan tombol
+            pendaftaran.</p>
+
+        <h3>2.6.3 Mendaftar Ekstrakurikuler</h3>
+        <p><strong>Syarat:</strong></p>
+        <ul>
+            <li>Pendaftaran harus sedang <strong>BUKA</strong></li>
+            <li>Memiliki <strong>Token Pendaftaran</strong> (didapat dari sekolah)</li>
+            <li>Belum melewati batas waktu pendaftaran</li>
+        </ul>
+
+        <p><strong>Langkah Pendaftaran:</strong></p>
+        <ol>
+            <li>Buka halaman detail ekstrakurikuler</li>
+            <li>Klik tombol <strong>"Daftar Sekarang"</strong></li>
+            <li>Masukkan data: Nama Lengkap, Kelas, No. HP/WhatsApp, Email, Token Pendaftaran, Alasan Bergabung,
+                Pengalaman</li>
+            <li>Klik <strong>"Kirim Pendaftaran"</strong></li>
+            <li>Tunggu konfirmasi dari admin via email/WhatsApp</li>
+        </ol>
+
+        <h2>2.7 PPDB Online (Pendaftaran Peserta Didik Baru)</h2>
+        <h3>2.7.1 Mengakses PPDB</h3>
+        <ol>
+            <li>Klik tombol <strong>"Daftar PPDB"</strong> di homepage, atau</li>
+            <li>Buka menu <strong>"PPDB"</strong> di navigation bar</li>
+            <li>Halaman landing menampilkan tahun ajaran, biaya, jadwal, alur pendaftaran</li>
+        </ol>
+
+        <h3>2.7.2 Syarat Pendaftaran</h3>
+        <ul>
+            <li>Pendaftaran harus sedang <strong>DIBUKA</strong> (dalam periode gelombang aktif)</li>
+            <li>Kuota pendaftaran masih tersedia</li>
+            <li>Menyiapkan dokumen dan data yang diperlukan</li>
+        </ul>
+
+        <h3>2.7.3 Proses Pendaftaran (7 Section)</h3>
+
+        <p><strong>SECTION 1: Identitas Diri</strong></p>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Required</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>Nama Lengkap</td>
+                <td>✅</td>
+                <td>Sesuai akta kelahiran</td>
+            </tr>
+            <tr>
+                <td>NIK</td>
+                <td>✅</td>
+                <td>16 digit Nomor Induk Kependudukan</td>
+            </tr>
+            <tr>
+                <td>NISN</td>
+                <td>✅</td>
+                <td>10 digit Nomor Induk Siswa Nasional</td>
+            </tr>
+            <tr>
+                <td>Tempat Lahir</td>
+                <td>✅</td>
+                <td>Kota/kabupaten kelahiran</td>
+            </tr>
+            <tr>
+                <td>Tanggal Lahir</td>
+                <td>✅</td>
+                <td>Format: DD/MM/YYYY</td>
+            </tr>
+            <tr>
+                <td>Jenis Kelamin</td>
+                <td>✅</td>
+                <td>Laki-laki / Perempuan</td>
+            </tr>
+            <tr>
+                <td>Agama</td>
+                <td>✅</td>
+                <td>Pilih dari dropdown</td>
+            </tr>
+            <tr>
+                <td>No. HP</td>
+                <td>✅</td>
+                <td>Nomor yang bisa dihubungi</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>✅</td>
+                <td>Email aktif untuk notifikasi</td>
+            </tr>
+            <tr>
+                <td>Foto</td>
+                <td>✅</td>
+                <td>Pas foto terbaru (3x4)</td>
+            </tr>
+        </table>
+
+        <p><strong>SECTION 2: Alamat Tempat Tinggal</strong></p>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Required</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>Alamat Lengkap</td>
+                <td>✅</td>
+                <td>Nama jalan, nomor rumah</td>
+            </tr>
+            <tr>
+                <td>RT/RW</td>
+                <td>✅</td>
+                <td>3 digit masing-masing</td>
+            </tr>
+            <tr>
+                <td>Kelurahan/Desa</td>
+                <td>✅</td>
+                <td>Nama kelurahan</td>
+            </tr>
+            <tr>
+                <td>Kecamatan</td>
+                <td>✅</td>
+                <td>Nama kecamatan</td>
+            </tr>
+            <tr>
+                <td>Kota/Kabupaten</td>
+                <td>✅</td>
+                <td>Nama kota/kabupaten</td>
+            </tr>
+            <tr>
+                <td>Provinsi</td>
+                <td>✅</td>
+                <td>Nama provinsi</td>
+            </tr>
+            <tr>
+                <td>Kode Pos</td>
+                <td>✅</td>
+                <td>5 digit</td>
+            </tr>
+        </table>
+
+        <p><strong>SECTION 3: Riwayat Pendidikan</strong></p>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Required</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>Asal Sekolah</td>
+                <td>✅</td>
+                <td>Nama SMP/MTs asal (dengan fitur search)</td>
+            </tr>
+            <tr>
+                <td>NPSN Sekolah</td>
+                <td>✅</td>
+                <td>Auto-fill dari pencarian sekolah</td>
+            </tr>
+            <tr>
+                <td>Tahun Lulus</td>
+                <td>✅</td>
+                <td>Tahun kelulusan SMP/MTs</td>
+            </tr>
+            <tr>
+                <td>Jurusan Pilihan</td>
+                <td>✅</td>
+                <td>IPA / IPS</td>
+            </tr>
+        </table>
+
+        <p><strong>SECTION 4: Data Orang Tua (Ayah)</strong></p>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Required</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>Nama Ayah</td>
+                <td>✅</td>
+                <td>Nama lengkap ayah</td>
+            </tr>
+            <tr>
+                <td>NIK Ayah</td>
+                <td>✅</td>
+                <td>16 digit NIK ayah</td>
+            </tr>
+            <tr>
+                <td>Pekerjaan</td>
+                <td>✅</td>
+                <td>Pilih dari dropdown</td>
+            </tr>
+            <tr>
+                <td>Pendidikan Terakhir</td>
+                <td>✅</td>
+                <td>Pilih dari dropdown</td>
+            </tr>
+            <tr>
+                <td>Penghasilan/Bulan</td>
+                <td>✅</td>
+                <td>Range penghasilan</td>
+            </tr>
+            <tr>
+                <td>No. HP Ayah</td>
+                <td>✅</td>
+                <td>Nomor yang bisa dihubungi</td>
+            </tr>
+        </table>
+
+        <p><strong>SECTION 5: Data Orang Tua (Ibu)</strong></p>
+        <p>(Field sama dengan data Ayah)</p>
+
+        <p><strong>SECTION 6: Data Wali (Opsional)</strong></p>
+        <p>Diisi jika wali berbeda dengan orang tua.</p>
+
+        <p><strong>SECTION 7: Data Kesehatan</strong></p>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Required</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>Golongan Darah</td>
+                <td>✅</td>
+                <td>A/B/AB/O</td>
+            </tr>
+            <tr>
+                <td>Tinggi Badan</td>
+                <td>✅</td>
+                <td>Dalam cm</td>
+            </tr>
+            <tr>
+                <td>Berat Badan</td>
+                <td>✅</td>
+                <td>Dalam kg</td>
+            </tr>
+            <tr>
+                <td>Alergi</td>
+                <td>✅</td>
+                <td>Ya/Tidak</td>
+            </tr>
+        </table>
+
+        <h3>2.7.4 Submit Pendaftaran</h3>
+        <ol>
+            <li>Pastikan semua field wajib sudah terisi</li>
+            <li>Review kembali semua data</li>
+            <li>Centang pernyataan kebenaran data</li>
+            <li>Klik <strong>"Kirim Pendaftaran"</strong></li>
+            <li>Halaman sukses akan menampilkan <strong>Nomor Registrasi</strong> dan <strong>Token Akses</strong></li>
+        </ol>
+
+        <div class="warning">
+            <strong>⚠️ PENTING:</strong> Simpan Nomor Registrasi dan Token dengan baik! Data ini diperlukan untuk
+            mengecek status pendaftaran.
+        </div>
+
+        <h3>2.7.5 Cek Status Pendaftaran</h3>
+        <ol>
+            <li>Buka halaman <strong>PPDB</strong> → <strong>Cek Status</strong></li>
+            <li>Masukkan Nomor Registrasi dan Token Akses</li>
+            <li>Klik <strong>"Cek Status"</strong></li>
+        </ol>
+
+        <table>
+            <tr>
+                <th>Status</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>🟡 Menunggu Verifikasi</td>
+                <td>Data sedang diperiksa admin</td>
+            </tr>
+            <tr>
+                <td>🔵 Terverifikasi</td>
+                <td>Data sudah valid, menunggu seleksi</td>
+            </tr>
+            <tr>
+                <td>🟣 Tahap Seleksi</td>
+                <td>Sedang dalam proses seleksi</td>
+            </tr>
+            <tr>
+                <td>🟢 Diterima</td>
+                <td>Selamat! Anda diterima sebagai siswa</td>
+            </tr>
+            <tr>
+                <td>🔴 Ditolak</td>
+                <td>Maaf, pendaftaran tidak diterima</td>
+            </tr>
+        </table>
+
+        <h2>2.8 Fitur Aksesibilitas</h2>
+        <h3>2.8.1 Dark/Light Mode</h3>
+        <ul>
+            <li><strong>Light Mode</strong> (Default): Latar belakang terang, teks gelap</li>
+            <li><strong>Dark Mode</strong>: Latar belakang gelap, teks terang</li>
+        </ul>
+        <p><strong>Cara Mengubah:</strong> Klik ikon 🌙 atau ☀️ di header</p>
+
+        <h3>2.8.2 Responsive Design</h3>
+        <ul>
+            <li>Desktop (1024px ke atas)</li>
+            <li>Tablet (768px - 1023px)</li>
+            <li>Mobile (di bawah 768px)</li>
+        </ul>
+
+        <h3>2.8.3 Floating Buttons</h3>
+        <ul>
+            <li><strong>WhatsApp Button</strong>: Klik untuk langsung chat dengan admin sekolah</li>
+            <li><strong>Scroll to Top</strong>: Muncul saat scroll ke bawah</li>
+        </ul>
+    </div>
+
+    <div class="page-break">
+        <h1>BAB III PANDUAN ADMINISTRATOR</h1>
+        <p>Bab ini menjelaskan fitur-fitur yang dapat diakses oleh administrator sekolah melalui panel admin (CMS).</p>
+
+        <h2>3.1 Akses Panel Admin</h2>
+        <h3>3.1.1 URL Akses</h3>
+        <pre>https://sma-mutiarainsannusantara.my.id/yasmin-panel</pre>
+
+        <h3>3.1.2 Login Administrator</h3>
+        <ol>
+            <li>Buka URL panel admin</li>
+            <li>Masukkan <strong>Email</strong> yang terdaftar</li>
+            <li>Masukkan <strong>Password</strong></li>
+            <li>Klik tombol <strong>"Login"</strong></li>
+        </ol>
+
+        <h3>3.1.3 Role Pengguna</h3>
+        <table>
+            <tr>
+                <th>Role</th>
+                <th>Hak Akses</th>
+            </tr>
+            <tr>
+                <td><strong>Super Admin</strong></td>
+                <td>Akses penuh ke semua fitur, termasuk Settings dan User Management</td>
+            </tr>
+            <tr>
+                <td><strong>Admin</strong></td>
+                <td>Mengelola konten website (Berita, Galeri, Prestasi, Ekskul, dll)</td>
+            </tr>
+            <tr>
+                <td><strong>Admin PPDB</strong></td>
+                <td>Fokus pada pengelolaan modul PPDB</td>
+            </tr>
+        </table>
+
+        <h3>3.1.4 Logout</h3>
+        <p>Klik ikon <strong>Logout</strong> di sidebar atau dropdown profil untuk keluar dari sistem.</p>
+
+        <div class="warning">
+            <strong>⚠️ Keamanan:</strong> Sistem memiliki proteksi rate limiting. Setelah beberapa kali gagal login,
+            akses akan dikunci sementara.
+        </div>
+
+        <h2>3.2 Dashboard</h2>
+        <h3>3.2.1 Statistik Utama</h3>
+        <p>Kartu statistik menampilkan: Total Berita, Total Album Galeri, Total Prestasi, Total Ekstrakurikuler, Total
+            Pendaftar Ekskul.</p>
+
+        <h3>3.2.2 Overview PPDB</h3>
+        <ul>
+            <li>Statistik pendaftar per status</li>
+            <li>Grafik pendaftaran per gelombang</li>
+            <li>Gelombang yang sedang aktif</li>
+        </ul>
+
+        <h3>3.2.3 Pendaftar Terbaru</h3>
+        <p>Tabel 10 pendaftar PPDB terbaru dengan quick action: View detail, Approve/Reject langsung.</p>
+
+        <h3>3.2.4 Kalender Sidebar</h3>
+        <ul>
+            <li>Klik ikon kalender untuk membuka sidebar</li>
+            <li>Lihat event bulan ini</li>
+            <li>Tambah event baru dengan klik tanggal</li>
+        </ul>
+
+        <h2>3.3 Manajemen PPDB</h2>
+        <h3>3.3.1 Menu PPDB</h3>
+        <table>
+            <tr>
+                <th>Menu</th>
+                <th>Fungsi</th>
+            </tr>
+            <tr>
+                <td>Dashboard PPDB</td>
+                <td>Statistik dan overview PPDB</td>
+            </tr>
+            <tr>
+                <td>Pendaftar</td>
+                <td>Daftar semua pendaftar</td>
+            </tr>
+            <tr>
+                <td>Gelombang</td>
+                <td>Kelola gelombang pendaftaran</td>
+            </tr>
+            <tr>
+                <td>Seleksi</td>
+                <td>Proses seleksi pendaftar</td>
+            </tr>
+            <tr>
+                <td>Pengumuman</td>
+                <td>Kelola pengumuman hasil</td>
+            </tr>
+        </table>
+
+        <h3>3.3.2 Kelola Gelombang</h3>
+        <p><strong>Tambah Gelombang Baru:</strong></p>
+        <ol>
+            <li>Klik menu <strong>Gelombang</strong> → <strong>+ Tambah Gelombang</strong></li>
+            <li>Isi data: Nama Gelombang, Tahun Ajaran, Tanggal Mulai &amp; Selesai, Kuota, Biaya, Deskripsi</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <div class="warning">
+            <strong>⚠️</strong> Hanya <strong>satu gelombang aktif</strong> yang boleh berjalan dalam satu waktu.
+        </div>
+
+        <p><strong>Aksi pada Gelombang:</strong> Edit, Toggle Aktif, Hapus (hanya jika belum ada pendaftar)</p>
+
+        <h3>3.3.3 Kelola Pendaftar</h3>
+        <p><strong>Status Pendaftar:</strong></p>
+        <table>
+            <tr>
+                <th>Status</th>
+                <th>Warna</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>pending</td>
+                <td>🟡</td>
+                <td>Menunggu verifikasi</td>
+            </tr>
+            <tr>
+                <td>verified</td>
+                <td>🔵</td>
+                <td>Data terverifikasi</td>
+            </tr>
+            <tr>
+                <td>selection</td>
+                <td>🟣</td>
+                <td>Tahap seleksi</td>
+            </tr>
+            <tr>
+                <td>accepted</td>
+                <td>🟢</td>
+                <td>Diterima</td>
+            </tr>
+            <tr>
+                <td>rejected</td>
+                <td>🔴</td>
+                <td>Ditolak</td>
+            </tr>
+        </table>
+
+        <p><strong>Alur Verifikasi:</strong> Pending → Verified → Selection → Accepted/Rejected</p>
+
+        <h3>3.3.4 Pengaturan Landing PPDB</h3>
+        <ol>
+            <li>Buka menu <strong>Dashboard PPDB</strong></li>
+            <li>Klik <strong>"Pengaturan Landing"</strong></li>
+            <li>Atur: Tahun Ajaran, Biaya Pendaftaran, Kontak WhatsApp, Jadwal Pendaftaran</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h2>3.4 Manajemen Berita</h2>
+        <h3>3.4.1 Fitur Utama</h3>
+        <ul>
+            <li>Rich Text Editor (TipTap)</li>
+            <li>Auto-convert gambar ke WebP</li>
+            <li>Soft Delete (Trash)</li>
+            <li>Featured/Pinned articles</li>
+        </ul>
+
+        <h3>3.4.2 Tambah Berita</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah Berita</strong></li>
+            <li>Isi form: Judul, Kategori, Thumbnail, Konten, Status, Featured, Meta Description</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <p><strong>Fitur TipTap Editor:</strong> Bold, Italic, Underline, Heading 1-3, Bullet &amp; Numbered list, Link
+            &amp; Image upload, Blockquote &amp; Code block</p>
+
+        <h3>3.4.3 Trash (Sampah)</h3>
+        <p>Berita yang dihapus masuk ke Trash. Tersedia aksi: <strong>Restore</strong> atau <strong>Hapus
+                Permanen</strong>.</p>
+
+        <h2>3.5 Manajemen Ekstrakurikuler</h2>
+        <h3>3.5.1 Fitur Utama</h3>
+        <ul>
+            <li>Sistem Token Pendaftaran</li>
+            <li>Deadline Otomatis</li>
+            <li>Toggle Buka/Tutup Pendaftaran</li>
+            <li>Integrasi WhatsApp</li>
+            <li>Email Notifikasi</li>
+        </ul>
+
+        <h3>3.5.2 Tambah Ekskul</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah Ekskul</strong></li>
+            <li><strong>Tab Data Utama:</strong> Nama, Tagline, Badge, Pembina, Lokasi, Deskripsi, Benefits, Gambar</li>
+            <li><strong>Tab Jadwal:</strong> Pilih hari latihan, Jam mulai &amp; selesai</li>
+            <li><strong>Tab Pendaftaran:</strong> Toggle Buka Pendaftaran, Batas Pendaftaran, WhatsApp Admin, Token</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h3>3.5.3 Sistem Token</h3>
+        <p><strong>Format Token:</strong> <code>NAMAEKSKUL-WORD-XX</code> (Contoh: BASKET-EAGLE-42)</p>
+        <p><strong>Generate Token:</strong> Buka Edit Ekskul → Tab Pendaftaran → Klik <strong>Generate Token</strong>
+        </p>
+
+        <div class="info">
+            <strong>ℹ️</strong> Token hanya bisa di-generate <strong>1x per 24 jam</strong>
+        </div>
+
+        <h3>3.5.4 Toggle Status Pendaftaran</h3>
+        <ul>
+            <li><strong>BUKA</strong> (hijau): Pendaftaran aktif</li>
+            <li><strong>TUTUP</strong> (merah): Pendaftaran ditutup</li>
+        </ul>
+
+        <div class="warning">
+            <strong>⚠️</strong> Jika deadline lewat, status otomatis TUTUP dan perlu ubah deadline untuk membuka
+            kembali.
+        </div>
+
+        <h3>3.5.5 Kelola Pendaftar Ekskul</h3>
+        <ol>
+            <li>Klik menu <strong>Pendaftar Ekskul</strong></li>
+            <li>Filter berdasarkan ekskul/status</li>
+            <li>Lihat detail pendaftar</li>
+            <li>Proses: <strong>Approve</strong> (Terima) atau <strong>Reject</strong> (Tolak dengan catatan)</li>
+        </ol>
+
+        <h2>3.6 Manajemen Galeri</h2>
+        <h3>3.6.1 Sistem Grid</h3>
+        <p>Layout 6 slot dengan ukuran berbeda. Setiap slot dapat memiliki hingga 3 gambar (slideshow).</p>
+
+        <h3>3.6.2 Mengelola Slot</h3>
+        <ol>
+            <li>Klik slot kosong (ikon +) atau slot yang sudah terisi</li>
+            <li>Isi data: Judul album, Deskripsi, Upload gambar (max 3)</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h2>3.7 Manajemen Prestasi</h2>
+        <h3>3.7.1 Tambah Prestasi</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah Prestasi</strong></li>
+            <li>Isi data: Nama Prestasi, Kategori, Tingkat, Tahun, Nama Peserta/Tim, Gambar, Deskripsi</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h2>3.8 Manajemen Pengumuman</h2>
+        <h3>3.8.1 Fitur</h3>
+        <ul>
+            <li>Scheduling (tanggal mulai-berakhir)</li>
+            <li>Priority (angka tinggi = lebih atas)</li>
+            <li>Link CTA</li>
+            <li>Auto-hide saat expired</li>
+        </ul>
+
+        <h3>3.8.2 Tambah Pengumuman</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah Pengumuman</strong></li>
+            <li>Isi data: Judul, Deskripsi, Gambar banner, Link tujuan, Tanggal Mulai &amp; Berakhir, Priority, Status
+                Aktif</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h2>3.9 Manajemen Testimoni</h2>
+        <h3>3.9.1 Fitur</h3>
+        <ul>
+            <li>Drag &amp; drop reordering</li>
+            <li>Toggle active/inactive</li>
+            <li>Public submission (perlu moderasi)</li>
+        </ul>
+
+        <h3>3.9.2 Tambah Testimoni</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah Testimoni</strong></li>
+            <li>Isi data: Nama pemberi, Peran, Isi testimoni, Foto (opsional)</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h3>3.9.3 Moderasi</h3>
+        <p>Testimoni dari public masuk dengan status <strong>Inactive</strong>. Admin perlu mengaktifkan untuk
+            ditampilkan.</p>
+
+        <h2>3.10 Manajemen Dokumen</h2>
+        <h3>3.10.1 Upload Dokumen</h3>
+        <ol>
+            <li>Klik <strong>+ Upload Dokumen</strong></li>
+            <li>Isi data: Judul, Deskripsi, File (PDF/DOC/DOCX/XLS/XLSX, max 10MB)</li>
+            <li>Klik <strong>Upload</strong></li>
+        </ol>
+
+        <h3>3.10.2 Toggle Visibility</h3>
+        <p>Klik toggle untuk menyembunyikan/menampilkan dokumen di website.</p>
+
+        <h2>3.11 Manajemen Data Guru</h2>
+        <h3>3.11.1 Tambah Data Guru</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah Guru</strong></li>
+            <li>Isi data: Nama lengkap, Mata Pelajaran/Bidang, Foto (crop 800x800)</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h2>3.12 Kalender Sekolah</h2>
+        <h3>3.12.1 Akses Kalender</h3>
+        <p>Klik ikon 📅 di header untuk membuka sidebar kalender.</p>
+
+        <h3>3.12.2 Tambah Event</h3>
+        <ol>
+            <li>Klik tanggal di kalender</li>
+            <li>Isi data: Judul Event, Deskripsi (opsional), Tanggal, Waktu (opsional), Warna penanda</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h3>3.12.3 Hapus Event</h3>
+        <p>Klik event → tombol <strong>Hapus</strong></p>
+
+        <h2>3.13 Manajemen User</h2>
+
+        <div class="warning">
+            <strong>⚠️ Hanya Super Admin</strong> yang dapat mengakses fitur ini.
+        </div>
+
+        <h3>3.13.1 Role Pengguna</h3>
+        <table>
+            <tr>
+                <th>Role</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>super_admin</td>
+                <td>Akses penuh, hanya boleh 1</td>
+            </tr>
+            <tr>
+                <td>admin</td>
+                <td>Kelola konten website</td>
+            </tr>
+            <tr>
+                <td>admin_ppdb</td>
+                <td>Fokus kelola PPDB</td>
+            </tr>
+        </table>
+
+        <h3>3.13.2 Tambah User</h3>
+        <ol>
+            <li>Klik <strong>+ Tambah User</strong></li>
+            <li>Isi data: Nama, Email, Password (min 6 karakter), Role</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+
+        <h3>3.13.3 Batasan</h3>
+        <ul>
+            <li>Super Admin <strong>tidak bisa dihapus</strong></li>
+            <li>User <strong>tidak bisa menghapus akun sendiri</strong></li>
+            <li>Hanya boleh ada <strong>1 Super Admin</strong></li>
+        </ul>
+
+        <h2>3.14 Activity Logs</h2>
+        <h3>3.14.1 Informasi yang Dicatat</h3>
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>User</td>
+                <td>Nama admin yang melakukan aksi</td>
+            </tr>
+            <tr>
+                <td>Action</td>
+                <td>Create/Update/Delete</td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td>Detail perubahan</td>
+            </tr>
+            <tr>
+                <td>Model</td>
+                <td>Tipe data yang diubah</td>
+            </tr>
+            <tr>
+                <td>IP Address</td>
+                <td>Alamat IP</td>
+            </tr>
+            <tr>
+                <td>Timestamp</td>
+                <td>Waktu aksi</td>
+            </tr>
+        </table>
+
+        <h3>3.14.2 Filter</h3>
+        <ul>
+            <li>Filter by Aksi</li>
+            <li>Filter by User</li>
+            <li>Search dalam deskripsi</li>
+        </ul>
+
+        <h3>3.14.3 Detail Perubahan</h3>
+        <p>Untuk aksi <strong>Update</strong>, klik log untuk melihat: <strong>Old Values</strong> (nilai sebelum) dan
+            <strong>New Values</strong> (nilai sesudah)</p>
+
+        <h2>3.15 Pengaturan Website</h2>
+
+        <div class="warning">
+            <strong>⚠️ Hanya Super Admin</strong> yang dapat mengakses fitur ini.
+        </div>
+
+        <h3>3.15.1 Data yang Dapat Diatur</h3>
+        <table>
+            <tr>
+                <th>Setting</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>Nama Sekolah</td>
+                <td>Nama resmi sekolah</td>
+            </tr>
+            <tr>
+                <td>Alamat</td>
+                <td>Alamat lengkap</td>
+            </tr>
+            <tr>
+                <td>Telepon</td>
+                <td>Nomor telepon sekolah</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>Email resmi sekolah</td>
+            </tr>
+            <tr>
+                <td>Logo</td>
+                <td>Upload logo sekolah</td>
+            </tr>
+            <tr>
+                <td>Tagline</td>
+                <td>Slogan sekolah</td>
+            </tr>
+            <tr>
+                <td>Social Media</td>
+                <td>Link Facebook, Instagram, YouTube, Twitter</td>
+            </tr>
+        </table>
+
+        <h3>3.15.2 Cara Mengubah</h3>
+        <ol>
+            <li>Klik menu <strong>Settings</strong> di sidebar</li>
+            <li>Ubah data yang diperlukan</li>
+            <li>Klik <strong>Simpan</strong></li>
+        </ol>
+    </div>
+
+    <hr>
+    <div class="center">
+        <p><strong>&copy; 2025-2026 SMA Yayasan Mutiara Insan Nusantara</strong></p>
+        <p><em>Manual Book Aplikasi Web v1.0</em></p>
+        <p><em>Dokumen ini dibuat oleh Tim Pengabdian Masyarakat Universitas Pamulang</em></p>
+    </div>
+
+</body>
+
+</html>

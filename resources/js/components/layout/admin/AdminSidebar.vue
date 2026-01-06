@@ -71,8 +71,9 @@
           :badge="pendingCount"
         />
 
-        <!-- PPDB Submenu -->
+        <!-- PPDB Submenu (hidden for regular Admin) -->
         <SidebarSubmenu
+          v-if="!isRegularAdmin"
           :icon="UserPlus"
           label="PPDB"
           :items="ppdbItems"
@@ -125,6 +126,10 @@ const props = defineProps({
     default: false
   },
   isAdminPpdb: {
+    type: Boolean,
+    default: false
+  },
+  isRegularAdmin: {
     type: Boolean,
     default: false
   }

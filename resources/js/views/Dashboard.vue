@@ -30,15 +30,16 @@
 
       <!-- All Dashboard Cards with consistent spacing -->
       <div class="space-y-4">
-        <!-- Stats Card - same width as PPDB Overview -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
-          <div class="lg:col-span-3">
+        <!-- Stats Card - full width for Admin, 3/5 for Super Admin -->
+        <div :class="isRegularAdmin ? '' : 'grid grid-cols-1 lg:grid-cols-5 gap-4'">
+          <div :class="isRegularAdmin ? '' : 'lg:col-span-3'">
             <DashboardStats :stats="displayStats" />
           </div>
         </div>
 
         <!-- Two Column Layout: PPDB Overview (Left) + Pendaftar Ekskul (Right) -->
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <!-- Super Admin: show both PPDB Overview and Pendaftar -->
+        <div v-if="!isRegularAdmin" class="grid grid-cols-1 lg:grid-cols-5 gap-4">
           <!-- PPDB Overview - Left (wider) -->
           <div class="lg:col-span-3">
             <DashboardPpdbOverview />
@@ -53,6 +54,16 @@
               :rejected-count="displayStats.pendaftar_rejected || 0"
             />
           </div>
+        </div>
+
+        <!-- Regular Admin: show only Pendaftar Ekskul (full width) -->
+        <div v-else>
+          <DashboardPendaftar
+            :items="store.recentPendaftar"
+            :pending-count="displayStats.pendaftar_pending"
+            :approved-count="displayStats.pendaftar_approved || 0"
+            :rejected-count="displayStats.pendaftar_rejected || 0"
+          />
         </div>
       </div>
 
@@ -75,6 +86,7 @@
 
 <script setup>
 import LoadingSpinner from '@/components/ui/shared/LoadingSpinner.vue'
+import { useAuth } from '@/composables/useAuth'
 import { usePopup } from '@/composables/usePopup'
 import api from '@/services/api'
 import { usePendaftarStore } from '@/stores/pendaftar'
@@ -85,6 +97,7 @@ import DashboardPpdbOverview from './dashboard/DashboardPpdbOverview.vue'
 import DashboardStats from './dashboard/DashboardStats.vue'
 import CalendarSidebar from './dashboard/CalendarSidebar.vue'
 
+const { isRegularAdmin } = useAuth()
 const { showSuccess, showError, showWarning, confirm } = usePopup()
 const store = usePendaftarStore()
 const showCalendar = ref(false)

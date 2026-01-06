@@ -35,6 +35,14 @@ export function useAuth() {
     return user.value.role?.toLowerCase() === 'admin_ppdb'
   })
 
+  /**
+   * Check if user is Regular Admin (Content only, no PPDB, no Users)
+   */
+  const isRegularAdmin = computed(() => {
+    if (!user.value) return false
+    return user.value.role?.toLowerCase() === 'admin'
+  })
+
   const login = async (credentials) => {
     isLoading.value = true
     error.value = null
@@ -108,6 +116,7 @@ export function useAuth() {
     isAdmin,
     isSuperAdmin,
     isAdminPpdb,
+    isRegularAdmin,
     login,
     logout,
     fetchUser,
